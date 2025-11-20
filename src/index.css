@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* small visual helper to mimic the dark theme from your screenshot */
+:root {
+  --bg: #0b0f10;
+  --panel: #111316;
+  --muted: #6b7280;
+}
+
+body {
+  background: linear-gradient(180deg, #071014 0%, #0b0f10 100%);
+  color: #e5e7eb;
+}
