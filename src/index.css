@@ -6,14 +6,27 @@ body,
   height: 100%;
 }
 
-/* small visual helper to mimic the dark theme from your screenshot */
-:root {
-  --bg: #0b0f10;
-  --panel: #111316;
-  --muted: #6b7280;
-}
 
 body {
-  background: linear-gradient(180deg, #071014 0%, #0b0f10 100%);
+  background: #2c2c2c;
   color: #e5e7eb;
 }
+
+/* For Chrome, Edge, Safari */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px; /* keep your existing width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: black; /* scrollbar background */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: inherit; /* keeps the same color it already had */
+}
+
+/* Optional: Firefox */
+.custom-scrollbar {
+    scrollbar-color: auto black; /* thumb stays auto, track becomes black */
+}
+

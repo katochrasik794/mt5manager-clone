@@ -298,7 +298,7 @@ const NavItem = ({ item, level = 0 }) => {
 export default function NavigatorSidebar() {
   // Define classes for dark theme styling
   const sidebarClasses =
-    "w-72 h-screen bg-[#2c2c2c] text-gray-300 flex flex-col font-sans";
+    "w-72 mb-10 bg-[#2c2c2c] text-gray-300 flex flex-col font-sans";
 
   const headerClasses =
     "px-4 py-1 bg-gray-600/50 flex items-center justify-between";

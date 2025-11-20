@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import {
-  FunnelIcon, // For the main Filter button
-  AdjustmentsHorizontalIcon, // For the Filter/Sort Adjuster icon
-  MagnifyingGlassIcon, // For the Search input
-  CheckIcon, // Added for the Checkbox icon
-  Cog8ToothIcon, // Using Cog8ToothIcon for Customize
-  Square2StackIcon, // Using Square2StackIcon for the "None" box icon
-  XMarkIcon, // For closing the modal
-  PlusIcon, // For adding filter criteria
+  FunnelIcon,
+  AdjustmentsHorizontalIcon,
+  MagnifyingGlassIcon,
+  CheckIcon,
+  Cog8ToothIcon,
+  Square2StackIcon,
+  XMarkIcon,
+  PlusIcon,
 } from "@heroicons/react/24/outline";
 
 // --- Data for the Filter Dropdown Menu ---
@@ -23,25 +23,22 @@ const filterOptions = [
   "News",
 ];
 
-// ----------------------------------------------------------------------
-// 1. MODAL COMPONENTS (Nested content for Customize)
-// ----------------------------------------------------------------------
-
-// --- Content for the 'Filters' Tab (Simplified table view) ---
+// --- Filters Tab (left tab in modal) ---
 const FiltersTab = ({ onClose }) => {
   return (
     <div className="p-4 flex flex-col h-full">
-      <div className="flex-1 overflow-auto border border-gray-400 min-h-[70vh]">
-        <div className='flex items-center justify-around '>
-          <span>Name</span>
-          <span>Filter</span>
+      <div className="flex-1 overflow-auto border border-gray-700 rounded-sm min-h-[60vh] p-3 bg-[#262626]">
+        <div className='flex items-center justify-between text-sm text-gray-300 pb-2 border-b border-gray-700 mb-2'>
+          <span className="pl-2">Name</span>
+          <span className="pr-2">Filter</span>
         </div>
-
+        {/* simplified list placeholder */}
+        <div className="text-sm text-gray-400">No saved filters</div>
       </div>
-      
+
       <div className="flex justify-end gap-3 pt-4 mt-4">
         <button className="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-500 rounded-sm hover:bg-blue-400">Apply</button>
-        <button 
+        <button
           className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-600 rounded-sm hover:bg-gray-500"
           onClick={onClose}
         >
@@ -52,180 +49,167 @@ const FiltersTab = ({ onClose }) => {
   );
 };
 
-// --- Content for the 'Edit Filter' Tab (Detailed form view) ---
+// --- Updated EditFilterTab with aligned labels & controls ---
 const EditFilterTab = ({ onClose }) => {
+  // helper: label width controlled via this class
+  const LABEL_CLASS = "w-[140px] text-right pr-4 text-sm font-medium text-gray-400";
+
   return (
-    <div className="py-4 overflow-y-auto text-sm max-h-[80vh] flex flex-col items-center">
-      <div className="flex items-center justify-between max-w-[300px] gap-12">
-        <label className="text-sm font-medium text-gray-400">Filter name:</label>
-        <input 
-          type="text" 
-          className="p-2 text-sm  border border-gray-600 rounded-sm focus:ring-blue-500 focus:border-blue-500"
-          placeholder=""
-        />
-      </div>
+    <div className="py-4 overflow-y-auto text-sm max-h-[86vh] flex flex-col px-6 custom-scrollbar">
+      {/* container with two-column layout: label column & control column */}
+      <div className="border border-[#343434] rounded-sm p-2">
+        <div className="grid grid-cols-[140px_1fr] gap-y-3 gap-x-4 items-center">
 
-      <div className="flex items-center pt-2">
-        <input id="hide-disabled" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded" />
-        <label htmlFor="hide-disabled" className="ml-2 text-sm text-gray-400">Hide disabled accounts</label>
-      </div>
+          {/* Filter Name */}
+          <label className={LABEL_CLASS}>Filter name:</label>
+          <input
+            type="text"
+            className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent text-gray-200 w-full"
+            placeholder=""
+          />
 
-      <div className="pt-2">
-        {/* Trading */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Trading:</label>
-          <div className="flex items-center gap-1 w-[200px]">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <select className="flex-1 p-2 text-sm  border border-gray-600 rounded-sm">
+          {/* Hide disabled */}
+          <div /> {/* empty cell for spacing */}
+          <div className="flex items-center gap-2">
+            <input id="hide-disabled" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded" />
+            <label htmlFor="hide-disabled" className="text-sm text-gray-400">Hide disabled accounts</label>
+          </div>
+
+          {/* Trading */}
+          <label className={LABEL_CLASS}>Trading:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <select className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-44">
               <option>Any</option>
               <option>Standard</option>
               <option>ECN</option>
             </select>
           </div>
-        </div>
 
-        {/* Country */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Country:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm  border border-gray-600 rounded-sm" />
+          {/* Country */}
+          <label className={LABEL_CLASS}>Country:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <select className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-full">
+              <option>Iran</option>
+              <option>India</option>
+            </select>
           </div>
-        </div>
 
-        {/* City */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">City:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm  border border-gray-600 rounded-sm" />
+          {/* City */}
+          <label className={LABEL_CLASS}>City:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <input type="text" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-full" />
           </div>
-        </div>
 
-        {/* Language */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Language:</label>
-          <div className="flex items-center gap-1 w-[200px]">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <select className="flex-1 p-2 text-sm border border-gray-600 rounded-sm">
+          {/* Language */}
+          <label className={LABEL_CLASS}>Language:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <select className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-48">
+              <option>Any</option>
               <option>English</option>
               <option>Spanish</option>
             </select>
           </div>
-        </div>
 
-        {/* Agent account */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Agent account:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm  border border-gray-600 rounded-sm" />
+          {/* Agent account */}
+          <label className={LABEL_CLASS}>Agent account:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <input type="text" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-full" />
           </div>
-        </div>
 
-        {/* Group */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Group:</label>
-          <div className="flex items-center gap-1 w-[200px]">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <select className="flex-1 p-2 text-sm border border-gray-600 rounded-sm">
+          {/* Group */}
+          <label className={LABEL_CLASS}>Group:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <select className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-48">
               <option>All Groups</option>
               <option>VIP</option>
-              <option>Standard</option>
             </select>
           </div>
-        </div>
 
-        {/* Company */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Company:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm border border-gray-600 rounded-sm" />
+          {/* Company */}
+          <label className={LABEL_CLASS}>Company:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <input type="text" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-full" />
+          </div>
+
+          {/* MetaQuotes ID */}
+          <label className={LABEL_CLASS}>MetaQuotes ID:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <input type="text" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-44" />
+          </div>
+
+          {/* Lead campaign */}
+          <label className={LABEL_CLASS}>Lead campaign:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <input type="text" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-full" />
+          </div>
+
+          {/* Lead source */}
+          <label className={LABEL_CLASS}>Lead source:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <input type="text" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-full" />
+          </div>
+
+          {/* Comment */}
+          <label className={LABEL_CLASS}>Comment:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><PlusIcon className="w-4 h-4 text-green-400" /></button>
+            <input type="text" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-full" />
           </div>
         </div>
 
-        {/* MetaQuotes ID */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">MetaQuotes ID:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm  border border-gray-600 rounded-sm" />
-          </div>
-        </div>
+        {/* Divider */}
+        <div className="border-t border-gray-700 mt-4 pt-4"></div>
 
-        {/* Lead campaign */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Lead campaign:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm border border-gray-600 rounded-sm" />
+        {/* Date and Balance grid */}
+        <div className="grid grid-cols-[160px_1fr] gap-y-3 gap-x-4 items-center mt-3">
+          {/* Last access */}
+          <label className={LABEL_CLASS}>Last access:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><XMarkIcon className="w-4 h-4 text-red-500" /></button>
+            <input type="date" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-48" />
+            <span className="text-gray-400">-</span>
+            <button className="rounded-sm p-1 hover:bg-gray-700"><XMarkIcon className="w-4 h-4 text-red-500" /></button>
+            <input type="date" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-48" />
+            {/* <div className="ml-2 text-gray-400 text-xs">any</div> */}
           </div>
-        </div>
 
-        {/* Lead source */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Lead source:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm border border-gray-600 rounded-sm" />
+          {/* Registration */}
+          <label className={LABEL_CLASS}>Registration:</label>
+          <div className="flex items-center gap-2">
+            <button className="rounded-sm p-1 hover:bg-gray-700"><XMarkIcon className="w-4 h-4 text-red-500" /></button>
+            <input type="date" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-48" />
+            <span className="text-gray-400">-</span>
+            <button className="rounded-sm p-1 hover:bg-gray-700"><XMarkIcon className="w-4 h-4 text-red-500" /></button>
+            <input type="date" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-48" />
           </div>
-        </div>
 
-        {/* Comment */}
-        <div className="mb-2 max-w-[350px] flex items-center justify-between ">
-          <label className="text-sm font-medium text-gray-400">Comment:</label>
-          <div className="flex items-center gap-1">
-            <PlusIcon className="w-4 h-4 text-green-500 cursor-pointer hover:text-green-400" />
-            <input type="text" className="flex-1 p-2 text-sm border border-gray-600 rounded-sm" />
+          {/* Balance */}
+          <label className={LABEL_CLASS}>Balance:</label>
+          <div className="flex items-center gap-2">
+            <input type="number" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-28" placeholder="Min" />
+            <span className="text-gray-400">-</span>
+            <input type="number" className="text-sm border border-gray-600 rounded-sm px-2 py-1 bg-transparent w-28" placeholder="Max" />
+            <span className="ml-2 text-gray-400">any currency</span>
           </div>
         </div>
       </div>
-      
-      {/* Date and Balance Filters */}
-      <div className="grid grid-cols-1 gap-4 border-t border-gray-700 pt-4 mt-4">
-        {/* Last access */}
-        <div className="space-y-1 flex items-center gap-4">
-          <label className="text-sm font-medium text-gray-400">Last access:</label>
-          <div className="flex items-center gap-2">
-            <XMarkIcon className="w-4 h-4 text-red-500 cursor-pointer" />
-            <input type="date" className="p-2 text-sm border border-gray-600 rounded-sm w-full" />
-            <span className="text-gray-400">-</span>
-            <XMarkIcon className="w-4 h-4 text-red-500 cursor-pointer" />
-            <input type="date" className="p-2 text-sm border border-gray-600 rounded-sm w-full" />
-          </div>
-        </div>
 
-        {/* Registration */}
-        <div className="space-y-1 flex items-center gap-4">
-          <label className="text-sm font-medium text-gray-400">Registration:</label>
-          <div className="flex items-center gap-2">
-            <XMarkIcon className="w-4 h-4 text-red-500 cursor-pointer" />
-            <input type="date" className="p-2 text-sm border border-gray-600 rounded-sm w-full" />
-            <span className="text-gray-400">-</span>
-            <XMarkIcon className="w-4 h-4 text-red-500 cursor-pointer" />
-            <input type="date" className="p-2 text-sm border border-gray-600 rounded-sm w-full" />
-          </div>
-        </div>
-
-        {/* Balance */}
-        <div className="space-y-1">
-          <label className="text-sm font-medium text-gray-400">Balance:</label>
-          <div className="flex items-center gap-2">
-            <input type="number" className="p-2 text-sm border border-gray-600 rounded-sm w-24" placeholder="Min" />
-            <span className="text-gray-400">-</span>
-            <input type="number" className="p-2 text-sm border border-gray-600 rounded-sm w-24" placeholder="Max" />
-            <span className="text-gray-400">any currency</span>
-          </div>
-        </div>
-      </div>
-      
-      {/* Buttons at the bottom */}
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-700 mt-4">
-        <button className="px-4 py-2 text-sm font-medium text-gray-900 bg-gray-300 rounded-sm hover:bg-gray-200">Save</button>
-        <button className="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-500 rounded-sm hover:bg-blue-400">Apply</button>
-        <button 
-          className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-600 rounded-sm hover:bg-gray-500"
+      {/* Buttons */}
+      <div className="flex justify-end gap-3 pt-4 mt-4">
+        <button className="px-4 py-1 text-sm font-medium text-gray-900 bg-gray-300 rounded-sm hover:bg-gray-200">Save</button>
+        <button className="px-4 py-1 text-sm font-medium text-gray-900 bg-blue-500 rounded-sm hover:bg-blue-400">Apply</button>
+        <button
+          className="px-4 py-1 text-sm font-medium text-gray-300 bg-gray-600 rounded-sm hover:bg-gray-500"
           onClick={onClose}
         >
           Cancel
@@ -235,26 +219,19 @@ const EditFilterTab = ({ onClose }) => {
   );
 };
 
-
-// --- The Main Modal Component (Customize Pop-up) ---
+// --- Modal & Dropdown components (unchanged behavior, styling tweaked for overall look) ---
 const CustomizeFilterModal = ({ isVisible, onClose }) => {
-  // State to manage which tab is active: 'filters' or 'edit'
-  // 'Edit Filter' is open by default
   const [activeTab, setActiveTab] = useState('edit');
 
   if (!isVisible) return null;
 
   return (
-    // Backdrop overlay
-    <div className="fixed inset-0 backdrop-blur flex items-center justify-center z-100 p-4">
-      {/* Modal Container */}
-      <div className="bg-[#2c2c2c] rounded-sm shadow-2xl w-full max-w-xl min-h-[70%] overflow-hidden border border-gray-700 text-gray-300 flex flex-col">
-        
-        {/* Header */}
-        <div className="flex justify-between items-center p-4">
-          <h2 className="text-lg font-semibold">Trading Accounts Filters</h2>
-          <button 
-            onClick={onClose} 
+    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+      <div className="bg-[#2c2c2c] rounded-sm shadow-2xl w-full max-w-3xl min-h-[65vh] overflow-hidden border border-gray-700 text-gray-300 flex flex-col">
+        <div className="flex justify-between items-center py-2 px-4 border-b border-gray-700">
+          <h2 className="font-semibold text-gray-200">Trading Accounts Filters</h2>
+          <button
+            onClick={onClose}
             className="p-1 rounded-full hover:bg-gray-700 transition-colors"
             aria-label="Close modal"
           >
@@ -262,48 +239,31 @@ const CustomizeFilterModal = ({ isVisible, onClose }) => {
           </button>
         </div>
 
-        {/* Tabs and Content Wrapper */}
-        <div className="flex flex-col flex-grow min-h-0">
-            {/* Tabs */}
-            <div className="flex border-b border-gray-700 px-4">
+        <div className="flex">
+          <div className="flex px-4">
             <button
-                className={`py-2 px-4 text-sm font-medium transition-all ${
-                activeTab === 'filters'
-                    ? 'border-b-2 border-blue-500 text-blue-400'
-                    : 'text-gray-400 hover:text-gray-300'
-                }`}
-                onClick={() => setActiveTab('filters')}
+              className={`py-2 px-4 text-sm font-medium transition-all ${activeTab === 'filters' ? 'border-b-2 border-blue-500 text-blue-400' : 'text-gray-400 hover:text-gray-300'}`}
+              onClick={() => setActiveTab('filters')}
             >
-                Filters
+              Filters
             </button>
             <button
-                className={`py-2 px-4 text-sm font-medium transition-all ${
-                activeTab === 'edit'
-                    ? 'border-b-2 border-blue-500 text-blue-400'
-                    : 'text-gray-400 hover:text-gray-300'
-                }`}
-                onClick={() => setActiveTab('edit')}
+              className={`py-2 px-4 text-sm font-medium transition-all ${activeTab === 'edit' ? 'border-b-2 border-blue-500 text-blue-400' : 'text-gray-400 hover:text-gray-300'}`}
+              onClick={() => setActiveTab('edit')}
             >
-                Edit Filter
+              Edit Filter
             </button>
-            </div>
-
-            {/* Body Content (Tab-dependent) */}
-            <div className="flex-grow overflow-y-auto">
-            {activeTab === 'edit' ? <EditFilterTab onClose={onClose} /> : <FiltersTab onClose={onClose} />}
-            </div>
+          </div>
         </div>
-        
+
+        <div className="flex-grow overflow-y-auto">
+          {activeTab === 'edit' ? <EditFilterTab onClose={onClose} /> : <FiltersTab onClose={onClose} />}
+        </div>
       </div>
     </div>
   );
 };
 
-// ----------------------------------------------------------------------
-// 2. DROPDOWN COMPONENTS
-// ----------------------------------------------------------------------
-
-// --- AdjustmentsHorizontalIcon Dropdown Menu Component (Existing Checkbox Menu) ---
 const AdjustmentsDropdownMenu = ({ isVisible, setMenuOpen, filterOptions }) => {
   const [checkedOptions, setCheckedOptions] = useState(
     filterOptions.reduce((acc, option) => {
@@ -334,7 +294,7 @@ const AdjustmentsDropdownMenu = ({ isVisible, setMenuOpen, filterOptions }) => {
     }, {});
     setCheckedOptions(noneSelected);
   };
-  
+
   if (!isVisible) return null;
 
   return (
@@ -353,17 +313,17 @@ const AdjustmentsDropdownMenu = ({ isVisible, setMenuOpen, filterOptions }) => {
           </div>
         ))}
       </div>
-      
+
       <div className="border-t border-gray-700 my-1"></div>
 
       <div className="py-1">
-        <div 
+        <div
           className="px-3 py-1.5 text-sm text-gray-300 hover:bg-gray-700 cursor-pointer"
           onClick={selectAll}
         >
           Select All
         </div>
-        <div 
+        <div
           className="px-3 py-1.5 text-sm text-gray-300 hover:bg-gray-700 cursor-pointer"
           onClick={selectNone}
         >
@@ -374,14 +334,12 @@ const AdjustmentsDropdownMenu = ({ isVisible, setMenuOpen, filterOptions }) => {
   );
 };
 
-
-// --- FunnelIcon Dropdown Menu Component (Triggers Modal on Customize) ---
-const FunnelDropdownMenu = ({ isVisible, setMenuOpen, setModalOpen }) => { 
+const FunnelDropdownMenu = ({ isVisible, setMenuOpen, setModalOpen }) => {
   if (!isVisible) return null;
 
   const handleCustomizeClick = () => {
-    setMenuOpen(false); // Close the dropdown
-    setModalOpen(true); // Open the modal
+    setMenuOpen(false);
+    setModalOpen(true);
   };
 
   return (
@@ -389,21 +347,21 @@ const FunnelDropdownMenu = ({ isVisible, setMenuOpen, setModalOpen }) => {
       <div className="py-1">
         <div
           className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-300 hover:bg-gray-700 cursor-pointer"
-          onClick={() => { /* handle 'None' action */ setMenuOpen(false); }}
+          onClick={() => { setMenuOpen(false); }}
         >
-          <Square2StackIcon className="w-5 h-5 text-blue-500" /> {/* Blue outlined square */}
+          <Square2StackIcon className="w-5 h-5 text-blue-500" />
           <span>None</span>
         </div>
       </div>
-      
+
       <div className="border-t border-gray-700 my-1"></div>
 
       <div className="py-1">
-        <div 
+        <div
           className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-300 hover:bg-gray-700 cursor-pointer"
-          onClick={handleCustomizeClick} // Call the new handler
+          onClick={handleCustomizeClick}
         >
-          <Cog8ToothIcon className="w-5 h-5 text-blue-500" /> {/* Blue cog icon */}
+          <Cog8ToothIcon className="w-5 h-5 text-blue-500" />
           <span>Customize</span>
         </div>
       </div>
@@ -411,58 +369,37 @@ const FunnelDropdownMenu = ({ isVisible, setMenuOpen, setModalOpen }) => {
   );
 };
 
-
-// ----------------------------------------------------------------------
-// 3. MAIN TOPBAR COMPONENT
-// ----------------------------------------------------------------------
-
+// --- Main Topbar ---
 export default function Topbar() {
   const [isAdjustmentsMenuOpen, setIsAdjustmentsMenuOpen] = useState(false);
   const [isFunnelMenuOpen, setIsFunnelMenuOpen] = useState(false);
   const [isCustomizeModalOpen, setIsCustomizeModalOpen] = useState(false);
 
-  const filterOptions = [
-    "Symbols",
-    "Clients",
-    "Accounts",
-    "Positions",
-    "Orders",
-    "Subscriptions",
-    "Payments",
-    "Mails",
-    "News",
-  ];
-  
-  // Base classes for the dark theme look
   const containerClasses = "flex items-center border border-gray-400 rounded-md bg-[#2c2c2c] text-gray-300";
   const buttonBaseClasses = "px-3 py-2 md:px-4 md:py-2 hover:bg-gray-700 transition-colors flex items-center gap-2 h-full";
   const iconClasses = "h-5 w-5 md:h-6 md:w-6 text-gray-400";
 
-  // Function to toggle Funnel dropdown and close Adjustments dropdown
   const toggleFunnelMenu = () => {
     setIsFunnelMenuOpen(!isFunnelMenuOpen);
-    setIsAdjustmentsMenuOpen(false); // Close other menu
+    setIsAdjustmentsMenuOpen(false);
   };
 
-  // Function to toggle Adjustments dropdown and close Funnel dropdown
   const toggleAdjustmentsMenu = () => {
     setIsAdjustmentsMenuOpen(!isAdjustmentsMenuOpen);
-    setIsFunnelMenuOpen(false); // Close other menu
+    setIsFunnelMenuOpen(false);
   };
 
   return (
-    <> {/* Use Fragment to wrap the header and the modal */}
+    <>
       <header className="flex items-center justify-between bg-[#2c2c2c] px-4 sm:px-6 lg:px-8 xl:px-12 py-3 border-b border-gray-800">
         <div className="flex items-center gap-3 md:gap-4">
+          {/* left area (empty for now) */}
         </div>
 
         <div className="flex items-center gap-3 md:gap-4 w-[220px]">
-          {/* Right-most filter button */}
           <div className="relative">
             <div className={containerClasses}>
-              
-              {/* 1. Funnel Icon Button (Filter Preset Dropdown Trigger) */}
-              <button 
+              <button
                 className={`rounded-l-md ${buttonBaseClasses}`}
                 aria-label="Filter preset menu"
                 onClick={toggleFunnelMenu}
@@ -471,11 +408,9 @@ export default function Topbar() {
                 <span className="hidden sm:inline">Filter</span>
               </button>
 
-              {/* 2. Separator */}
               <div className="h-full border-l border-gray-700"></div>
 
-              {/* 3. AdjustmentsHorizontalIcon Button (Checkbox Dropdown Trigger) */}
-              <button 
+              <button
                 className={buttonBaseClasses}
                 aria-label="Advanced filter settings"
                 onClick={toggleAdjustmentsMenu}
@@ -483,10 +418,8 @@ export default function Topbar() {
                 <AdjustmentsHorizontalIcon className={iconClasses} />
               </button>
 
-              {/* 4. Separator */}
               <div className="h-full border-l border-gray-700"></div>
 
-              {/* 5. Search Input Field */}
               <div className="flex-1 flex items-center px-3 py-1 md:py-2">
                 <input
                   type="text"
@@ -497,25 +430,22 @@ export default function Topbar() {
                 <MagnifyingGlassIcon className="h-5 w-5 md:h-6 md:w-6" />
               </div>
             </div>
-            
-            {/* Render the Funnel Dropdown Menu */}
-            <FunnelDropdownMenu 
-              isVisible={isFunnelMenuOpen} 
-              setMenuOpen={setIsFunnelMenuOpen} 
+
+            <FunnelDropdownMenu
+              isVisible={isFunnelMenuOpen}
+              setMenuOpen={setIsFunnelMenuOpen}
               setModalOpen={setIsCustomizeModalOpen}
             />
 
-            {/* Render the Adjustments Dropdown Menu */}
-            <AdjustmentsDropdownMenu 
-              isVisible={isAdjustmentsMenuOpen} 
-              setMenuOpen={setIsAdjustmentsMenuOpen} 
-              filterOptions={filterOptions} 
+            <AdjustmentsDropdownMenu
+              isVisible={isAdjustmentsMenuOpen}
+              setMenuOpen={setIsAdjustmentsMenuOpen}
+              filterOptions={filterOptions}
             />
           </div>
         </div>
       </header>
 
-      {/* Render the Customize Filter Modal */}
       <CustomizeFilterModal
         isVisible={isCustomizeModalOpen}
         onClose={() => setIsCustomizeModalOpen(false)}

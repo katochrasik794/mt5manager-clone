@@ -62,8 +62,8 @@ export default function App() {
 
   return (
     // Main container to simulate the application environment for correct styling
-    <div 
-        className="" 
+    <div
+        className=""
         style={{ backgroundColor: styles.appBg, color: styles.mainText, fontFamily: 'Inter, sans-serif' }}>
         {/* Footer Bar System */}
         <div className="w-full">
@@ -90,8 +90,8 @@ export default function App() {
 
                 {/* Logs Content Area */}
                 <div className={`p-2 transition-opacity duration-300 ${isLogsPanelOpen ? 'opacity-100' : 'opacity-0 h-0'}`}>
-                    <div 
-                        className="h-64 overflow-y-auto rounded-sm"
+                    <div
+                        className="h-64 overflow-y-auto rounded-sm custom-scrollbar"
                         style={{ border: `1px solid ${styles.borderColor}`, backgroundColor: styles.logDefaultBg }}
                     >
                         {/* Table Header Row */}
