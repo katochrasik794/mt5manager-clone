@@ -227,10 +227,10 @@ const NavItem = ({ item, level = 0 }) => {
   const Icon = item.icon;
   const isActive = item.active;
   const hasChildren = item.children && item.children.length > 0;
-  
+
   // *** KEY CHANGE: Always set initial state to false (closed) ***
-  const [isOpen, setIsOpen] = useState(false); 
-  
+  const [isOpen, setIsOpen] = useState(false);
+
   // Function to toggle the state
   const handleClick = () => {
     // Only toggle the state if the item is a parent
