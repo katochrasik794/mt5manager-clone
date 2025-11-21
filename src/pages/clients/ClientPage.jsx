@@ -1,4 +1,7 @@
 
+import React from "react";
+import ClientModal from "../../components/ClientModal";
+
 const sampleData = (count = 80) => {
   const rows = [];
   for (let i = 0; i < count; i++) {
@@ -22,6 +25,13 @@ const sampleData = (count = 80) => {
 export default function ClientPage() {
   // If you have a prop or real data, replace this with your real array.
   const rows = sampleData(120); // many rows to demonstrate scrolling
+  const [selectedClient, setSelectedClient] = React.useState(null);
+  const [modalOpen, setModalOpen] = React.useState(false);
+
+  const onRowDoubleClick = (row) => {
+    setSelectedClient(row);
+    setModalOpen(true);
+  };
 
   return (
     <div className="">
@@ -30,7 +40,7 @@ export default function ClientPage() {
         <div className="text-sm text-gray-400">Showing table — scroll to see more</div>
       </div> */}
 
-      <div className="bg-[#2c2c2c] rounded-md border border-gray-700 shadow-sm overflow-hidden">
+      <div className="bg-[#2c2c2c] rounded-md border border-gray-700 shadow-sm overflow-hidden ">
         {/* Table header */}
         <div className="w-full overflow-x-auto">
           <table className="min-w-full table-fixed border-collapse">
@@ -53,13 +63,15 @@ export default function ClientPage() {
         </div>
 
         {/* Scrollable body: fixed height so ~20 rows are visible (adjust h-[720px] if you need exact fit) */}
-        <div className="max-h-[520px] overflow-y-auto">
+        <div className="max-h-[520px] overflow-y-auto custom-scrollbar">
           <table className="min-w-full table-fixed border-collapse">
             <tbody>
               {rows.map((r, idx) => (
                 <tr
                   key={r.login + "-" + idx}
-                  className={`border-b border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}`}
+                  onDoubleClick={() => onRowDoubleClick(r)}
+                  className={`border-b border-gray-800 hover:bg-gray-800/40 cursor-pointer ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}`}
+                  title="Double-click to open client details"
                 >
                   <td className="px-3 py-2 text-sm text-gray-200 w-[88px]">{r.login}</td>
                   <td className="px-3 py-2 text-sm text-gray-200">{r.name}</td>
@@ -77,6 +89,14 @@ export default function ClientPage() {
           </table>
         </div>
       </div>
+
+      {/* Client Modal */}
+      <ClientModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        client={selectedClient || {}}
+      />
     </div>
   );
 }
+

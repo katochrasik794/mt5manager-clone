@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Import Heroicons
 import {
   XMarkIcon,
@@ -224,6 +225,7 @@ const navItems = [
  * @param {number} level - Current nesting level (for padding/indentation)
  */
 const NavItem = ({ item, level = 0 }) => {
+  const navigate = useNavigate();
   const Icon = item.icon;
   const isActive = item.active;
   const hasChildren = item.children && item.children.length > 0;
@@ -231,11 +233,11 @@ const NavItem = ({ item, level = 0 }) => {
   // *** KEY CHANGE: Always set initial state to false (closed) ***
   const [isOpen, setIsOpen] = useState(false);
 
-  // Function to toggle the state
+  // Function to handle clicks
   const handleClick = () => {
-    // Only toggle the state if the item is a parent
+    console.log('Clicked on item:', item.name, 'isParent:', item.isParent);
     if (item.isParent) {
-      setIsOpen(!isOpen);
+      navigate('/clients');
     }
     // Logic for leaf item clicks can be added here
   };
@@ -261,12 +263,13 @@ const NavItem = ({ item, level = 0 }) => {
         <div className="flex items-center w-full">
           {/* Expansion Arrow/Icon - Conditionally applied rotation */}
           {item.isParent ? (
-             <span 
-                className={`text-gray-100 text-sm font-semibold transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`} 
-                style={{ marginRight: '4px' }}
+             <button
+                className={`text-gray-100 text-sm font-semibold transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
+                onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
+                style={{ marginRight: '4px', background: 'none', border: 'none', cursor: 'pointer' }}
              >
                 &gt; {/* Simple triangle for expansion/collapse */}
-            </span>
+            </button>
           ) : (
              <span className="w-4 mr-1"></span> // Placeholder for alignment
           )}

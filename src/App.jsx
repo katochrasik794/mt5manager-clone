@@ -29,12 +29,13 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 import Topbar from "./components/Topbar";
-import Sidebar from "./components/Sidebar";
+import NavigatorSidebar from "./components/Sidebar";
 import FooterBar from "./components/FooterBar";
 
 // pages you already have
 import Dashboard from "./components/Dashboard"; // your Dashboard.jsx
 import UsersPage from "./pages/UsersPage";
+import ClientPage from "./pages/clients/ClientPage";
 // If you have other page components, import them here:
 // import SettingsPage from "./pages/SettingsPage";
 
@@ -54,13 +55,14 @@ export default function App() {
 
       {/* Middle area: sidebar + changing dashboard content */}
       <div className="flex flex-1">
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <NavigatorSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Dashboard area that will change by route */}
         <main className="flex-1">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/users" element={<UsersPage />} />
+            <Route path="/clients" element={<ClientPage />} />
             {/* Add your other route entries here */}
             <Route path="*" element={<div>Page not found</div>} />
           </Routes>

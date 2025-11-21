@@ -194,8 +194,8 @@ export default function Dashboard() {
 
       <div className="bg-[#2c2c2c] rounded-md border border-gray-700 shadow-sm overflow-hidden">
         {/* Table header */}
-        <div className="w-full overflow-x-auto">
-          <table className="min-w-full table-fixed border-collapse">
+        <div className="w-full overflow-x-auto ">
+          <table className="min-w-full table-fixed border-collapse ">
             <thead>
               <tr className="">
                 {/* sticky header: using position: sticky via utility classes */}
