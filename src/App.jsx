@@ -61,7 +61,7 @@ export default function App() {
         {/* Dashboard area that will change by route */}
         <main className="flex-1">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<ClientPage />} />
             <Route path="/users" element={<UsersPage />} />
             <Route path="/clients" element={<ClientPage />} />
             <Route path="/online-users" element={<OnlineUsers />} />
