@@ -32,7 +32,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
   };
 
   const commonInputClasses =
-    "bg-[#3c3c3c] border border-[#5a5a5a] text-gray-100 text-sm h-6 px-2 rounded-sm focus:outline-none focus:border-blue-500 w-ful";
+    "bg-[#3c3c3c] border border-[#5a5a5a] text-gray-100 text-xs h-6 px-2 rounded-sm focus:outline-none focus:border-blue-500";
   const labelClasses = "text-xs text-gray-400 min-w-[100px] text-right pr-3";
   const rowClasses = "flex items-center space-x-2";
   // const sectionHeaderClasses = "text-xs font-semibold px-2 py-1";
@@ -44,12 +44,12 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
       onClick={onClose}
     >
       <div
-        className="relative bg-[#2b2b2b] text-gray-100 w-5xl h-[680px] flex flex-col overflow-hidden"
+        className="relative bg-[#3c3c3c] text-gray-100 w-4xl h-[680px] flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         style={{ boxShadow: "0 0 10px rgba(0,0,0,0.5)" }}
       >
         {/* Title Bar */}
-        <div className="bg-[#3c3c3c] px-4 text-sm font-semibold py-1.5 flex justify-between items-center border-b border-[#5a5a5a]">
+        <div className="bg-[#2c2c2c] px-4 text-sm font-semibold py-1.5 flex justify-between items-center border-b border-[#5a5a5a]">
           <span>
             Deal #{formData.deal} <span className="font-normal">**{formData.type}**</span>{" "}
             {formData.volume} [Admin Approved Deposit]
@@ -63,8 +63,29 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
           </button>
         </div>
 
+        <span className="flex items-center gap-2 px-4 py-2 text-xs text-blue-600 hover:text-red-600 hover:underline">
+  {/* Person Icon */}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    strokeWidth="1.5"
+    stroke="currentColor"
+    className="w-4 h-4 text-yellow-500"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+    />
+  </svg>
+
+  <a href="">name, 2546321, oxo_B\Standard, 1: 400</a>
+</span>
+
+
         {/* Top: simulated grid row */}
-        <div className="flex flex-col py-2 mx-4 my-2 text-xs border border-gray-300 h-56">
+        <div className="flex flex-col py-2 mx-4 my-2 text-xs border border-gray-300/50 bg-[#2c2c2c] h-56">
           {/* Header Row */}
           <div className="flex w-full text-gray-400 font-semibold text-center">
             <span className="w-[8%]">Ticket</span>
@@ -79,7 +100,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
           </div>
 
           {/* Blue selected data row (approx) */}
-          <div className="mt-2 flex text-white bg-[#007acc] border-t border-[#5a5a5a] text-xs text-center rounded-sm">
+          <div className="mt-2 flex text-white bg-[#007acc] border-t border-[#5a5a5a] text-xs text-center">
             <span className="w-[8%] p-2">{formData.deal}</span>
             <span className="w-[20%] p-2">{formData.createTime}</span>
             <span className="w-[6%] p-2"></span>
@@ -93,7 +114,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
         </div>
 
         {/* Tabs */}
-        <div className="flex bg-[#2b2b2b] px-4">
+        <div className="flex bg-[#2c2c2c] px-4">
           <button
             onClick={() => setActiveTab("details")}
             className={
@@ -118,9 +139,9 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
         </div>
 
         {/* Content area (switches by tab) */}
-        <div className="flex flex-col flex-grow overflow-hidden border mx-4">
+        <div className="flex flex-col flex-grow overflow-hidden mx-4 mt-2 mb-2 bg-[#2c2c2c]">
           {activeTab === "details" ? (
-            <div className="py-2 space-y-3 px-10 overflow-y-auto">
+            <div className="py-2 bg-[#2c2c2c] space-y-3 px-10 mb-2 ">
               <div className="space-y-2">
                 {/* Deal */}
                 <div className={rowClasses}>
@@ -152,10 +173,10 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
                       name="volume"
                       value={formData.volume}
                       onChange={handleChange}
-                      className={commonInputClasses + " flex-grow"}
+                      className={commonInputClasses}
                       step="0.01"
                     />
-                    <button className="bg-[#3c3c3c] border border-[#5a5a5a] text-gray-400 h-7 w-7 text-xs flex items-center justify-center">
+                    <button className="bg-[#3c3c3c] border border-[#5a5a5a] text-gray-400 h-6 w-7 text-xs flex items-center justify-center">
                       ...
                     </button>
                   </div>
@@ -170,9 +191,9 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
                       name="createTime"
                       value={formData.createTime}
                       onChange={handleChange}
-                      className={commonInputClasses + " flex-grow"}
+                      className={commonInputClasses}
                     />
-                    <button className="bg-[#3c3c3c] border border-[#5a5a5a] text-gray-400 h-7 w-7 text-xs flex items-center justify-center">
+                    <button className="bg-[#3c3c3c] border border-[#5a5a5a] text-gray-400 h-6 w-7 text-xs flex items-center justify-center">
                       ▼
                     </button>
                   </div>
@@ -248,7 +269,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
             /* Journal tab content */
             <div className="flex flex-col flex-grow overflow-hidden">
               {/* Large dark area with bordered inner box */}
-              <div className="m-4 flex-grow border border-[#5a5a5a] rounded-sm bg-[#2e2e2e] overflow-auto">
+              <div className="m-4 flex-grow border border-[#5a5a5a] rounded-sm bg-[#2e2e2e]">
                 {/* Journal header row (column titles) */}
                 <div className="sticky top-0 bg-[#2b2b2b] border-b border-[#5a5a5a]">
                   <div className="flex text-gray-300 text-xs font-semibold px-3 py-2">
@@ -265,10 +286,10 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
               </div>
 
               {/* Bottom filter bar (like screenshot) */}
-              <div className="flex items-center gap-3 p-3 border-t border-[#5a5a5a] bg-[#2b2b2b]">
+              <div className="flex items-center gap-3 p-2 border-t border-[#5a5a5a] bg-[#2b2b2b]">
                 {/* Search dropdown / input */}
-                <div className="flex items-center space-x-2 w-[260px]">
-                  <select className={commonInputClasses + " w-36"}>
+                <div className="flex items-center space-x-2 w-[200px]">
+                  <select className={commonInputClasses + " w-20"}>
                     <option>#7349073</option>
                     {/* other options */}
                   </select>
@@ -293,10 +314,10 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
                 </select>
 
                 {/* Date inputs */}
-                <input type="date" className={commonInputClasses + " w-44"} />
-                <input type="date" className={commonInputClasses + " w-44"} />
+                <input type="date" className={commonInputClasses + " w-40"} />
+                <input type="date" className={commonInputClasses + " w-40"} />
 
-                <button className="ml-auto px-4 py-1 text-sm rounded-sm bg-[#007acc] hover:bg-[#006bb3]">
+                <button className="mr-1 px-4 py-1 text-sm rounded-sm bg-[#007acc] hover:bg-[#006bb3]">
                   Request
                 </button>
               </div>
@@ -305,7 +326,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
         </div>
 
         {/* Footer Buttons */}
-        <div className="flex justify-between items-center bg-[#3c3c3c] p-3 border-t border-[#5a5a5a]">
+        <div className="flex justify-between items-center bg-[#2c2c2c] p-3 border-t border-[#5a5a5a]">
           <button
             className={buttonClasses + " bg-[#3c3c3c] text-gray-400 border border-[#5a5a5a] hover:bg-[#4a4a4a]"}
           >
