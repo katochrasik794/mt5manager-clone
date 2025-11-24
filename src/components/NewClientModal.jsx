@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 
 const inputStyle =
-  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5";
+  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1";
 const inputStyleSmall = 
-  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 h-[34px]"; // Consistent height for grid
+  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 h-[34px]"; // Consistent height for grid
 const labelStyle = "block text-sm text-gray-400 mb-1";
-const selectStyle = "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 block w-full appearance-none";
+const selectStyle = "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1 pr-8 block w-full appearance-none";
 const iconStyle = "absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs pointer-events-none";
 
 /**
@@ -307,7 +307,7 @@ export default function NewClientModal({ open, onClose }) {
   return (
     <div className="fixed inset-0 backdrop-blur flex items-center justify-center z-50">
       {/* Main Content Area - mimics the window from the image */}
-      <div className="bg-[#2c2c2c] rounded-sm border border-gray-700 shadow-2xl max-w-4xl w-full h-[95%] mx-4 flex flex-col">
+      <div className="bg-[#2c2c2c] rounded-sm border border-gray-700 shadow-2xl max-w-5xl w-full h-[95%] mx-4 flex flex-col">
         
         {/* Title Bar */}
         <div className="flex items-center justify-between p-1 bg-[#2f2f2f] border-b border-gray-700">
@@ -331,14 +331,14 @@ export default function NewClientModal({ open, onClose }) {
         {/* Content Body: Sidebar + Main Form */}
         <div className="flex flex-grow overflow-hidden">
           {/* Sidebar Navigation */}
-          <div className="w-48 bg-[#2c2c2c] border-r border-gray-700 p-2 space-y-2">
+          <div className="w-60 bg-[#2c2c2c] border-r border-gray-700 p-2 space-y-2">
             {sections.map((section) => (
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}
                 className={`flex items-center w-full px-3 py-2 text-sm text-left rounded-sm transition-colors duration-100 ${
                   activeSection === section
-                    ? "bg-blue-600 text-white"
+                    ? "bg-gray-500 text-white"
                     : "text-gray-300 hover:bg-gray-600"
                 }`}
               >
@@ -355,7 +355,7 @@ export default function NewClientModal({ open, onClose }) {
           </div>
 
           {/* Main Form Content */}
-          <div className="flex-grow p-4 overflow-auto">
+          <div className="flex-grow p-4 overflow-auto custom-scrollbar">
             <h2 className="text-xl font-bold text-gray-100 mb-4">{activeSection}</h2>
             {renderContent()}
           </div>

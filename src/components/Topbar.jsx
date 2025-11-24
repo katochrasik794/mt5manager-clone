@@ -27,7 +27,7 @@ const filterOptions = [
 const FiltersTab = ({ onClose }) => {
   return (
     <div className="p-4 flex flex-col h-full">
-      <div className="flex-1 overflow-auto border border-gray-700 rounded-sm min-h-[60vh] p-3 bg-[#262626]">
+      <div className="flex-1 overflow-auto border border-gray-300 rounded-sm min-h-[60vh] p-3 bg-[#262626]">
         <div className='flex items-center justify-between text-sm text-gray-300 pb-2 border-b border-gray-700 mb-2'>
           <span className="pl-2">Name</span>
           <span className="pr-2">Filter</span>
@@ -37,11 +37,11 @@ const FiltersTab = ({ onClose }) => {
       </div>
 
       <div className="flex justify-end gap-3 pt-4 mt-4">
-        <button className="px-4 py-2 text-sm font-medium text-gray-900 bg-blue-500 rounded-sm hover:bg-blue-400">Apply</button>
+        <button className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-sm hover:bg-blue-400">Apply</button>
         <button
           className="px-4 py-2 text-sm font-medium text-gray-300 bg-gray-600 rounded-sm hover:bg-gray-500"
           onClick={onClose}
-        >
+        > 
           Cancel
         </button>
       </div>
@@ -57,7 +57,7 @@ const EditFilterTab = ({ onClose }) => {
   return (
     <div className="py-4 overflow-y-auto text-sm max-h-[86vh] flex flex-col px-6 custom-scrollbar">
       {/* container with two-column layout: label column & control column */}
-      <div className="border border-[#343434] rounded-sm p-2">
+      <div className="border border-gray-300 rounded-sm p-2">
         <div className="grid grid-cols-[140px_1fr] gap-y-3 gap-x-4 items-center">
 
           {/* Filter Name */}
@@ -207,7 +207,7 @@ const EditFilterTab = ({ onClose }) => {
       {/* Buttons */}
       <div className="flex justify-end gap-3 pt-4 mt-4">
         <button className="px-4 py-1 text-sm font-medium text-gray-900 bg-gray-300 rounded-sm hover:bg-gray-200">Save</button>
-        <button className="px-4 py-1 text-sm font-medium text-gray-900 bg-blue-500 rounded-sm hover:bg-blue-400">Apply</button>
+        <button className="px-4 py-1 text-sm font-medium text-white bg-blue-500 rounded-sm hover:bg-blue-400">Apply</button>
         <button
           className="px-4 py-1 text-sm font-medium text-gray-300 bg-gray-600 rounded-sm hover:bg-gray-500"
           onClick={onClose}
@@ -393,7 +393,7 @@ export default function Topbar() {
     <>
       <header className="flex items-center justify-between bg-[#2c2c2c] px-4 sm:px-6 lg:px-8 xl:px-12 py-2 border-b border-gray-800">
         <div className="flex items-center gap-3 md:gap-4">
-          <span className='text-xl'>FINCRM</span>
+          <span className='text-xl'><a href="/">FINCRM</a></span>
         </div>
 
         <div className="flex items-center gap-3 md:gap-4 w-[220px]">

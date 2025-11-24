@@ -230,13 +230,15 @@ const NavItem = ({ item, level = 0 }) => {
   const isActive = item.active;
   const hasChildren = item.children && item.children.length > 0;
 
-  // *** KEY CHANGE: Always set initial state to false (closed) ***
-  const [isOpen, setIsOpen] = useState(false);
+  // Set initial state to true if item is active, otherwise false
+  const [isOpen, setIsOpen] = useState(item.active || false);
 
   // Function to handle clicks
   const handleClick = () => {
     console.log('Clicked on item:', item.name, 'isParent:', item.isParent);
-    if (item.isParent) {
+    if (item.name.includes("Online Users")) {
+      navigate('/online-users');
+    } else if (item.isParent) {
       navigate('/clients');
     }
     // Logic for leaf item clicks can be added here
