@@ -84,9 +84,9 @@ export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\St
 
     // Generic styling for this modal
     const inputStyle =
-        "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-1";
-    const labelStyle = "block text-sm font-medium text-gray-400 mb-1";
-    const checkboxStyle = "w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500";
+        "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs p-[2px] rounded-sm focus:ring-blue-500 focus:border-blue-500 block";
+    const labelStyle = "block text-xs font-medium text-gray-400 mb-1";
+    const checkboxStyle = "w-4 h-3 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500";
     const tabButtonStyle = (tab) => 
         `px-4 py-2 text-sm font-medium ${
             activeTab === tab
@@ -156,7 +156,7 @@ export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\St
                                         <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM2 20a1 1 0 011-1h14a1 1 0 011 1H2zM13 11a5 5 0 00-1.859-3.831A5.969 5.969 0 0110 8a5.969 5.969 0 01-1.141-.169A5 5 0 007 11v1h6v-1z" clipRule="evenodd" fillRule="evenodd"></path>
                                     </svg>
                                 </div>
-                                <p className="text-gray-200">Please set up margin requirements.</p>
+                                <p className="text-gray-200 text-sm">Please set up margin requirements.</p>
                             </div>
                             
                             <div className="space-y-4">
@@ -179,11 +179,11 @@ export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\St
                                 <div className="space-y-2 pt-2">
                                     <div className="flex items-center">
                                         <input id="compensateNegative" type="checkbox" checked={compensateNegative} onChange={(e) => setCompensateNegative(e.target.checked)} className={checkboxStyle} />
-                                        <label htmlFor="compensateNegative" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Compensate negative balance after stop out</label>
+                                        <label htmlFor="compensateNegative" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Compensate negative balance after stop out</label>
                                     </div>
                                     <div className="flex items-center">
                                         <input id="withdrawCredit" type="checkbox" checked={withdrawCredit} onChange={(e) => setWithdrawCredit(e.target.checked)} className={checkboxStyle} />
-                                        <label htmlFor="withdrawCredit" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Withdraw credit after negative balance compensation</label>
+                                        <label htmlFor="withdrawCredit" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Withdraw credit after negative balance compensation</label>
                                     </div>
                                 </div>
                                 <div className="flex items-center pt-4">
@@ -208,7 +208,7 @@ export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\St
                                             <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM2 20a1 1 0 011-1h14a1 1 0 011 1H2zM13 11a5 5 0 00-1.859-3.831A5.969 5.969 0 0110 8a5.969 5.969 0 01-1.141-.169A5 5 0 007 11v1h6v-1z" clipRule="evenodd" fillRule="evenodd"></path>
                                         </svg>
                                     </div>
-                                    <p className="text-gray-200">Please set up individual parameters of symbols trade for the group.</p>
+                                    <p className="text-gray-200 text-sm">Please set up individual parameters of symbols trade for the group.</p>
                                 </div>
                             
                             <div className="flex gap-6 mt-4">

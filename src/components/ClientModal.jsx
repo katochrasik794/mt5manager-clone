@@ -92,7 +92,7 @@ export default function ClientModal({ open, onClose, client }) {
   const inputStyle =
     "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-[2px]";
   const labelStyle = "block text-xs font-medium  text-gray-400";
-  const checkboxStyle = "w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500";
+  const checkboxStyle = "w-4 h-3 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500";
   
   // Custom styling for the MetaQuotes input fields (used in Profile)
   const mqInputStyle = "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-4 py-3";
@@ -100,7 +100,7 @@ export default function ClientModal({ open, onClose, client }) {
   
   // Custom styling for select dropdowns
   const selectStyle = (width = 'full') => 
-    `bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1 pr-8 block w-${width}`;
+    `bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-[2px] pr-8 block w-${width}`;
 
     // Dummy Candlestick Component (purely visual)
     const Candlestick = ({ color, height, offset, wickHeight, isCurrent }) => {
@@ -254,7 +254,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Registered: **{registered}** Last access: **{lastAccess}** Last Address: **{lastAddress}**
                   </p>
                 </div>
-                <div className="border border-gray-700 rounded-sm">
+                <div className="border border-gray-300 rounded-sm h-2/3">
                   <div className="flex text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
                     <span className="w-2/12 px-2">Symbol</span>
                     <span className="w-1/12 px-2">Type</span>
@@ -266,7 +266,7 @@ export default function ClientModal({ open, onClose, client }) {
                     <span className="w-1/12 px-2 text-right">Swap</span>
                     <span className="w-2/12 px-2 text-right">Profit</span>
                   </div>
-                  <div className="flex text-sm text-gray-200 bg-[#1e1e1e] py-2 border-b border-gray-700">
+                  <div className="flex text-sm text-gray-200 bg-gray-500/50 py-2 border-b border-gray-700">
                     <span className="w-6/12 px-2 font-bold">
                       Balance: <span className="text-white font-normal">{balance} USD</span> | Equity: <span className="text-white font-normal">{equity}</span> | Free Margin: <span className="text-white font-normal">{freeMargin}</span>
                     </span>
@@ -306,127 +306,148 @@ export default function ClientModal({ open, onClose, client }) {
             {/* --- Personal Content --- */}
             {activeTab === "Personal" && (
               <div className="space-y-4 px-10">
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="flex items-center gap-4">
-                    <label htmlFor="firstName" className={labelStyle}>Name:</label>
-                    <input type="text" id="firstName" className={inputStyle} value={firstName} readOnly/>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                    <label htmlFor="lastName" className="block text-sm font-medium  text-gray-400 mb-1 w-26">Last name:</label>
-                    <input type="text" id="lastName" className={inputStyle} value={lastName} readOnly/>
-                  </div>
-                  <div className="flex items-center gap-8">
-                    <label htmlFor="middleName" className="block text-sm font-medium  text-gray-400 mb-1 w-38">Middle name:</label>
-                    <input type="text" id="middleName" className={inputStyle} value={middleName} readOnly/>
-                  </div>
-                  </div>
-                </div>
 
-                <div className="flex items-center gap-4">
-                  <label htmlFor="company" className={labelStyle}>Company:</label>
-                  <input type="text" id="company" className={inputStyle} value={company} readOnly/>
-                </div>
+  {/* NAME */}
+  <div className="flex items-center gap-4">
+    <label htmlFor="firstName" className={labelStyle}>Name:</label>
+    <input type="text" id="firstName" className={inputStyle} value={firstName} readOnly />
+  </div>
 
-                <div className="grid grid-cols-1">
-                  <div className="flex items-center space-x-2">
-                    <label htmlFor="registered" className={labelStyle + " mb-0"}>Registered:</label>
-                    <div className="relative flex-grow flex items-center">
-                      <input type="text" id="registered" className={`${inputStyle} pr-8`} value={registered} readOnly/>
-                      <span className="absolute right-2 text-gray-400 top-1/2 -translate-y-1/2">&#9662;</span>
-                    </div>
-                  </div>
-                </div>
+  {/* LAST & MIDDLE NAME */}
+  <div className="flex items-center justify-between w-full">
+    <div className="flex items-center gap-4">
+      <label htmlFor="lastName" className="block text-xs font-medium text-gray-400 w-26">Last name:</label>
+      <input type="text" id="lastName" className={inputStyle} value={lastName} readOnly />
+    </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="f">
-                    <div className="flex items-center gap-4 mb-1">
-                      <label htmlFor="language" className={labelStyle}>Language:</label>
-                      <div className="relative">
-                        <select id="language" className={inputStyle} value={language}>
-                          <option value="">-</option>
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4 mb-1">
-                    <label htmlFor="idNumber" className="block text-sm font-medium  text-gray-400 mb-1 w-24">ID number:</label>
-                    <input type="text" id="idNumber" className={inputStyle} value={idNumber} readOnly/>
-                  </div>
-                  <div className="flex items-center gap-4">
-                      <label htmlFor="metaQuotesId" className="block text-sm font-medium  text-gray-400 w-38">MetaQuotes ID:</label>
-                      <input type="text" id="metaQuotesId" className={inputStyle} value={metaQuotesId} readOnly/>
-                    </div>
-                  </div>
+    <div className="flex items-center gap-4">
+      <label htmlFor="middleName" className="block text-xs font-medium text-gray-400 w-38">Middle name:</label>
+      <input type="text" id="middleName" className={inputStyle} value={middleName} readOnly />
+    </div>
+  </div>
 
-                  <div>
-                    <div className="flex items-center gap-4">
-                      <label htmlFor="status" className={labelStyle}>Status:</label>
-                      <div className="relative">
-                        <select id="status" className={inputStyle} value={status}>
-                          <option value="">-</option>
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4 mb-1">
-                    <label htmlFor="leadCampaign" className="block text-sm font-medium  text-gray-400 mb-1 w-36">Lead campaign:</label>
-                    <input type="text" id="leadCampaign" className={inputStyle} value={leadCampaign} readOnly/>
-                  
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <label htmlFor="leadSource" className="block text-sm font-medium  text-gray-400 mb-1 w-38">Lead source:</label>
-                    <input type="text" id="leadSource" className={inputStyle} value={leadSource} readOnly/>
-                  </div>
-                  </div>
-                </div>
+  {/* COMPANY */}
+  <div className="flex items-center gap-4">
+    <label htmlFor="company" className={labelStyle}>Company:</label>
+    <input type="text" id="company" className={inputStyle} value={company} readOnly />
+  </div>
 
-                <div className="flex items-center gap-4">
-                  <label htmlFor="email" className={labelStyle}>Email:</label>
-                  <input type="email" id="email" className={inputStyle} value={email} readOnly/>
-                </div>
+  {/* REGISTERED */}
+  <div className="flex items-center gap-4">
+    <label htmlFor="registered" className={labelStyle}>Registered:</label>
+    <div className="relative flex-grow">
+      <input type="text" id="registered" className={`${inputStyle} pr-8`} value={registered} readOnly />
+      <span className="absolute right-2 text-gray-400 top-1/2 -translate-y-1/2">&#9662;</span>
+    </div>
+  </div>
 
-                <div className="flex items-center gap-4">
-                  <label htmlFor="phone" className={labelStyle}>Phone:</label>
-                  <input type="text" id="phone" className={`${inputStyle} border-red-500`} value={phone} readOnly/>
-                </div>
+  {/* LANGUAGE / STATUS BLOCK */}
+  <div className="grid grid-cols-2 gap-8">
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-4">
-                    <label htmlFor="country" className={labelStyle}>Country:</label>
-                    <div className="relative">
-                      <select id="country" className="block text-sm font-medium bg-[#3c3c3c]  text-gray-400 mb-1 w-60 border border-gray-600" value={country}>
-                        <option value="India">India</option>
-                      </select>
-                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
-                    </div>
-                  </div>
+    {/* LEFT COLUMN */}
+    <div>
+      <div className="flex items-center gap-4 mb-3">
+        <label htmlFor="language" className={labelStyle}>Language:</label>
+        <div className="relative">
+          <select id="language" className={inputStyle} value={language}>
+            <option value="">-</option>
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center text-gray-400">&#9662;</div>
+        </div>
+      </div>
 
-                  <div className="flex items-center gap-4">
-                    <label htmlFor="state" className={labelStyle}>State:</label>
-                    <input type="text" id="state" className={inputStyle} value={state} readOnly/>
-                  </div>
-                </div>
+      <div className="flex items-center gap-4 mb-3">
+        <label htmlFor="idNumber" className="block text-xs font-medium text-gray-400 w-22">ID number:</label>
+        <input type="text" id="idNumber" className={inputStyle} value={idNumber} readOnly />
+      </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="flex items-center gap-4">
-                    <label htmlFor="city" className={labelStyle}>City:</label>
-                    <input type="text" id="city" className={inputStyle} value={city} readOnly/>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <label htmlFor="zipCode" className="block text-sm font-medium  text-gray-400 mb-1 w-20">Zip code:</label>
-                    <input type="text" id="zipCode" className={inputStyle} value={zipCode} readOnly/>
-                  </div>
-                </div>
-                <div  className="flex items-center gap-4">
-                  <label htmlFor="address" className={labelStyle}>Address:</label>
-                  <input type="text" id="address" className={inputStyle} value={address} readOnly/>
-                </div >
-                <div className="flex items-center gap-4">
-                  <label htmlFor="comment" className={labelStyle}>Comment:</label>
-                  <input type="text" id="comment" className={inputStyle} value={comment} readOnly/>
-                </div>
-              </div>
+      <div className="flex items-center gap-4">
+        <label htmlFor="metaQuotesId" className="block text-xs font-medium text-gray-400 w-34">MetaQuotes ID:</label>
+        <input type="text" id="metaQuotesId" className={inputStyle} value={metaQuotesId} readOnly />
+      </div>
+    </div>
+
+    {/* RIGHT COLUMN */}
+    <div>
+      <div className="flex items-center gap-4 mb-3">
+        <label htmlFor="status" className={labelStyle}>Status:</label>
+        <div className="relative">
+          <select id="status" className={inputStyle} value={status}>
+            <option value="">-</option>
+          </select>
+          <div className="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center text-gray-400">&#9662;</div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-4 mb-3">
+        <label htmlFor="leadCampaign" className="block text-xs font-medium text-gray-400 w-34">Lead campaign:</label>
+        <input type="text" id="leadCampaign" className={inputStyle} value={leadCampaign} readOnly />
+      </div>
+
+      <div className="flex items-center gap-4">
+        <label htmlFor="leadSource" className="block text-xs font-medium text-gray-400 w-24">Lead source:</label>
+        <input type="text" id="leadSource" className={inputStyle} value={leadSource} readOnly />
+      </div>
+    </div>
+  </div>
+
+  {/* EMAIL */}
+  <div className="flex items-center gap-4">
+    <label htmlFor="email" className={labelStyle}>Email:</label>
+    <input type="email" id="email" className={inputStyle} value={email} readOnly />
+  </div>
+
+  {/* PHONE */}
+  <div className="flex items-center gap-4">
+    <label htmlFor="phone" className={labelStyle}>Phone:</label>
+    <input type="text" id="phone" className={`${inputStyle} border-red-500`} value={phone} readOnly />
+  </div>
+
+  {/* COUNTRY / STATE */}
+  <div className="grid grid-cols-2 gap-8">
+    <div className="flex items-center gap-4">
+      <label htmlFor="country" className={labelStyle}>Country:</label>
+      <div className="relative">
+        <select id="country" className="block text-sm font-medium bg-[#3c3c3c] text-gray-400 w-60 border border-gray-600" value={country}>
+          <option value="India">India</option>
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center text-gray-400">&#9662;</div>
+      </div>
+    </div>
+
+    <div className="flex items-center gap-4">
+      <label htmlFor="state" className={labelStyle}>State:</label>
+      <input type="text" id="state" className={inputStyle} value={state} readOnly />
+    </div>
+  </div>
+
+  {/* CITY / ZIP */}
+  <div className="grid grid-cols-2 gap-8">
+    <div className="flex items-center gap-4">
+      <label htmlFor="city" className={labelStyle}>City:</label>
+      <input type="text" id="city" className={inputStyle} value={city} readOnly />
+    </div>
+
+    <div className="flex items-center gap-4">
+      <label htmlFor="zipCode" className="block text-sm font-medium text-gray-400 w-20">Zip code:</label>
+      <input type="text" id="zipCode" className={inputStyle} value={zipCode} readOnly />
+    </div>
+  </div>
+
+  {/* ADDRESS */}
+  <div className="flex items-center gap-4">
+    <label htmlFor="address" className={labelStyle}>Address:</label>
+    <input type="text" id="address" className={inputStyle} value={address} readOnly />
+  </div>
+
+  {/* COMMENT */}
+  <div className="flex items-center gap-4">
+    <label htmlFor="comment" className={labelStyle}>Comment:</label>
+    <input type="text" id="comment" className={inputStyle} value={comment} readOnly />
+  </div>
+
+</div>
+
             )}
             {/* --- Account Content --- */}
             {activeTab === "Account" && (
@@ -461,32 +482,32 @@ export default function ClientModal({ open, onClose, client }) {
                     <input type="text" id="bankAccount" className={inputStyle} value={bankAccount} readOnly/>
                   </div>
                   <div className="flex items-center gap-4">
-                    <label htmlFor="agentAccount" className="block text-xs font-medium  text-gray-400 w-28">Agent account:</label>
+                    <label htmlFor="agentAccount" className="block text-xs font-medium  text-gray-400 w-30">Agent account:</label>
                     <input type="text" id="agentAccount" className={inputStyle} value={agentAccount} readOnly/>
                   </div>
                 </div>
                 <div className="space-y-2 pt-2">
                   <div className="flex items-center">
                     <input id="enableThisAccount" type="checkbox" checked={enableAccount} className={checkboxStyle} readOnly/>
-                    <label htmlFor="enableThisAccount" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable this account</label>
+                    <label htmlFor="enableThisAccount" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Enable this account</label>
                   </div>
                   <div className="flex items-center">
                     <input id="enablePasswordChange" type="checkbox" checked={enablePasswordChange} className={checkboxStyle} readOnly/>
-                    <label htmlFor="enablePasswordChange" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable password change</label>
+                    <label htmlFor="enablePasswordChange" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Enable password change</label>
                   </div>
                   <div className="flex items-center">
                     <input id="enableOneTimePassword" type="checkbox" checked={enableOneTimePassword} className={checkboxStyle} readOnly/>
-                    <label htmlFor="enableOneTimePassword" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable one-time password</label>
+                    <label htmlFor="enableOneTimePassword" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Enable one-time password</label>
                   </div>
                   <div className="flex items-center">
                     <input id="changePasswordNextLogin" type="checkbox" checked={changePasswordNextLogin} className={checkboxStyle} readOnly/>
-                    <label htmlFor="changePasswordNextLogin" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Change password at next login</label>
+                    <label htmlFor="changePasswordNextLogin" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Change password at next login</label>
                   </div>
                 </div>
                 <div className="pt-4 ">
                   <div className="flex gap-8">
                     <div className="flex flex-col justify-between h-[250px]">
-                      <p className="text-gray-400 text-sm mb-2">Trade accounts:</p>
+                      <p className="text-gray-400 text-xs w-26 mb-2">Trade accounts:</p>
                                         <div className="flex flex-col gap-4">
                     <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500 text-sm h-full">Add</button>
                     <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500 text-sm h-full">Edit</button>
@@ -494,7 +515,7 @@ export default function ClientModal({ open, onClose, client }) {
                   </div>
                     </div>
                     
-                  <div className="border border-gray-700 rounded-sm w-2xl">
+                  <div className="border border-gray-300 rounded-sm w-2xl">
                     <div className="grid grid-cols-2 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
                       <span className="px-4">Gateway ID</span>
                       <span className="px-4">Account</span>
@@ -666,9 +687,9 @@ export default function ClientModal({ open, onClose, client }) {
             {activeTab === "Payments" && (
               <div className="flex flex-col h-full space-y-4">
                   {/* Top Table: Active Payments/Requests */}
-                  <div className="border border-gray-700 rounded-sm flex-grow min-h-[50%] flex flex-col">
+                  <div className="border border-gray-300 rounded-sm flex-grow min-h-[50%] flex flex-col">
                       {/* Header */}
-                      <div className="grid grid-cols-8 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                      <div className="flex items-center justify-between text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
                           <span className="px-4">ID</span>
                           <span className="px-4">Action</span>
                           <span className="px-4">State</span>
@@ -713,9 +734,9 @@ export default function ClientModal({ open, onClose, client }) {
                   </div>
 
                   {/* Bottom Table: Saved Cards/Payment Methods (shorter) */}
-                  <div className="border border-gray-700 rounded-sm flex-grow min-h-[25%] flex flex-col">
+                  <div className="border border-gray-300 rounded-sm flex-grow min-h-[25%] flex flex-col">
                       {/* Header */}
-                      <div className="grid grid-cols-8 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                      <div className="flex items-center justify-between text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
                           <span className="px-4">ID</span>
                           <span className="px-4">Gateway</span>
                           <span className="px-4">Type</span>
@@ -739,8 +760,8 @@ export default function ClientModal({ open, onClose, client }) {
                 
                 {/* Top Section: Operation Input */}
                 <div className="space-y-4 border-b border-gray-700 pb-4">
-                  <div className="flex space-x-4 items-center">
-                    <div className="w-1/4">
+                  <div className="flex flex-col items-start gap-4">
+                    <div className="w-1/4 flex items-center gap-2">
                       <label htmlFor="operation" className={labelStyle}>Operation:</label>
                       <div className="relative">
                         <select id="operation" className={selectStyle('full')} defaultValue="Balance">
@@ -749,14 +770,14 @@ export default function ClientModal({ open, onClose, client }) {
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
                       </div>
                     </div>
-                    <div className="w-1/4">
+                    <div className="w-1/4 flex items-center gap-4">
                       <label htmlFor="amount" className={labelStyle}>Amount:</label>
                       <div className="flex items-center space-x-1">
                           <input type="text" id="amount" className={inputStyle} placeholder="..." />
                           <span className="text-gray-400 text-sm">USD</span>
                       </div>
                     </div>
-                    <div className="w-2/4">
+                    <div className="w-2/4 flex items-center gap-2">
                       <label htmlFor="comment" className={labelStyle}>Comment:</label>
                       <div className="relative">
                         <select id="comment" className={selectStyle('full')} defaultValue="... put your comment here ...">
@@ -771,16 +792,16 @@ export default function ClientModal({ open, onClose, client }) {
                   <div className="flex items-center space-x-6">
                     <div className="flex items-center">
                       <input id="checkFreeMargin" type="checkbox" className={checkboxStyle} />
-                      <label htmlFor="checkFreeMargin" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">
+                      <label htmlFor="checkFreeMargin" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">
                         Conduct balance operation without checking the free margin and the current balance on the account
                       </label>
                     </div>
                     
                     <div className="flex space-x-2">
-                      <button className="px-6 py-2 text-sm bg-gray-600 text-gray-200 rounded hover:bg-gray-500 border border-gray-500 disabled:opacity-50" disabled>
+                      <button className="px-6 py-1 text-xs text-gray-200 rounded hover:bg-gray-500 border border-gray-500 disabled:opacity-50" disabled>
                         Deposit
                       </button>
-                      <button className="px-6 py-2 text-sm bg-gray-600 text-gray-200 rounded hover:bg-gray-500 border border-gray-500 disabled:opacity-50" disabled>
+                      <button className="px-6 py-1 text-xs text-gray-200 rounded hover:bg-gray-500 border border-gray-500 disabled:opacity-50" disabled>
                         Withdrawal
                       </button>
                     </div>
@@ -788,7 +809,7 @@ export default function ClientModal({ open, onClose, client }) {
                 </div>
                 
                 {/* Bottom Section: Deal History Table */}
-                <div className="border border-gray-700 rounded-sm flex-grow flex flex-col">
+                <div className="border border-gray-300 rounded-sm flex-grow flex flex-col">
                   
                   {/* Header */}
                   <div className="grid grid-cols-4 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
@@ -813,7 +834,7 @@ export default function ClientModal({ open, onClose, client }) {
                   {/* Footer/Filter */}
                   <div className="flex items-center justify-end space-x-2 p-2 border-t border-gray-700">
                       <div className="relative">
-                          <select className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8">
+                          <select className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8">
                               <option>Last 3 months</option>
                               {/* Other time periods */}
                           </select>
@@ -822,7 +843,7 @@ export default function ClientModal({ open, onClose, client }) {
                       
                       {/* Date Picker 1 */}
                       <div className="relative">
-                          <input type="text" defaultValue="2025.09.01" className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"/>
+                          <input type="text" defaultValue="2025.09.01" className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8 w-24"/>
                           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">&#9662;</span>
                       </div>
 
@@ -830,11 +851,11 @@ export default function ClientModal({ open, onClose, client }) {
                       
                       {/* Date Picker 2 */}
                       <div className="relative">
-                          <input type="text" defaultValue="2025.11.21" className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"/>
+                          <input type="text" defaultValue="2025.11.21" className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8 w-24"/>
                           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">&#9662;</span>
                       </div>
                       
-                      <button className="px-4 py-1.5 text-sm bg-blue-700 text-white rounded-sm hover:bg-blue-600 border border-blue-600">
+                      <button className="px-4 py-1.5 text-xs border border-gray-600 text-white rounded-sm">
                           Request
                       </button>
                   </div>
@@ -1009,7 +1030,7 @@ export default function ClientModal({ open, onClose, client }) {
               <div className="flex flex-col h-full space-y-4">
                 
                 {/* History Table */}
-                <div className="border border-gray-700 rounded-sm flex-grow flex flex-col">
+                <div className="border border-gray-300 rounded-sm flex-grow flex flex-col">
                   
                   {/* Header */}
                   <div className="grid grid-cols-10 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
