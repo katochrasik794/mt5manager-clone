@@ -280,8 +280,8 @@ export default function UserModal({ open, onClose, client }) {
           {/* Main Content Area */}
           {/* Only the Profile tab is forced to have no scroll; others can scroll if content exceeds height */}
           <div
-            className={`p-4 bg-[#2c2c2c] h-[calc(100%-65px)] ${
-              activeTab !== "Profile" ? "overflow-auto" : "overflow-hidden"
+            className={`p-4 bg-[#2c2c2c] h-[calc(100%-65px)] overflow-auto ${
+              activeTab === "Personal" || activeTab === "Trade" || activeTab === "Profile" || activeTab === "Balance" ? "custom-scrollbar" : ""
             }`}
           >
             {/* --- Overview Content --- */}
@@ -1176,7 +1176,7 @@ export default function UserModal({ open, onClose, client }) {
             )}
             {/* --- Profile Content --- */}
             {activeTab === "Profile" && (
-              <div className="flex justify-center h-full items-start pt-10">
+              <div className="flex justify-center h-full items-start pt-10 overflow-y-auto">
                 <div className="w-full max-w-md text-center space-y-6">
                   <h2 className="text-2xl font-semibold text-gray-200">
                     MetaQuotes Support Center
