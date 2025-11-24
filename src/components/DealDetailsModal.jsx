@@ -1,9 +1,8 @@
 // DealDetailsModal.jsx
 import React, { useState } from "react";
+import UserModal from "./UserModal";
 
 export default function DealDetailsModal({ open, onClose, dealData }) {
-  if (!open) return null;
-
   // Tab state: 'details' (default) or 'journal'
   const [activeTab, setActiveTab] = useState("details");
 
@@ -19,6 +18,11 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
     externalId: dealData?.externalId ?? "",
     comment: dealData?.comment ?? "Admin Approved Deposit",
   });
+
+  // State for UserModal
+  const [userModalOpen, setUserModalOpen] = useState(false);
+
+  if (!open) return null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,7 +84,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
     />
   </svg>
 
-  <a href="">name, 2546321, oxo_B\Standard, 1: 400</a>
+  <a href="" onClick={(e) => { e.preventDefault(); setUserModalOpen(true); }}>name, 2546321, oxo_B\Standard, 1: 400</a>
 </span>
 
 
@@ -354,6 +358,17 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
           </div>
         </div>
       </div>
+
+      <UserModal
+        open={userModalOpen}
+        onClose={() => setUserModalOpen(false)}
+        client={{
+          login: "2546321",
+          name: "name",
+          group: "oxo_B\\Standard",
+          leverage: "1: 400"
+        }}
+      />
     </div>
   );
 }

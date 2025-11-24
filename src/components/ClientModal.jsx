@@ -83,6 +83,10 @@ export default function ClientModal({ open, onClose, client }) {
   // State to manage the visibility of the NEW CLIENT modal
   const [isNewClientOpen, setIsNewClientOpen] = useState(false);
 
+   const volumeDefault = "0.01";
+     const atPriceDefault = "1.15450";
+     const midPrice = "1.15462";
+
   // State to manage the visibility of the GROUP CONFIG modal
   const [isGroupConfigOpen, setIsGroupConfigOpen] = useState(false);
 
@@ -305,148 +309,258 @@ export default function ClientModal({ open, onClose, client }) {
             )}
             {/* --- Personal Content --- */}
             {activeTab === "Personal" && (
-              <div className="space-y-4 px-10">
+              <div className="px-1 space-y-3">
+                {/* NAME */}
+                <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Name:
+                  </label>
+                  <input
+                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    value={firstName}
+                    readOnly
+                  />
+                </div>
 
-  {/* NAME */}
-  <div className="flex items-center gap-4">
-    <label htmlFor="firstName" className={labelStyle}>Name:</label>
-    <input type="text" id="firstName" className={inputStyle} value={firstName} readOnly />
-  </div>
+                {/* LAST + MIDDLE */}
+                <div className="grid grid-cols-[120px_260px_133px_260px] items-center gap-4">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Last name:
+                  </label>
+                  <input
+                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1"
+                    value={lastName}
+                    readOnly
+                  />
 
-  {/* LAST & MIDDLE NAME */}
-  <div className="flex items-center justify-between w-full">
-    <div className="flex items-center gap-4">
-      <label htmlFor="lastName" className="block text-xs font-medium text-gray-400 w-26">Last name:</label>
-      <input type="text" id="lastName" className={inputStyle} value={lastName} readOnly />
-    </div>
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Middle name:
+                  </label>
+                  <input
+                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1"
+                    value={middleName}
+                    readOnly
+                  />
+                </div>
 
-    <div className="flex items-center gap-4">
-      <label htmlFor="middleName" className="block text-xs font-medium text-gray-400 w-38">Middle name:</label>
-      <input type="text" id="middleName" className={inputStyle} value={middleName} readOnly />
-    </div>
-  </div>
+                {/* COMPANY */}
+                <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Company:
+                  </label>
+                  <input
+                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    value={company}
+                    readOnly
+                  />
+                </div>
 
-  {/* COMPANY */}
-  <div className="flex items-center gap-4">
-    <label htmlFor="company" className={labelStyle}>Company:</label>
-    <input type="text" id="company" className={inputStyle} value={company} readOnly />
-  </div>
+                {/* REGISTERED */}
+                <div className="grid grid-cols-[120px_1fr] items-center gap-4 relative">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Registered:
+                  </label>
 
-  {/* REGISTERED */}
-  <div className="flex items-center gap-4">
-    <label htmlFor="registered" className={labelStyle}>Registered:</label>
-    <div className="relative flex-grow">
-      <input type="text" id="registered" className={`${inputStyle} pr-8`} value={registered} readOnly />
-      <span className="absolute right-2 text-gray-400 top-1/2 -translate-y-1/2">&#9662;</span>
-    </div>
-  </div>
+                  <div className="relative w-[688px]">
+                    <input
+                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-full px-2 py-1 pr-8"
+                      value={registered}
+                      readOnly
+                    />
+                    <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
+                      ▾
+                    </span>
+                  </div>
+                </div>
 
-  {/* LANGUAGE / STATUS BLOCK */}
-  <div className="grid grid-cols-2 gap-8">
+                {/* LANGUAGE / STATUS BLOCK */}
+                <div className="grid grid-cols-2 gap-">
+                  {/* LEFT SIDE */}
+                  <div className="space-y-3">
+                    {/* LANGUAGE */}
+                    <div className="grid grid-cols-[120px_200px] items-center gap-4 relative">
+                      <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                        Language:
+                      </label>
+                      <div className="relative">
+                        <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                          <option>-</option>
+                        </select>
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
+                          ▾
+                        </span>
+                      </div>
+                    </div>
 
-    {/* LEFT COLUMN */}
-    <div>
-      <div className="flex items-center gap-4 mb-3">
-        <label htmlFor="language" className={labelStyle}>Language:</label>
-        <div className="relative">
-          <select id="language" className={inputStyle} value={language}>
-            <option value="">-</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center text-gray-400">&#9662;</div>
-        </div>
-      </div>
+                    {/* ID NUMBER */}
+                    <div className="grid grid-cols-[120px_200px] items-center gap-4">
+                      <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                        ID number:
+                      </label>
+                      <input
+                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        value={idNumber}
+                        readOnly
+                      />
+                    </div>
 
-      <div className="flex items-center gap-4 mb-3">
-        <label htmlFor="idNumber" className="block text-xs font-medium text-gray-400 w-22">ID number:</label>
-        <input type="text" id="idNumber" className={inputStyle} value={idNumber} readOnly />
-      </div>
+                    {/* METAQUOTES */}
+                    <div className="grid grid-cols-[120px_200px] items-center gap-4">
+                      <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                        MetaQuotes ID:
+                      </label>
+                      <input
+                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        value={metaQuotesId}
+                        readOnly
+                      />
+                    </div>
+                  </div>
 
-      <div className="flex items-center gap-4">
-        <label htmlFor="metaQuotesId" className="block text-xs font-medium text-gray-400 w-34">MetaQuotes ID:</label>
-        <input type="text" id="metaQuotesId" className={inputStyle} value={metaQuotesId} readOnly />
-      </div>
-    </div>
+                  {/* RIGHT SIDE */}
+                  <div className="space-y-3">
+                    {/* STATUS */}
+                    <div className="grid grid-cols-[120px_260px] items-center gap-4 relative">
+                      <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                        Status:
+                      </label>
+                      <div className="relative">
+                        <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                          <option>-</option>
+                        </select>
+                        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
+                          ▾
+                        </span>
+                      </div>
+                    </div>
 
-    {/* RIGHT COLUMN */}
-    <div>
-      <div className="flex items-center gap-4 mb-3">
-        <label htmlFor="status" className={labelStyle}>Status:</label>
-        <div className="relative">
-          <select id="status" className={inputStyle} value={status}>
-            <option value="">-</option>
-          </select>
-          <div className="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center text-gray-400">&#9662;</div>
-        </div>
-      </div>
+                    {/* LEAD CAMPAIGN */}
+                    <div className="grid grid-cols-[120px_260px] items-center gap-4">
+                      <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                        Lead campaign:
+                      </label>
+                      <input
+                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        value={leadCampaign}
+                        readOnly
+                      />
+                    </div>
 
-      <div className="flex items-center gap-4 mb-3">
-        <label htmlFor="leadCampaign" className="block text-xs font-medium text-gray-400 w-34">Lead campaign:</label>
-        <input type="text" id="leadCampaign" className={inputStyle} value={leadCampaign} readOnly />
-      </div>
+                    {/* LEAD SOURCE */}
+                    <div className="grid grid-cols-[120px_260px] items-center gap-4">
+                      <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                        Lead source:
+                      </label>
+                      <input
+                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        value={leadSource}
+                        readOnly
+                      />
+                    </div>
+                  </div>
+                </div>
 
-      <div className="flex items-center gap-4">
-        <label htmlFor="leadSource" className="block text-xs font-medium text-gray-400 w-24">Lead source:</label>
-        <input type="text" id="leadSource" className={inputStyle} value={leadSource} readOnly />
-      </div>
-    </div>
-  </div>
+                {/* EMAIL */}
+                <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Email:
+                  </label>
+                  <input
+                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    value={email}
+                    readOnly
+                  />
+                </div>
 
-  {/* EMAIL */}
-  <div className="flex items-center gap-4">
-    <label htmlFor="email" className={labelStyle}>Email:</label>
-    <input type="email" id="email" className={inputStyle} value={email} readOnly />
-  </div>
+                {/* PHONE */}
+                <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Phone:
+                  </label>
+                  <input
+                    className="bg-[#5a1f24] text-gray-100 border border-red-600 w-[260px] px-2 py-1"
+                    value={phone}
+                    readOnly
+                  />
+                </div>
 
-  {/* PHONE */}
-  <div className="flex items-center gap-4">
-    <label htmlFor="phone" className={labelStyle}>Phone:</label>
-    <input type="text" id="phone" className={`${inputStyle} border-red-500`} value={phone} readOnly />
-  </div>
+                {/* COUNTRY + STATE */}
+                <div className="grid grid-cols-2 gap-8">
+                  <div className="grid grid-cols-[120px_260px] items-center gap-4 relative">
+                    <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                      Country:
+                    </label>
+                    <div className="relative">
+                      <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                        <option>India</option>
+                      </select>
+                      <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
+                        ▾
+                      </span>
+                    </div>
+                  </div>
 
-  {/* COUNTRY / STATE */}
-  <div className="grid grid-cols-2 gap-8">
-    <div className="flex items-center gap-4">
-      <label htmlFor="country" className={labelStyle}>Country:</label>
-      <div className="relative">
-        <select id="country" className="block text-sm font-medium bg-[#3c3c3c] text-gray-400 w-60 border border-gray-600" value={country}>
-          <option value="India">India</option>
-        </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 px-2 flex items-center text-gray-400">&#9662;</div>
-      </div>
-    </div>
+                  <div className="grid grid-cols-[100px_200px] items-center gap-4">
+                    <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                      State:
+                    </label>
+                    <input
+                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      value={state}
+                      readOnly
+                    />
+                  </div>
+                </div>
 
-    <div className="flex items-center gap-4">
-      <label htmlFor="state" className={labelStyle}>State:</label>
-      <input type="text" id="state" className={inputStyle} value={state} readOnly />
-    </div>
-  </div>
+                {/* CITY + ZIP */}
+                <div className="grid grid-cols-2">
+                  <div className="grid grid-cols-[120px_260px] items-center gap-4">
+                    <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                      City:
+                    </label>
+                    <input
+                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      value={city}
+                      readOnly
+                    />
+                  </div>
 
-  {/* CITY / ZIP */}
-  <div className="grid grid-cols-2 gap-8">
-    <div className="flex items-center gap-4">
-      <label htmlFor="city" className={labelStyle}>City:</label>
-      <input type="text" id="city" className={inputStyle} value={city} readOnly />
-    </div>
+                  <div className="grid grid-cols-[118px_260px] items-center gap-4">
+                    <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                      Zip code:
+                    </label>
+                    <input
+                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      value={zipCode}
+                      readOnly
+                    />
+                  </div>
+                </div>
 
-    <div className="flex items-center gap-4">
-      <label htmlFor="zipCode" className="block text-sm font-medium text-gray-400 w-20">Zip code:</label>
-      <input type="text" id="zipCode" className={inputStyle} value={zipCode} readOnly />
-    </div>
-  </div>
+                {/* ADDRESS */}
+                <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Address:
+                  </label>
+                  <input
+                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    value={address}
+                    readOnly
+                  />
+                </div>
 
-  {/* ADDRESS */}
-  <div className="flex items-center gap-4">
-    <label htmlFor="address" className={labelStyle}>Address:</label>
-    <input type="text" id="address" className={inputStyle} value={address} readOnly />
-  </div>
-
-  {/* COMMENT */}
-  <div className="flex items-center gap-4">
-    <label htmlFor="comment" className={labelStyle}>Comment:</label>
-    <input type="text" id="comment" className={inputStyle} value={comment} readOnly />
-  </div>
-
-</div>
+                {/* COMMENT */}
+                <div className="grid grid-cols-[120px_1fr] items-center gap-4">
+                  <label className="text-xs font-medium text-gray-400 text-right pr-4">
+                    Comment:
+                  </label>
+                  <input
+                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    value={comment}
+                    readOnly
+                  />
+                </div>
+              </div>
 
             )}
             {/* --- Account Content --- */}
@@ -919,109 +1033,159 @@ export default function ClientModal({ open, onClose, client }) {
                 </div>
                 
                 {/* Right Side: Order Panel */}
-                <div className="w-2/5 space-y-3 pt-2">
-                  
-                  {/* Symbol and Type Selects */}
-                  <div className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                          <div className="flex items-center gap-2">
-                              <label htmlFor="symbol" className={labelStyle}>Symbol:</label>
-                              <div className="relative">
-                                  <select id="symbol" className={selectStyle('full')} defaultValue="EURUSD">
-                                      <option>EURUSD, Euro vs US Dollar</option>
-                                      {/* Other symbols */}
-                                  </select>
-                                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
-                              </div>
-                          </div>
-                          <div className="flex items-center gap-4">
-                              <label htmlFor="type" className={labelStyle}>Type:</label>
-                              <div className="relative">
-                                  <select id="type" className={selectStyle('full')} defaultValue="Market Order">
-                                      <option>Market Order</option>
-                                      {/* Other types */}
-                                  </select>
-                                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
+                <div className="w-3/5 pt-2 space-y-4 text-gray-100 font-sans">
 
-                  {/* Volume and Fill Policy */}
-                  <div className="space-y-4">
-                      <div className="grid grid-cols-2 gap-4">
-                          <div className="flex items-center gap-4">
-                              <label htmlFor="volume" className={labelStyle}>Volume:</label>
-                              <div className="flex items-center space-x-1">
-                                  <input type="number" id="volume" className={inputStyle} defaultValue="0.01" min="0"/>
-                                  <span className="text-gray-400 text-sm w-16">EUR</span>
-                              </div>
-                          </div>
-                          
-                      </div>
-                      <div className="flex items-center gap-4">
-                              <label htmlFor="fillPolicy" className={labelStyle}>Fill Policy:</label>
-                              <div className="relative">
-                                  <select id="fillPolicy" className={selectStyle('full')} defaultValue="Fill or Kill">
-                                      <option>Fill or Kill</option>
-                                      {/* Other policies */}
-                                  </select>
-                                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
-                              </div>
-                          </div>
-                  </div>
+      {/* Symbol & Type */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <label htmlFor="symbol" className="text-sm text-gray-300 min-w-[100px]">Symbol:</label>
+          <div className="relative">
+            <select
+              id="symbol"
+              defaultValue="EURUSD"
+              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+            >
+              <option>EURUSD, Euro vs US Dollar</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+          </div>
+        </div>
 
-                  {/* At Price, Stop Loss, Take Profit */}
-                  <div className="space-y-4">
-                      <div className="grid grid-cols-3 gap-4 items-end">
-                          <div>
-                              <label htmlFor="atPrice" className={labelStyle}>At Price:</label>
-                              <div className="flex items-center space-x-2">
-                                  <input type="number" id="atPrice" className={inputStyle} defaultValue="1.15450"/>
-                                  <button className="text-gray-400 hover:text-white">&#x21bb;</button> {/* Refresh/Update icon */}
-                                  <div className="flex items-center">
-                                      <input id="autoUpdate" type="checkbox" defaultChecked className={checkboxStyle} />
-                                      <label htmlFor="autoUpdate" className="ml-1 text-sm text-gray-200">Auto</label>
-                                  </div>
-                              </div>
-                          </div>
-                          <div>
-                              <label htmlFor="stopLoss" className={labelStyle}>Stop Loss:</label>
-                              <input type="number" id="stopLoss" className={inputStyle} defaultValue="0.00000"/>
-                          </div>
-                          <div>
-                              <label htmlFor="takeProfit" className={labelStyle}>Take Profit:</label>
-                              <input type="number" id="takeProfit" className={inputStyle} defaultValue="0.00000"/>
-                          </div>
-                      </div>
-                  </div>
-                  
-                  {/* Comment */}
-                  <div className="pt-2 flex items-center gap-4">
-                      <label htmlFor="commentTrade" className={labelStyle}>Comment:</label>
-                      <input type="text" id="commentTrade" className={inputStyle} />
-                  </div>
-                  
-                  <hr className="border-gray-700 mt-6 mb-6"/>
+        <div className="flex items-center gap-2">
+          <label htmlFor="type" className="text-sm text-gray-300 min-w-[100px]">Type:</label>
+          <div className="relative">
+            <select
+              id="type"
+              defaultValue="Market Order"
+              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+            >
+              <option>Market Order</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+          </div>
+        </div>
+      </div>
 
-                  {/* Price Display */}
-                  <div className="text-center">
-                      <p className="text-3xl font-mono">
-                          <span className="text-red-500">1.15462</span> / <span className="text-blue-500">1.15462</span>
-                      </p>
-                  </div>
+      {/* Volume & Fill Policy */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <label htmlFor="volume" className="text-sm text-gray-300 min-w-[100px]">Volume:</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              id="volume"
+              defaultValue={volumeDefault}
+              min="0"
+              className="bg-[#3c3c3c] text-[#00baff] border border-white/85 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            />
+            <span className="text-gray-400 text-sm">1 000 EUR</span>
+          </div>
+        </div>
 
-                  {/* Trade Buttons */}
-                  <div className="grid grid-cols-2 gap-4 pt-4">
-                      <button className="p-3 text-lg bg-red-700 text-white rounded-sm hover:bg-red-600">
-                          Sell at 1.15462
-                      </button>
-                      <button className="p-3 text-lg bg-blue-700 text-white rounded-sm hover:bg-blue-600">
-                          Buy at 1.15462
-                      </button>
-                  </div>
+        <div className="flex items-center gap-2">
+          <label htmlFor="fillPolicy" className="text-sm text-gray-300 min-w-[100px]">Fill Policy:</label>
+          <div className="relative">
+            <select
+              id="fillPolicy"
+              defaultValue="Fill or Kill"
+              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+            >
+              <option>Fill or Kill</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+          </div>
+        </div>
+      </div>
 
-                </div>
+      {/* At Price / Auto / Stop Loss / Take Profit */}
+      <div className="space-y-2">
+
+        <div className="flex items-center gap-2">
+          <label htmlFor="atPrice" className="text-sm text-gray-300 min-w-[100px]">At Price:</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              id="atPrice"
+              defaultValue={atPriceDefault}
+              className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            />
+            <button
+              title="Update"
+              className="text-gray-400 hover:text-white text-sm"
+              type="button"
+            >
+              ↻
+            </button>
+
+            <label className="inline-flex items-center gap-2 text-sm text-gray-200 ml-3">
+              <input type="checkbox" defaultChecked className="accent-sky-400 w-4 h-4" />
+              <span className="text-sm">Auto</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <label htmlFor="stopLoss" className="text-sm text-gray-300 min-w-[100px]">Stop Loss:</label>
+          <input
+            type="number"
+            id="stopLoss"
+            defaultValue="0.00000"
+            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <label htmlFor="takeProfit" className="text-sm text-gray-300 min-w-[100px]">Take Profit:</label>
+          <input
+            type="number"
+            id="takeProfit"
+            defaultValue="0.00000"
+            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+          />
+        </div>
+      </div>
+
+      {/* Comment */}
+      <div className="flex items-center gap-2 pt-2">
+        <label htmlFor="commentTrade" className="text-sm text-gray-300 min-w-[100px]">Comment:</label>
+        <input
+          type="text"
+          id="commentTrade"
+          className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-full min-w-[360px] text-sm"
+        />
+      </div>
+
+      <hr className="border-t border-white/6 mt-6 mb-6" />
+
+      {/* Mid price */}
+      <div className="text-center">
+        <p className="text-3xl font-mono">
+          <span className="text-red-400 font-semibold">{midPrice}</span> /{" "}
+          <span className="text-sky-400 font-semibold">{midPrice}</span>
+        </p>
+      </div>
+
+      {/* Buttons */}
+      <div className="grid grid-cols-2 gap-4 pt-4">
+        <button
+          className="py-3 text-lg rounded-sm text-white bg-gradient-to-b from-[#7f2b2b] to-[#6a2323] border border-black/40 hover:brightness-105"
+          type="button"
+        >
+          Sell at {midPrice}
+        </button>
+
+        <button
+          className="py-3 text-lg rounded-sm text-white bg-gradient-to-b from-[#1e429f] to-[#1f3fa1] border border-black/40 hover:brightness-105"
+          type="button"
+        >
+          Buy at {midPrice}
+        </button>
+      </div>
+
+      {/* dark bottom bar */}
+      <div className="h-8 rounded-sm border border-white/5 mt-4" />
+
+    </div>
               </div>
             )}
             

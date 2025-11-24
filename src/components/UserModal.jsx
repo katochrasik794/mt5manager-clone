@@ -90,6 +90,8 @@ export default function UserModal({ open, onClose, client }) {
        },
        // add more rows if needed
      ];
+
+
    
      const [modalOpen, setModalOpen] = React.useState(false);
      const [selectedRow, setSelectedRow] = React.useState(null);
@@ -103,7 +105,11 @@ export default function UserModal({ open, onClose, client }) {
        setModalOpen(false);
        setSelectedRow(null);
      };
-   
+
+     const volumeDefault = "0.01";
+     const atPriceDefault = "1.15450";
+     const midPrice = "1.15462";
+
      // State to manage the active tab (original modal)
      const [activeTab, setActiveTab] = useState("Overview");
    
@@ -1609,181 +1615,159 @@ export default function UserModal({ open, onClose, client }) {
                 </div>
 
                 {/* Right Side: Order Panel */}
-                <div className="w-2/5 space-y-3 pt-2">
-                  {/* Symbol and Type Selects */}
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="flex items-center gap-2">
-                        <label htmlFor="symbol" className={labelStyle}>
-                          Symbol:
-                        </label>
-                        <div className="relative">
-                          <select
-                            id="symbol"
-                            className={selectStyle("full")}
-                            defaultValue="EURUSD"
-                          >
-                            <option>EURUSD, Euro vs US Dollar</option>
-                            {/* Other symbols */}
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                            &#9662;
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <label htmlFor="type" className={labelStyle}>
-                          Type:
-                        </label>
-                        <div className="relative">
-                          <select
-                            id="type"
-                            className={selectStyle("full")}
-                            defaultValue="Market Order"
-                          >
-                            <option>Market Order</option>
-                            {/* Other types */}
-                          </select>
-                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                            &#9662;
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                 <div className="w-3/5 pt-2 space-y-4 text-gray-100 font-sans">
 
-                  {/* Volume and Fill Policy */}
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="flex items-center gap-4">
-                        <label htmlFor="volume" className={labelStyle}>
-                          Volume:
-                        </label>
-                        <div className="flex items-center space-x-1">
-                          <input
-                            type="number"
-                            id="volume"
-                            className={inputStyle}
-                            defaultValue="0.01"
-                            min="0"
-                          />
-                          <span className="text-gray-400 text-sm w-16">
-                            EUR
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <label htmlFor="fillPolicy" className={labelStyle}>
-                        Fill Policy:
-                      </label>
-                      <div className="relative">
-                        <select
-                          id="fillPolicy"
-                          className={selectStyle("full")}
-                          defaultValue="Fill or Kill"
-                        >
-                          <option>Fill or Kill</option>
-                          {/* Other policies */}
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
-                          &#9662;
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      {/* Symbol & Type */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <label htmlFor="symbol" className="text-sm text-gray-300 min-w-[100px]">Symbol:</label>
+          <div className="relative">
+            <select
+              id="symbol"
+              defaultValue="EURUSD"
+              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+            >
+              <option>EURUSD, Euro vs US Dollar</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+          </div>
+        </div>
 
-                  {/* At Price, Stop Loss, Take Profit */}
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-3 gap-4 items-end">
-                      <div>
-                        <label htmlFor="atPrice" className={labelStyle}>
-                          At Price:
-                        </label>
-                        <div className="flex items-center space-x-2">
-                          <input
-                            type="number"
-                            id="atPrice"
-                            className={inputStyle}
-                            defaultValue="1.15450"
-                          />
-                          <button className="text-gray-400 hover:text-white">
-                            &#x21bb;
-                          </button>{" "}
-                          {/* Refresh/Update icon */}
-                          <div className="flex items-center">
-                            <input
-                              id="autoUpdate"
-                              type="checkbox"
-                              defaultChecked
-                              className={checkboxStyle}
-                            />
-                            <label
-                              htmlFor="autoUpdate"
-                              className="ml-1 text-sm text-gray-200"
-                            >
-                              Auto
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div>
-                        <label htmlFor="stopLoss" className={labelStyle}>
-                          Stop Loss:
-                        </label>
-                        <input
-                          type="number"
-                          id="stopLoss"
-                          className={inputStyle}
-                          defaultValue="0.00000"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="takeProfit" className={labelStyle}>
-                          Take Profit:
-                        </label>
-                        <input
-                          type="number"
-                          id="takeProfit"
-                          className={inputStyle}
-                          defaultValue="0.00000"
-                        />
-                      </div>
-                    </div>
-                  </div>
+        <div className="flex items-center gap-2">
+          <label htmlFor="type" className="text-sm text-gray-300 min-w-[100px]">Type:</label>
+          <div className="relative">
+            <select
+              id="type"
+              defaultValue="Market Order"
+              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+            >
+              <option>Market Order</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+          </div>
+        </div>
+      </div>
 
-                  {/* Comment */}
-                  <div className="pt-2 flex items-center gap-4">
-                    <label htmlFor="commentTrade" className={labelStyle}>
-                      Comment:
-                    </label>
-                    <input
-                      type="text"
-                      id="commentTrade"
-                      className={inputStyle}
-                    />
-                  </div>
+      {/* Volume & Fill Policy */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <label htmlFor="volume" className="text-sm text-gray-300 min-w-[100px]">Volume:</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              id="volume"
+              defaultValue={volumeDefault}
+              min="0"
+              className="bg-[#3c3c3c] text-[#00baff] border border-white/85 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            />
+            <span className="text-gray-400 text-sm">1 000 EUR</span>
+          </div>
+        </div>
 
-                  <hr className="border-gray-700 mt-6 mb-6" />
+        <div className="flex items-center gap-2">
+          <label htmlFor="fillPolicy" className="text-sm text-gray-300 min-w-[100px]">Fill Policy:</label>
+          <div className="relative">
+            <select
+              id="fillPolicy"
+              defaultValue="Fill or Kill"
+              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+            >
+              <option>Fill or Kill</option>
+            </select>
+            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+          </div>
+        </div>
+      </div>
 
-                  {/* Price Display */}
-                  <div className="text-center">
-                    <p className="text-3xl font-mono">
-                      <span className="text-red-500">1.15462</span> /{" "}
-                      <span className="text-blue-500">1.15462</span>
-                    </p>
-                  </div>
+      {/* At Price / Auto / Stop Loss / Take Profit */}
+      <div className="space-y-2">
 
-                  {/* Trade Buttons */}
-                  <div className="grid grid-cols-2 gap-4 pt-4">
-                    <button className="p-3 text-lg bg-red-700 text-white rounded-sm hover:bg-red-600">
-                      Sell at 1.15462
-                    </button>
-                    <button className="p-3 text-lg bg-blue-700 text-white rounded-sm hover:bg-blue-600">
-                      Buy at 1.15462
-                    </button>
-                  </div>
-                </div>
+        <div className="flex items-center gap-2">
+          <label htmlFor="atPrice" className="text-sm text-gray-300 min-w-[100px]">At Price:</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              id="atPrice"
+              defaultValue={atPriceDefault}
+              className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            />
+            <button
+              title="Update"
+              className="text-gray-400 hover:text-white text-sm"
+              type="button"
+            >
+              ↻
+            </button>
+
+            <label className="inline-flex items-center gap-2 text-sm text-gray-200 ml-3">
+              <input type="checkbox" defaultChecked className="accent-sky-400 w-4 h-4" />
+              <span className="text-sm">Auto</span>
+            </label>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <label htmlFor="stopLoss" className="text-sm text-gray-300 min-w-[100px]">Stop Loss:</label>
+          <input
+            type="number"
+            id="stopLoss"
+            defaultValue="0.00000"
+            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <label htmlFor="takeProfit" className="text-sm text-gray-300 min-w-[100px]">Take Profit:</label>
+          <input
+            type="number"
+            id="takeProfit"
+            defaultValue="0.00000"
+            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+          />
+        </div>
+      </div>
+
+      {/* Comment */}
+      <div className="flex items-center gap-2 pt-2">
+        <label htmlFor="commentTrade" className="text-sm text-gray-300 min-w-[100px]">Comment:</label>
+        <input
+          type="text"
+          id="commentTrade"
+          className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-full min-w-[360px] text-sm"
+        />
+      </div>
+
+      <hr className="border-t border-white/6 mt-6 mb-6" />
+
+      {/* Mid price */}
+      <div className="text-center">
+        <p className="text-3xl font-mono">
+          <span className="text-red-400 font-semibold">{midPrice}</span> /{" "}
+          <span className="text-sky-400 font-semibold">{midPrice}</span>
+        </p>
+      </div>
+
+      {/* Buttons */}
+      <div className="grid grid-cols-2 gap-4 pt-4">
+        <button
+          className="py-3 text-lg rounded-sm text-white bg-gradient-to-b from-[#7f2b2b] to-[#6a2323] border border-black/40 hover:brightness-105"
+          type="button"
+        >
+          Sell at {midPrice}
+        </button>
+
+        <button
+          className="py-3 text-lg rounded-sm text-white bg-gradient-to-b from-[#1e429f] to-[#1f3fa1] border border-black/40 hover:brightness-105"
+          type="button"
+        >
+          Buy at {midPrice}
+        </button>
+      </div>
+
+      {/* dark bottom bar */}
+      <div className="h-8 rounded-sm border border-white/5 mt-4" />
+
+    </div>
               </div>
             )}
 
