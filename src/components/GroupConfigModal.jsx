@@ -61,8 +61,8 @@ const initialCommissionsData = [
 
 // Group configuration modal for setting margin, symbols, etc., for a specific group.
 export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\Standard" }) {
-    // State to manage the active tab (Margin, Symbols, Commissions). Initializing to 'Commissions' to show the new content first.
-    const [activeTab, setActiveTab] = useState("Commissions");
+    // State to manage the active tab (Margin, Symbols, Commissions). Initializing to 'Margin' to show the margin tab by default.
+    const [activeTab, setActiveTab] = useState("Margin");
     
     // --- Margin Tab States ---
     const [marginCallLevel, setMarginCallLevel] = useState("100");

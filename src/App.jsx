@@ -36,6 +36,7 @@ import FooterBar from "./components/FooterBar";
 import Dashboard from "./components/Dashboard"; // your Dashboard.jsx
 import UsersPage from "./pages/UsersPage";
 import ClientPage from "./pages/clients/ClientPage";
+import Clients from "./pages/clients/Clients";
 import OnlineUsers from "./pages/clients/OnlineUsers";
 // If you have other page components, import them here:
 // import SettingsPage from "./pages/SettingsPage";
@@ -63,7 +64,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<ClientPage />} />
             <Route path="/users" element={<UsersPage />} />
-            <Route path="/clients" element={<ClientPage />} />
+            <Route path="/clients" element={<Clients />} />
+            <Route path="/clients-dashboard" element={<ClientPage />} />
             <Route path="/online-users" element={<OnlineUsers />} />
             {/* Add your other route entries here */}
             <Route path="*" element={<div>Page not found</div>} />

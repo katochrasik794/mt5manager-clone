@@ -86,11 +86,10 @@ const navItems = [
       { name: "Ultency", icon: FolderIcon },
     ]
   },
-  // --- Clients & Orders (Active) ---
+  // --- Clients & Orders ---
   {
     name: "Clients & Orders",
     icon: UserGroupIcon,
-    active: true,
     isParent: true,
     children: [
       { name: "Online Users (5)", icon: SubMenuIcons.ClientsOrders },
@@ -223,23 +222,29 @@ const navItems = [
  * Recursive component to render nested menu items
  * @param {object} item - The navigation item object
  * @param {number} level - Current nesting level (for padding/indentation)
+ * @param {string} path - Unique path for the item
+ * @param {string} activeItem - Currently active item path
+ * @param {function} setActiveItem - Function to set active item
  */
-const NavItem = ({ item, level = 0 }) => {
+const NavItem = ({ item, level = 0, path, activeItem, setActiveItem }) => {
   const navigate = useNavigate();
   const Icon = item.icon;
-  const isActive = item.active;
+  const isActive = activeItem === path;
   const hasChildren = item.children && item.children.length > 0;
 
-  // Set initial state to true if item is active, otherwise false
-  const [isOpen, setIsOpen] = useState(item.active || false);
+  // Set initial state to false
+  const [isOpen, setIsOpen] = useState(false);
 
   // Function to handle clicks
   const handleClick = () => {
     console.log('Clicked on item:', item.name, 'isParent:', item.isParent);
+    setActiveItem(path);
     if (item.name.includes("Online Users")) {
       navigate('/online-users');
-    } else if (item.isParent) {
+    } else if (item.name.includes("Clients") && !item.isParent) {
       navigate('/clients');
+    } else if (item.name === "Clients & Orders") {
+      navigate('/clients-dashboard');
     }
     // Logic for leaf item clicks can be added here
   };
@@ -291,7 +296,7 @@ const NavItem = ({ item, level = 0 }) => {
       {isOpen && hasChildren && (
         <div className="flex flex-col">
           {item.children.map((child, index) => (
-            <NavItem key={index} item={child} level={level + 1} />
+            <NavItem key={index} item={child} level={level + 1} path={`${path}/${child.name}`} activeItem={activeItem} setActiveItem={setActiveItem} />
           ))}
         </div>
       )}
@@ -301,6 +306,8 @@ const NavItem = ({ item, level = 0 }) => {
 
 
 export default function NavigatorSidebar() {
+  const [activeItem, setActiveItem] = useState(null);
+
   // Define classes for dark theme styling
   const sidebarClasses =
     "w-72 mb-10 bg-[#2c2c2c] text-gray-300 flex flex-col font-sans";
@@ -342,7 +349,7 @@ export default function NavigatorSidebar() {
         <nav className="text-sm">
           {/* Render the top-level items */}
           {navItems.map((item, index) => (
-            <NavItem key={index} item={item} level={0} />
+            <NavItem key={index} item={item} level={0} path={item.name} activeItem={activeItem} setActiveItem={setActiveItem} />
           ))}
         </nav>
       </div>
