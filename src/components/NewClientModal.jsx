@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 
 const inputStyle =
-  "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5";
+  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5";
 const inputStyleSmall = 
-  "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 h-[34px]"; // Consistent height for grid
+  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 h-[34px]"; // Consistent height for grid
 const labelStyle = "block text-sm text-gray-400 mb-1";
-const selectStyle = "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 block w-full appearance-none";
+const selectStyle = "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 block w-full appearance-none";
 const iconStyle = "absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs pointer-events-none";
 
 /**
@@ -87,7 +87,7 @@ export default function NewClientModal({ open, onClose }) {
       </label>
       <div className="flex items-center space-x-1">
         <input type="text" id={id} className={`${inputStyle} flex-grow`} defaultValue="" />
-        <button className="bg-[#1e1e1e] border border-gray-600 text-red-500 text-sm rounded-sm p-1.5 w-8 flex items-center justify-center hover:bg-gray-700">
+        <button className="bg-[3c3c3c] border border-gray-600 text-red-500 text-sm rounded-sm p-1.5 w-8 flex items-center justify-center hover:bg-gray-700">
             &times;
         </button>
         <button className="bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 w-8 flex items-center justify-center hover:bg-gray-700">
@@ -112,7 +112,7 @@ export default function NewClientModal({ open, onClose }) {
     switch (activeSection) {
       case "Client":
         return (
-          <div className="space-y-4">
+          <div className="space-y-2">
             {renderSelect("clientType", "Type", "Individual", ["Individual", "Corporate"])}
             {renderSelect("clientStatus", "Status", "Approved", ["Approved", "Pending", "Denied"])}
             {renderSelect("kycStatus", "KYC status", "Undefined", ["Undefined", "Verified", "Rejected"])}
@@ -307,7 +307,7 @@ export default function NewClientModal({ open, onClose }) {
   return (
     <div className="fixed inset-0 backdrop-blur flex items-center justify-center z-50">
       {/* Main Content Area - mimics the window from the image */}
-      <div className="bg-[#2c2c2c] rounded-sm border border-gray-700 shadow-2xl max-w-4xl w-full h-4/5 mx-4 flex flex-col">
+      <div className="bg-[#2c2c2c] rounded-sm border border-gray-700 shadow-2xl max-w-4xl w-full h-[95%] mx-4 flex flex-col">
         
         {/* Title Bar */}
         <div className="flex items-center justify-between p-1 bg-[#2f2f2f] border-b border-gray-700">

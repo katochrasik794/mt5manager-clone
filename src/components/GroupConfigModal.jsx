@@ -278,7 +278,7 @@ export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\St
                             </div>
 
                                 {/* Commissions Table */}
-                                <div className="overflow-x-auto border border-gray-600 rounded-sm">
+                                <div className="overflow-x-auto overflow-y-auto custom-scrollbar border border-gray-600 rounded-sm">
                                     <table className="min-w-full divide-y divide-gray-600">
                                         <thead>
                                             <tr>

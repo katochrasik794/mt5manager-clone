@@ -15,8 +15,8 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
     if (!open) return null;
 
     // Generic dark theme styling
-    const inputStyle = "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-1";
-    const labelStyle = "block text-sm font-medium text-gray-400 mb-1";
+    const inputStyle = "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block";
+    const labelStyle = "block text-xs font-medium text-gray-400 mb-1";
     const radioStyle = "w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 focus:ring-blue-500";
     const buttonStyle = "px-4 py-1 text-sm bg-gray-600 text-gray-200 rounded hover:bg-gray-500";
     const smallButtonStyle = "px-4 py-1 text-sm border border-gray-600 text-gray-200 rounded hover:bg-[#4c4c4c]";
@@ -52,10 +52,10 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
                     {/* Header Info */}
                     <div className="flex items-start space-x-3">
                         {/* Golden Dollar Icon */}
-                        <div className="px-4 py-2 bg-yellow-700/50 rounded-2xl">
+                        <div className="px-4 py-2 bg-yellow-700/50 rounded-lg">
                             <span className="text-3xl text-yellow-400 font-bold">$</span>
                         </div>
-                        <p className="text-gray-200 text-sm pt-2">Adjustment of commissions parameters of the symbol.</p>
+                        <p className="text-gray-200 text-xs pt-3.5">Adjustment of commissions parameters of the symbol.</p>
                     </div>
 
                     {/* Input Fields and Radio Buttons */}
@@ -77,10 +77,10 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
 
                         {/* Column 1: Symbol & Range */}
                         <div className="space-y-2">
-                            <div>
+                            <div className="flex items-center gap-2">
                                 <label htmlFor="symbol" className={labelStyle}>Symbol:</label>
                                 <div className="relative">
-                                    <select id="symbol" className={inputStyle + " w-full"} value={symbol} onChange={(e) => setSymbol(e.target.value)}>
+                                    <select id="symbol" className={inputStyle + " w-40"} value={symbol} onChange={(e) => setSymbol(e.target.value)}>
                                         <option value="*">*</option>
                                         <option value="EURUSD">EURUSD</option>
                                         <option value="GOLD">GOLD</option>
@@ -88,20 +88,20 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
                                 </div>
                             </div>
-                            <div>
+                            <div className="flex items-center gap-3">
                                 <label htmlFor="range" className={labelStyle}>Range:</label>
                                 <div className="relative">
-                                    <select id="range" className={inputStyle + " w-full"} value={range} onChange={(e) => setRange(e.target.value)}>
+                                    <select id="range" className={inputStyle + " w-40"} value={range} onChange={(e) => setRange(e.target.value)}>
                                         <option value="Volume">Volume</option>
                                         <option value="Lots">Lots</option>
                                     </select>
                                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
                                 </div>
                             </div>
-                            <div>
+                            <div className="flex items-center gap-2">
                                 <label htmlFor="charge" className={labelStyle}>Charge:</label>
                                 <div className="relative">
-                                    <select id="charge" className={inputStyle + " w-full"} value={charge} onChange={(e) => setCharge(e.target.value)}>
+                                    <select id="charge" className={inputStyle + " w-40"} value={charge} onChange={(e) => setCharge(e.target.value)}>
                                         <option value="Daily">Daily</option>
                                         <option value="Monthly">Monthly</option>
                                     </select>
@@ -111,37 +111,36 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
                         </div>
 
                         {/* Column 2: Charge & Turnover Currency */}
-                        <div className="space-y-4">
-                             <div>
-                                <label htmlFor="turnoverCurrency" className={labelStyle}>Turnover currency:</label>
-                                <input type="text" id="turnoverCurrency" className={inputStyle + " w-full"} value={turnoverCurrency} onChange={(e) => setTurnoverCurrency(e.target.value)} />
-                            </div>
+                        <div className="space-y-2">
 
-                        <fieldset className="p-2 space-y-2 border border-gray-700 rounded-sm self-start">
+                        <fieldset className="p-2 space-y-2 border border-gray-300 rounded-sm self-start">
                             <legend className="sr-only">Commission Type</legend>
                             <div className="flex items-center">
                                 <input id="standardCommission" type="radio" value="Standard commission" checked={commissionType === "Standard commission"} onChange={(e) => setCommissionType(e.target.value)} className={radioStyle} />
-                                <label htmlFor="standardCommission" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Standard commission</label>
+                                <label htmlFor="standardCommission" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Standard commission</label>
                             </div>
                             <div className="flex items-center">
                                 <input id="agentCommission" type="radio" value="Agent commission" checked={commissionType === "Agent commission"} onChange={(e) => setCommissionType(e.target.value)} className={radioStyle} />
-                                <label htmlFor="agentCommission" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Agent commission</label>
+                                <label htmlFor="agentCommission" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Agent commission</label>
                             </div>
                             <div className="flex items-center">
                                 <input id="fee" type="radio" value="Fee" checked={commissionType === "Fee"} onChange={(e) => setCommissionType(e.target.value)} className={radioStyle} />
-                                <label htmlFor="fee" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Fee</label>
+                                <label htmlFor="fee" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Fee</label>
                             </div>
                         </fieldset>
                             
                            
                         </div>
-
+                        <div className="flex items-center justify-between">
+                                <label htmlFor="turnoverCurrency" className={labelStyle + " w-44"} >Turnover currency:</label>
+                                <input type="text" id="turnoverCurrency" className={inputStyle + " w-full"} value={turnoverCurrency} onChange={(e) => setTurnoverCurrency(e.target.value)} />
+                            </div>
                         
                     </div>
 
                     {/* Commissions Table (Empty Placeholder) */}
                     <div className="flex space-x-4 pt-4">
-                        <div className="flex-grow border border-gray-600 h-40 overflow-auto">
+                        <div className="flex-grow border border-gray-600 h-40 overflow-auto custom-scrollbar">
                             <table className="min-w-full divide-y divide-gray-600">
                                 <thead>
                                     <tr>
@@ -172,7 +171,7 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
 
                 {/* Footer Buttons */}
                 <div className="flex justify-end p-2 bg-[#2c2c2c] border-t border-gray-700 space-x-2">
-                    <button onClick={handleSave} className="px-4 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700">
+                    <button onClick={handleSave} className="px-4 py-1 text-sm border border-gray-600 hover:bg-gray-600 text-white rounded ">
                         OK
                     </button>
                     <button onClick={onClose} className={buttonStyle}>
