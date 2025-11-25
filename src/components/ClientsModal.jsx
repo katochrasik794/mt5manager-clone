@@ -1,6 +1,7 @@
 // NewClientModal.jsx
 import React, { useState } from "react";
 import { FiDownload, FiFileText, FiMessageCircle, FiClock, FiDollarSign } from "react-icons/fi";
+import ProofOfIdentityModal from './ProofOfIdentityModal';
 
 const inputStyle =
   "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1";
@@ -21,6 +22,7 @@ export default function NewClientModal({ open, onClose }) {
   const [activeSection, setActiveSection] = useState("Client");
   const [selected, setSelected] = useState(1);
   const [historyOpen, setHistoryOpen] = useState({ 2: true, 1: false });
+  const [proofModalOpen, setProofModalOpen] = useState(false);
 
   if (!open) return null;
 
@@ -369,6 +371,7 @@ export default function NewClientModal({ open, onClose }) {
                 <div
                   key={doc.id}
                   onClick={() => setSelected(doc.id)}
+                  onDoubleClick={doc.type === "Proof of identity" ? () => setProofModalOpen(true) : undefined}
                   className={`grid grid-cols-[40px_150px_250px_150px_150px] text-sm cursor-pointer border-b border-gray-800
                     ${selected === doc.id ? "bg-[#1e4f7a]" : "bg-[#2c2c2c] hover:bg-[#3a3a3a]"}
                   `}
@@ -657,6 +660,7 @@ export default function NewClientModal({ open, onClose }) {
           )}
         </div>
       </div>
+      <ProofOfIdentityModal open={proofModalOpen} onClose={() => setProofModalOpen(false)} />
     </div>
   );
 }
