@@ -391,7 +391,7 @@ export default function Topbar() {
 
   return (
     <>
-      <header className="flex items-center justify-between bg-[#2c2c2c] px-4 sm:px-6 lg:px-8 xl:px-12 py-2 border-b border-gray-800">
+      <header className="flex items-center justify-between bg-[#2c2c2c] px-4 py-2 border-b border-gray-800">
         <div className="flex items-center gap-3 md:gap-4">
           <span className='text-xl'><a href="/">FINCRM</a></span>
         </div>

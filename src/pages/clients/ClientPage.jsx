@@ -47,16 +47,16 @@ export default function ClientPage() {
             <thead>
               <tr className="">
                 {/* sticky header: using position: sticky via utility classes */}
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Login</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Name</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Group</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Country</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Client</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Balance</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Balance / Checked</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Equity</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Profit</th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Currency</th>
+                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[88px]">Login</th>
+                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[180px]">Name</th>
+                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[160px]">Group</th>
+                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[96px]">Country</th>
+                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[80px]">Client</th>
+                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[120px]">Balance</th>
+                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[140px]">Balance / Checked</th>
+                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[100px]">Equity</th>
+                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[120px]">Profit</th>
+                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[72px]">Currency</th>
               </tr>
             </thead>
           </table>
@@ -74,8 +74,8 @@ export default function ClientPage() {
                   title="Double-click to open client details"
                 >
                   <td className="px-3 py-2 text-sm text-gray-200 w-[88px]">{r.login}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200">{r.name}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200">{r.group}</td>
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[180px]">{r.name}</td>
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[160px]">{r.group}</td>
                   <td className="px-3 py-2 text-sm text-gray-200 w-[96px]">{r.country}</td>
                   <td className="px-3 py-2 text-sm text-gray-200 w-[80px]">{r.client}</td>
                   <td className="px-3 py-2 text-sm text-gray-200 text-right w-[120px]">{r.balance}</td>

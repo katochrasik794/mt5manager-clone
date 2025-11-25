@@ -52,7 +52,7 @@ export default function Clients() {
 
   return (
     <div className="">
-      <div className="bg-[#2c2c2c] rounded-md border border-gray-700 shadow-sm overflow-hidden">
+      <div className="bg-[#2c2c2c] rounded-md border border-gray-700 shadow-sm overflow-hidden h-[75vh]">
         {/* RESPONSIVE TABLE WRAPPER */}
         <div className="w-full overflow-x-auto">
           <table className="min-w-full table-fixed border-collapse">
@@ -64,52 +64,52 @@ export default function Clients() {
                 </th>
 
                 {/* Name - always visible */}
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[220px] whitespace-nowrap">
+                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[100px] whitespace-nowrap">
                   Name
                 </th>
 
                 {/* City - visible from sm (>=640px) */}
-                <th className="sticky top-0 hidden sm:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[120px] whitespace-nowrap">
+                <th className="sticky top-0 hidden sm:table-cell px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[80px] whitespace-nowrap">
                   City
                 </th>
 
                 {/* Type - visible from md (>=768px) */}
-                <th className="sticky top-0 hidden md:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[120px] whitespace-nowrap">
+                <th className="sticky top-0 hidden md:table-cell px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[120px] whitespace-nowrap">
                   Type
                 </th>
 
                 {/* Status - visible from md */}
-                <th className="sticky top-0 hidden lg:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[140px] whitespace-nowrap">
+                <th className="sticky top-0 hidden lg:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[130px] whitespace-nowrap">
                   Status
                 </th>
 
                 {/* KYC Status - visible from lg */}
-                <th className="sticky top-0 hidden xl:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[140px] whitespace-nowrap">
+                <th className="sticky top-0 hidden xl:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[90px] whitespace-nowrap">
                   KYC Status
                 </th>
 
                 {/* Assigned Manager - visible from xl */}
-                <th className="sticky top-0 hidden 2xl:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[140px] whitespace-nowrap">
+                {/* <th className="sticky top-0 hidden 2xl:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[100px] whitespace-nowrap">
                   Assigned Mana...
-                </th>
+                </th> */}
 
                 {/* Company - visible from lg */}
-                <th className="sticky top-0 hidden lg:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[140px] whitespace-nowrap">
+                <th className="sticky top-0 hidden lg:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[60px] whitespace-nowrap">
                   Company
                 </th>
 
                 {/* Email - visible from sm (so mobile shows email too) */}
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[260px] whitespace-nowrap hidden xs:table-cell sm:table-cell">
+                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[200px] whitespace-nowrap hidden xs:table-cell sm:table-cell">
                   Email
                 </th>
 
                 {/* Phone - visible from sm */}
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[160px] whitespace-nowrap hidden sm:table-cell">
+                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[100px] whitespace-nowrap hidden sm:table-cell">
                   Phone
                 </th>
 
                 {/* Country - visible from md */}
-                <th className="sticky top-0 hidden md:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[120px] whitespace-nowrap">
+                <th className="sticky top-0 hidden md:table-cell text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[60px] whitespace-nowrap">
                   Country
                 </th>
               </tr>
@@ -139,12 +139,12 @@ export default function Clients() {
                   </td>
 
                   {/* Name */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[220px] align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[120px] align-top">
                     {r.name}
                   </td>
 
                   {/* City (hidden on xs) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[120px] hidden sm:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[80px] hidden sm:table-cell align-top">
                     {r.city}
                   </td>
 
@@ -154,37 +154,37 @@ export default function Clients() {
                   </td>
 
                   {/* Status (visible on lg+) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[140px] hidden lg:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[130px] hidden lg:table-cell align-top">
                     {r.status}
                   </td>
 
                   {/* KYC Status (visible on xl+) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[140px] hidden xl:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[110px] hidden xl:table-cell align-top">
                     {r.kycStatus}
                   </td>
 
                   {/* Assigned Manager (visible on 2xl+) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[140px] hidden 2xl:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[90px] hidden 2xl:table-cell align-top">
                     {r.assignedManager}
                   </td>
 
                   {/* Company (visible on lg+) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[140px] hidden lg:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[60px] hidden lg:table-cell align-top">
                     {r.company}
                   </td>
 
                   {/* Email (visible on sm+) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[260px] hidden sm:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[200px] hidden sm:table-cell align-top">
                     {r.email}
                   </td>
 
                   {/* Phone (visible on sm+) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[160px] hidden sm:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[100px] hidden sm:table-cell align-top">
                     {r.phone}
                   </td>
 
                   {/* Country (visible on md+) */}
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[120px] hidden md:table-cell align-top">
+                  <td className="px-3 py-2 text-sm text-gray-200 w-[60px] hidden md:table-cell align-top">
                     {r.country}
                   </td>
 

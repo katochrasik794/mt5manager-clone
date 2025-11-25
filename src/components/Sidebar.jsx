@@ -245,6 +245,12 @@ const NavItem = ({ item, level = 0, path, activeItem, setActiveItem }) => {
       navigate('/clients');
     } else if (item.name === "Clients & Orders") {
       navigate('/clients-dashboard');
+    } else if (item.name.includes("Trading Accounts")) {
+      navigate('/trading-accounts');
+    } else if (item.name.includes("Positions")) {
+      navigate('/positions');
+    } else if (item.name.includes("Orders")) {
+      navigate('/orders');
     }
     // Logic for leaf item clicks can be added here
   };
@@ -337,7 +343,7 @@ export default function NavigatorSidebar() {
           className="p-1 text-gray-400 hover:text-white"
           aria-label="Close"
         >
-          <XMarkIcon className="w-5 h-5" />
+          {/* <XMarkIcon className="w-5 h-5" /> */}
         </button>
       </div>
 

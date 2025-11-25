@@ -38,6 +38,9 @@ import UsersPage from "./pages/UsersPage";
 import ClientPage from "./pages/clients/ClientPage";
 import Clients from "./pages/clients/Clients";
 import OnlineUsers from "./pages/clients/OnlineUsers";
+import TradingAccounts from "./pages/clients/TradingAccounts";
+import Positions from "./pages/clients/Positions";
+import Orders from "./pages/clients/Orders";
 // If you have other page components, import them here:
 // import SettingsPage from "./pages/SettingsPage";
 
@@ -67,6 +70,9 @@ export default function App() {
             <Route path="/clients" element={<Clients />} />
             <Route path="/clients-dashboard" element={<ClientPage />} />
             <Route path="/online-users" element={<OnlineUsers />} />
+            <Route path="/trading-accounts" element={<TradingAccounts />} />
+            <Route path="/positions" element={<Positions />} />
+            <Route path="/orders" element={<Orders />} />
             {/* Add your other route entries here */}
             <Route path="*" element={<div>Page not found</div>} />
           </Routes>

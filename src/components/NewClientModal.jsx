@@ -248,7 +248,7 @@ export default function NewClientModal({ open, onClose }) {
         );
       case "Address":
         return (
-            <div className="space-y-4 max-w-lg">
+            <div className="space-y-4 ">
                 {renderSelect("documentType", "Document type", "", ["", "Passport", "Driver's License", "Utility Bill"])}
                 
                 {renderInputWithPlaceholder("documentNumber", "Document number", "min 2 chars")}
@@ -274,7 +274,7 @@ export default function NewClientModal({ open, onClose }) {
         );
       case "Regulation":
         return (
-            <div className="space-y-4 max-w-lg">
+            <div className="space-y-4 ">
                 {renderSelect("nationality", "Nationality", "", ["", "India", "USA", "UK"])}
                 {renderInput("taxID", "Tax ID")}
                 

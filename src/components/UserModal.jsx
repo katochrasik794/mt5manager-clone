@@ -4,7 +4,7 @@ import GroupConfigModal from "../components/GroupConfigModal"; // Import GroupCo
 // import DealModal from "./DealDetailsModal"
 import DealDetailsModal from "./DealDetailsModal";
 
-export default function UserModal({ open, onClose, client, hideNewClient = false, hideHelp = false }) {
+export default function UserModal({ open, onClose, client, hideNewClient = false, hideHelp = false, initialTab = "Overview" }) {
   // Destructure client data with defaults
   const {
     login = "369003",
@@ -111,7 +111,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
      const midPrice = "1.15462";
 
      // State to manage the active tab (original modal)
-     const [activeTab, setActiveTab] = useState("Overview");
+     const [activeTab, setActiveTab] = useState(initialTab);
    
      // State to manage the visibility of the NEW CLIENT modal
      const [isNewClientOpen, setIsNewClientOpen] = useState(false);
@@ -1955,16 +1955,18 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
           </div>
 
           {/* Footer/Action Buttons - consistent across tabs */}
-          <div className="flex justify-end p-2 border-t border-gray-700 bg-[#2c2c2c]">
-            <div className="space-x-2">
+          <div className="flex justify-between p-2 border-t border-gray-700 bg-[#2c2c2c]">
+            <div>
               {!hideNewClient && (
                 <button
                   onClick={() => setIsNewClientOpen(true)} // Open NewClientModal
-                  className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
+                  className="px-4 py-1 text-sm text-gray-200 rounded-l hover:bg-gray-500 border border-gray-500"
                 >
                   New Client
                 </button>
               )}
+            </div>
+            <div className="space-x-2">
               <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
                 Update
               </button>
