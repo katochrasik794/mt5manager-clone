@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NewCommentModal from "./NewCommentModal";
 
 export default function ProofOfIdentityModal({
   open = true,
@@ -12,6 +13,7 @@ export default function ProofOfIdentityModal({
   const [expDate, setExpDate] = useState("");
   const [name, setName] = useState("Prasad Nanekar - Person");
   const [comment, setComment] = useState("by Prasad Nanekar");
+  const [showNewCommentModal, setShowNewCommentModal] = useState(false);
 
   const files = [
     {
@@ -46,6 +48,12 @@ export default function ProofOfIdentityModal({
     setHistory((prev) =>
       prev.map((h) => (h.id === id ? { ...h, expanded: !h.expanded } : h))
     );
+  }
+
+  function handleSaveComment(commentText) {
+    console.log("New comment saved:", commentText);
+    // Here you could add the comment to a comments list or send to server
+    setShowNewCommentModal(false);
   }
 
   if (!open) return null;
@@ -93,7 +101,7 @@ export default function ProofOfIdentityModal({
           <main className="flex-1 p-8">
             <div>
               {activeTab === "Document" && (
-                <div className="max-w-2xl mx-auto space-y-1">
+                <div className="max-w-2xl mx-auto space-y-2">
                   <header className="mb-4 text-center">
                     <h2 className="text-2xl font-semibold">
                       Proof of identity - Prasad Nanekar - Person
@@ -107,7 +115,7 @@ export default function ProofOfIdentityModal({
                       Last changed by: 7100020542 on 2025.11.02 16:32
                     </div>
                   </div>
-                  <div className="grid grid-cols-1 gap-1">
+                  <div className="grid grid-cols-1 gap-2">
                     <label className="text-sm text-gray-300">Status</label>
                     <select
                       value={status}
@@ -436,7 +444,10 @@ export default function ProofOfIdentityModal({
                     <div>
                       <label className="inline-flex items-center gap-2">
                         <input type="file" className="hidden" id="add-files" />
-                        <button className="px-4 py-2 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]">
+                        <button
+                          onClick={() => setShowNewCommentModal(true)}
+                          className="px-4 py-2 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]"
+                        >
                           New Comment...
                         </button>
                       </label>
@@ -460,6 +471,13 @@ export default function ProofOfIdentityModal({
           </main>
         </div>
       </div>
+
+      {/* New Comment Modal */}
+      <NewCommentModal
+        open={showNewCommentModal}
+        onClose={() => setShowNewCommentModal(false)}
+        onSave={handleSaveComment}
+      />
     </div>
   );
 }

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { FiDownload, FiFileText, FiMessageCircle, FiClock, FiDollarSign } from "react-icons/fi";
 import ProofOfIdentityModal from './ProofOfIdentityModal';
+import NewCommentModal from './NewCommentModal';
 
 const inputStyle =
   "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1";
@@ -23,6 +24,7 @@ export default function NewClientModal({ open, onClose }) {
   const [selected, setSelected] = useState(1);
   const [historyOpen, setHistoryOpen] = useState({ 2: true, 1: false });
   const [proofModalOpen, setProofModalOpen] = useState(false);
+  const [newCommentModalOpen, setNewCommentModalOpen] = useState(false);
 
   if (!open) return null;
 
@@ -290,7 +292,7 @@ export default function NewClientModal({ open, onClose }) {
 
       case "Address":
         return (
-          <div className="space-y-4 max-w-lg">
+          <div className="space-y-4 ">
             {renderSelect("documentType", "Document type", "", ["", "Passport", "Driver's License", "Utility Bill"])}
 
             {renderInputWithPlaceholder("documentNumber", "Document number", "min 2 chars")}
@@ -316,7 +318,7 @@ export default function NewClientModal({ open, onClose }) {
 
       case "Regulation":
         return (
-          <div className="space-y-4 max-w-lg">
+          <div className="space-y-4">
             {renderSelect("nationality", "Nationality", "", ["", "India", "USA", "UK"])}
             {renderInput("taxID", "Tax ID")}
 
@@ -393,13 +395,10 @@ export default function NewClientModal({ open, onClose }) {
 
       case "Comments":
         return (
-          <div className="space-y-4 max-w-lg">
+          <div className="space-y-4">
             {/* Comments area - placeholder for a comment editor */}
             <label className={labelStyle}>Add comment</label>
-            <textarea className="w-full bg-[#3c3c3c] border border-gray-600 text-gray-100 p-2 rounded-sm min-h-[120px]" />
-            <div className="flex justify-end">
-              <button className="px-4 py-1.5 text-sm bg-[#3c3c3c] border border-gray-600 rounded-sm">Add</button>
-            </div>
+            <textarea className="w-full h-[65vh] bg-[#3c3c3c] border border-gray-600 text-gray-100 p-2 rounded-sm min-h-[120px]" />
           </div>
         );
 
@@ -523,12 +522,12 @@ export default function NewClientModal({ open, onClose }) {
    },
  ]
  return (
-   <div className="flex flex-col w-full h-full bg-[#1f1f1f] border border-gray-700">
+   <div className="flex flex-col w-full h-full border border-gray-700">
 
      {/* Table */}
      <div className="flex-grow overflow-auto">
        {/* Table Header */}
-       <div className="grid grid-cols-4 text-xs bg-[#1f1f1f] border-b border-gray-700 text-gray-300">
+       <div className="grid grid-cols-4 text-xs bg-[#3c3c3c] border-b border-gray-700 text-gray-300">
          <div className="py-2 px-3 flex items-center gap-1">
            Login <span className="text-[10px]">▲</span>
          </div>
@@ -650,6 +649,18 @@ export default function NewClientModal({ open, onClose }) {
                 </button>
               </div>
             </>
+          ) : activeSection === "Comments" ? (
+            <div className="space-x-2">
+              <button onClick={() => setNewCommentModalOpen(true)} className="px-4 py-1.5 mr-2 lg:mr-[460px]  text-sm bg-[#3c3c3c] border border-gray-600 hover:bg-[#4a4a4a] rounded-sm">
+                New Comment...
+              </button>
+              <button className="px-4 py-1.5 text-sm bg-[#3c3c3c] border border-gray-600 hover:bg-[#4a4a4a] rounded-sm">
+                Cancel
+              </button>
+              <button className="px-4 py-1.5 text-sm bg-[#007acc] hover:bg-[#006bb3] text-white rounded-sm">
+                Update
+              </button>
+            </div>
           ) : (
             <div className="space-x-2">
               <button onClick={onClose} className="px-4 py-1.5 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
@@ -661,6 +672,7 @@ export default function NewClientModal({ open, onClose }) {
         </div>
       </div>
       <ProofOfIdentityModal open={proofModalOpen} onClose={() => setProofModalOpen(false)} />
+      <NewCommentModal open={newCommentModalOpen} onClose={() => setNewCommentModalOpen(false)} onSave={() => setNewCommentModalOpen(false)} />
     </div>
   );
 }

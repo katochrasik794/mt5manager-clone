@@ -9,7 +9,7 @@ export default function NewCommentModal({ open = true, onClose = () => {}, onSav
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur">
       <div className="w-[920px] max-w-[98%] bg-[#2b2b2b] rounded shadow-lg overflow-hidden text-gray-200">
         {/* Title bar */}
         <div className="flex items-center gap-3 px-4 py-2 border-b border-gray-700 bg-[#262626]">
@@ -61,7 +61,7 @@ export default function NewCommentModal({ open = true, onClose = () => {}, onSav
 
         {/* Editor area */}
         <div className="p-4 h-[380px] bg-[#2b2b2b]">
-          <div className="h-full bg-[#282828] rounded border border-gray-700 p-3 text-gray-200 overflow-auto">
+          <div className="h-full bg-[#282828] rounded border border-gray-700 p-3 text-gray-200 overflow-auto custom-scrollbar">
             {/* Using a textarea for simplicity; replace with a rich text editor if needed */}
             <textarea
               value={content}
