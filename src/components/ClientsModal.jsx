@@ -1,8 +1,10 @@
-// NewClientModal.jsx
+// ClientsModal.jsx
 import React, { useState } from "react";
-import { FiDownload, FiFileText, FiMessageCircle, FiClock, FiDollarSign } from "react-icons/fi";
+import { FiDownload, FiFileText, FiMessageCircle, FiClock, FiDollarSign, FiUser, FiHome, FiMapPin, FiShield } from "react-icons/fi";
 import ProofOfIdentityModal from './ProofOfIdentityModal';
 import NewCommentModal from './NewCommentModal';
+import NewAccountModal from './NewAccountModal';
+import UserModal from './UserModal';
 
 const inputStyle =
   "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1";
@@ -25,6 +27,9 @@ export default function NewClientModal({ open, onClose }) {
   const [historyOpen, setHistoryOpen] = useState({ 2: true, 1: false });
   const [proofModalOpen, setProofModalOpen] = useState(false);
   const [newCommentModalOpen, setNewCommentModalOpen] = useState(false);
+  const [newAccountModalOpen, setNewAccountModalOpen] = useState(false);
+  const [userModalOpen, setUserModalOpen] = useState(false);
+  const [selectedAccount, setSelectedAccount] = useState(null);
 
   if (!open) return null;
 
@@ -540,6 +545,7 @@ export default function NewClientModal({ open, onClose }) {
        {realAccounts.map((acc, index) => (
          <div
            key={index}
+           onDoubleClick={() => { setSelectedAccount(acc); setUserModalOpen(true); }}
            className="grid grid-cols-4 text-sm border-b border-gray-800 hover:bg-[#2a2a2a] cursor-pointer"
          >
            {/* Login with user icon */}
@@ -558,6 +564,15 @@ export default function NewClientModal({ open, onClose }) {
  );
 }
 
+      case "7120045698 Prashad Nanekar":
+        return (
+          <div className="space-y-4">
+            <div className="w-full h-[65vh] bg-[#3c3c3c] border border-gray-600 text-gray-100 p-2 rounded-sm min-h-[120px]">
+              <UserModal open={true} onClose={() => setActiveSection("Client")} client={{login: "7120045698", name: "Prashad Nanekar"}} hideNewClient={true} hideHelp={true} />
+            </div>
+          </div>
+        );
+
 
       default:
         return null;
@@ -565,11 +580,16 @@ export default function NewClientModal({ open, onClose }) {
   };
 
   const iconFor = (name) => {
+    if (name === "Client") return <FiUser className="inline-block mr-3" />;
+    if (name === "Personal") return <FiHome className="inline-block mr-3" />;
+    if (name === "Address") return <FiMapPin className="inline-block mr-3" />;
+    if (name === "Regulation") return <FiShield className="inline-block mr-3" />;
     if (name === "Documents") return <FiFileText className="inline-block mr-3" />;
     if (name === "Comments") return <FiMessageCircle className="inline-block mr-3" />;
     if (name === "History") return <FiClock className="inline-block mr-3" />;
     if (name === "Real Trading Accounts") return <FiDollarSign className="inline-block mr-3" />;
-    return <span className="mr-3">{name === "Client" ? "👤" : name === "Personal" ? "🏠" : name === "Address" ? "📍" : "⚖️"}</span>;
+    if (name === "7120045698 Prashad Nanekar") return <FiUser className="inline-block mr-3" />;
+    return <span className="mr-3">👤</span>; // default for any other tabs
   };
 
   return (
@@ -632,7 +652,7 @@ export default function NewClientModal({ open, onClose }) {
           ) : activeSection === "Real Trading Accounts" ? (
             <>
               <div className="flex items-center gap-3 ml-0  lg:ml-[25%]">
-                <button className="px-4 py-1.5 text-sm bg-[#2d2d2d] border border-gray-600 text-gray-200 hover:bg-[#3a3a3a] rounded-sm">
+                <button onClick={() => setNewAccountModalOpen(true)} className="px-4 py-1.5 text-sm bg-[#2d2d2d] border border-gray-600 text-gray-200 hover:bg-[#3a3a3a] rounded-sm">
                   New Account
                 </button>
                 <button className="px-4 py-1.5 text-sm bg-[#2d2d2d] border border-gray-600 text-gray-200 hover:bg-[#3a3a3a] rounded-sm flex items-center gap-2">
@@ -673,6 +693,8 @@ export default function NewClientModal({ open, onClose }) {
       </div>
       <ProofOfIdentityModal open={proofModalOpen} onClose={() => setProofModalOpen(false)} />
       <NewCommentModal open={newCommentModalOpen} onClose={() => setNewCommentModalOpen(false)} onSave={() => setNewCommentModalOpen(false)} />
+      <NewAccountModal open={newAccountModalOpen} onClose={() => setNewAccountModalOpen(false)} onCreate={() => setNewAccountModalOpen(false)} />
+      <UserModal open={userModalOpen} onClose={() => setUserModalOpen(false)} client={selectedAccount} hideNewClient={true} hideHelp={true} />
     </div>
   );
 }

@@ -2,9 +2,6 @@ import React from "react";
 // import ClientModal from "../../components/ClientModal";
 import ClientsModal from "../../components/ClientsModal";
 
-// keep your screenshot path available (dev note: this is your uploaded file path)
-const screenshotUrl = "/mnt/data/f5c1e7d1-11ed-4623-a181-24e58fc30ca6.png";
-
 export default function Clients() {
   // Replaced dynamic generator with the exact (2) entries to match screenshot.
   const rows = [

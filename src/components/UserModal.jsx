@@ -4,7 +4,7 @@ import GroupConfigModal from "../components/GroupConfigModal"; // Import GroupCo
 // import DealModal from "./DealDetailsModal"
 import DealDetailsModal from "./DealDetailsModal";
 
-export default function UserModal({ open, onClose, client }) {
+export default function UserModal({ open, onClose, client, hideNewClient = false, hideHelp = false }) {
   // Destructure client data with defaults
   const {
     login = "369003",
@@ -1955,14 +1955,16 @@ export default function UserModal({ open, onClose, client }) {
           </div>
 
           {/* Footer/Action Buttons - consistent across tabs */}
-          <div className="flex justify-between p-2 border-t border-gray-700 bg-[#2c2c2c]">
-            <button
-              onClick={() => setIsNewClientOpen(true)} // Open NewClientModal
-              className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
-            >
-              New Client
-            </button>
+          <div className="flex justify-end p-2 border-t border-gray-700 bg-[#2c2c2c]">
             <div className="space-x-2">
+              {!hideNewClient && (
+                <button
+                  onClick={() => setIsNewClientOpen(true)} // Open NewClientModal
+                  className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
+                >
+                  New Client
+                </button>
+              )}
               <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
                 Update
               </button>
@@ -1972,9 +1974,11 @@ export default function UserModal({ open, onClose, client }) {
               >
                 Cancel
               </button>
-              <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
-                Help
-              </button>
+              {!hideHelp && (
+                <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
+                  Help
+                </button>
+              )}
             </div>
           </div>
         </div>

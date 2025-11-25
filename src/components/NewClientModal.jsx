@@ -1,5 +1,6 @@
 // NewClientModal.jsx
 import React, { useState } from "react";
+import { FaUser, FaHome, FaMapMarkerAlt, FaBalanceScale } from 'react-icons/fa';
 
 const inputStyle =
   "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1";
@@ -342,12 +343,12 @@ export default function NewClientModal({ open, onClose }) {
                     : "text-gray-300 hover:bg-gray-600"
                 }`}
               >
-                {/* Dummy Icons based on image_c4c7a1.png */}
+                {/* Icons using react-icons */}
                 <i className="mr-3">
-                  {section === "Client" && "👤"}
-                  {section === "Personal" && "🏠"}
-                  {section === "Address" && "📍"}
-                  {section === "Regulation" && "⚖️"}
+                  {section === "Client" && <FaUser />}
+                  {section === "Personal" && <FaHome />}
+                  {section === "Address" && <FaMapMarkerAlt />}
+                  {section === "Regulation" && <FaBalanceScale />}
                 </i>
                 {section} 
               </button>
