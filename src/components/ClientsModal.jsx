@@ -1,19 +1,13 @@
 // ClientsModal.jsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FiDownload, FiFileText, FiMessageCircle, FiClock, FiDollarSign, FiUser, FiHome, FiMapPin, FiShield } from "react-icons/fi";
 import ProofOfIdentityModal from './ProofOfIdentityModal';
 import NewCommentModal from './NewCommentModal';
 import NewAccountModal from './NewAccountModal';
 import UserModal from './UserModal';
+import NewDocument from './NewDocument';
+import Mycontext from "../context/Mycontext";
 
-const inputStyle =
-  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1";
-const inputStyleSmall =
-  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 h-[34px]";
-const labelStyle = "block text-sm text-gray-400 mb-1";
-const selectStyle =
-  "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1 pr-8 block w-full appearance-none";
-const iconStyle = "absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs pointer-events-none";
 
 /**
  * NewClientModal
@@ -22,6 +16,20 @@ const iconStyle = "absolute right-2 top-1/2 transform -translate-y-1/2 text-gray
  *  - onClose (fn)
  */
 export default function NewClientModal({ open, onClose }) {
+  const { mode } = useContext(Mycontext);
+
+  const inputStyle = mode === "dark"
+    ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1"
+    : "bg-white border border-gray-400 text-black text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1";
+  const inputStyleSmall = mode === "dark"
+    ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 h-[34px]"
+    : "bg-white border border-gray-400 text-black text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-1 h-[34px]";
+  const labelStyle = `block text-sm mb-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`;
+  const selectStyle = mode === "dark"
+    ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1 pr-8 block w-full appearance-none"
+    : "bg-white border border-gray-400 text-black text-sm rounded-sm p-1 pr-8 block w-full appearance-none";
+  const iconStyle = `absolute right-2 top-1/2 transform -translate-y-1/2 text-xs pointer-events-none ${mode === "dark" ? "text-gray-400" : "text-gray-500"}`;
+
   const [activeSection, setActiveSection] = useState("Client");
   const [selected, setSelected] = useState(1);
   const [historyOpen, setHistoryOpen] = useState({ 2: true, 1: false });
@@ -30,6 +38,7 @@ export default function NewClientModal({ open, onClose }) {
   const [newAccountModalOpen, setNewAccountModalOpen] = useState(false);
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [selectedAccount, setSelectedAccount] = useState(null);
+  const [newDocumentModalOpen, setNewDocumentModalOpen] = useState(false);
 
   if (!open) return null;
 
@@ -362,9 +371,9 @@ export default function NewClientModal({ open, onClose }) {
 
       case "Documents":
         return (
-          <div className="w-full h-[500px] bg-[#2c2c2c] text-gray-200 flex flex-col border border-gray-700">
+          <div className={`w-full h-[500px] flex flex-col border ${mode === "dark" ? "bg-[#2c2c2c] text-gray-200 border-gray-700" : "bg-white text-black border-gray-300"}`}>
             {/* Header */}
-            <div className="grid grid-cols-[40px_150px_250px_150px_150px] text-xs bg-[#2c2c2c] border-b border-gray-700 text-gray-300">
+            <div className={`grid grid-cols-[40px_150px_250px_150px_150px] text-xs border-b ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700 text-gray-300" : "bg-gray-100 border-gray-300 text-gray-600"}`}>
               <div className="py-2 px-3">ID</div>
               <div className="py-2 px-3">Type</div>
               <div className="py-2 px-3">Name</div>
@@ -379,8 +388,11 @@ export default function NewClientModal({ open, onClose }) {
                   key={doc.id}
                   onClick={() => setSelected(doc.id)}
                   onDoubleClick={doc.type === "Proof of identity" ? () => setProofModalOpen(true) : undefined}
-                  className={`grid grid-cols-[40px_150px_250px_150px_150px] text-sm cursor-pointer border-b border-gray-800
-                    ${selected === doc.id ? "bg-[#1e4f7a]" : "bg-[#2c2c2c] hover:bg-[#3a3a3a]"}
+                  className={`grid grid-cols-[40px_150px_250px_150px_150px] text-sm cursor-pointer border-b
+                    ${selected === doc.id
+                      ? `${mode === "dark" ? "bg-[#1e4f7a]" : "bg-blue-200"}`
+                      : `${mode === "dark" ? "border-gray-800 bg-[#2c2c2c] hover:bg-[#3a3a3a]" : "border-gray-300 bg-white hover:bg-gray-200"}`
+                    }
                   `}
                 >
                   <div className="py-2 px-3">{doc.id}</div>
@@ -403,7 +415,7 @@ export default function NewClientModal({ open, onClose }) {
           <div className="space-y-4">
             {/* Comments area - placeholder for a comment editor */}
             <label className={labelStyle}>Add comment</label>
-            <textarea className="w-full h-[65vh] bg-[#3c3c3c] border border-gray-600 text-gray-100 p-2 rounded-sm min-h-[120px]" />
+            <textarea className={`w-full h-[65vh] border p-2 rounded-sm min-h-[120px] ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 text-gray-100" : "bg-white border-gray-400 text-black"}`} />
           </div>
         );
 
@@ -446,13 +458,13 @@ export default function NewClientModal({ open, onClose }) {
   return (
     <div className="space-y-2 w-full">
       {/* Container styled like screenshot (dark, bordered) */}
-      <div className="bg-[#1f1f1f] border border-gray-600 rounded-sm overflow-hidden">
+      <div className={`border rounded-sm overflow-hidden ${mode === "dark" ? "bg-[#1f1f1f] border-gray-600" : "bg-gray-100 border-gray-400"}`}>
         {historyEntries.map((entry) => {
           const isOpen = !!historyOpen[entry.id];
           // header classes: blue when open (like screenshot top row), dark gray when closed
           const headerClass = isOpen
-            ? "bg-[#0b66b0] text-white"
-            : "bg-[#2b2b2b] text-gray-200 hover:bg-[#3a3a3a]";
+            ? `${mode === "dark" ? "bg-[#0b66b0] text-white" : "bg-blue-500 text-white"}`
+            : `${mode === "dark" ? "bg-[#2b2b2b] text-gray-200 hover:bg-[#3a3a3a]" : "bg-gray-200 text-gray-700 hover:bg-gray-300"}`;
 
           return (
             <div key={entry.id} className="border-b border-gray-700">
@@ -471,7 +483,7 @@ export default function NewClientModal({ open, onClose }) {
 
                 <div className="flex items-center gap-3">
                   {/* optional short note shown on the header line */}
-                  {entry.shortNote && <div className="text-sm text-gray-100 mr-2">{entry.shortNote}</div>}
+                  {entry.shortNote && <div className={`text-sm mr-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>{entry.shortNote}</div>}
                   {/* chevron button */}
                   <button
                     onClick={(e) => {
@@ -494,7 +506,7 @@ export default function NewClientModal({ open, onClose }) {
 
               {/* Content area (expanded body) */}
               {isOpen && (
-                <div className="px-4 py-3 bg-[#222] text-sm text-gray-200">
+                <div className={`px-4 py-3 text-sm ${mode === "dark" ? "bg-[#222] text-gray-200" : "bg-white text-black"}`}>
                   {entry.details ? (
                     <ul className="space-y-1 list-none">
                       {entry.details.map((line, idx) => (
@@ -504,7 +516,7 @@ export default function NewClientModal({ open, onClose }) {
                       ))}
                     </ul>
                   ) : (
-                    <div className="text-sm text-gray-200">{entry.shortNote}</div>
+                    <div className={`text-sm ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{entry.shortNote}</div>
                   )}
                 </div>
               )}
@@ -527,12 +539,12 @@ export default function NewClientModal({ open, onClose }) {
    },
  ]
  return (
-   <div className="flex flex-col w-full h-full border border-gray-700">
+   <div className={`flex flex-col w-full h-full border ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
 
      {/* Table */}
      <div className="flex-grow overflow-auto">
        {/* Table Header */}
-       <div className="grid grid-cols-4 text-xs bg-[#3c3c3c] border-b border-gray-700 text-gray-300">
+       <div className={`grid grid-cols-4 text-xs border-b ${mode === "dark" ? "bg-[#3c3c3c] border-gray-700 text-gray-300" : "bg-gray-100 border-gray-300 text-gray-700"}`}>
          <div className="py-2 px-3 flex items-center gap-1">
            Login <span className="text-[10px]">▲</span>
          </div>
@@ -546,11 +558,11 @@ export default function NewClientModal({ open, onClose }) {
          <div
            key={index}
            onDoubleClick={() => { setSelectedAccount(acc); setUserModalOpen(true); }}
-           className="grid grid-cols-4 text-sm border-b border-gray-800 hover:bg-[#2a2a2a] cursor-pointer"
+           className={`grid grid-cols-4 text-sm border-b cursor-pointer ${mode === "dark" ? "bg-[#2c2c2c] border-gray-800 hover:bg-[#2a2a2a] text-gray-100" : "bg-white border-gray-300 hover:bg-gray-200 text-black"}`}
          >
            {/* Login with user icon */}
            <div className="py-2 px-3 flex items-center gap-2">
-             <span className="text-gray-400">👤</span>
+             <span className={mode === "dark" ? "text-gray-400" : "text-gray-500"}>👤</span>
              {acc.login}
            </div>
 
@@ -567,7 +579,7 @@ export default function NewClientModal({ open, onClose }) {
       case "7120045698 Prashad Nanekar":
         return (
           <div className="space-y-4">
-            <div className="w-full h-[65vh] bg-[#3c3c3c] border border-gray-600 text-gray-100 p-2 rounded-sm min-h-[120px]">
+            <div className={`w-full h-[65vh] border p-2 rounded-sm min-h-[120px] ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 text-gray-100" : "bg-white border-gray-400 text-black"}`}>
               <UserModal open={true} onClose={() => setActiveSection("Client")} client={{login: "7120045698", name: "Prashad Nanekar"}} hideNewClient={true} hideHelp={true} />
             </div>
           </div>
@@ -594,13 +606,13 @@ export default function NewClientModal({ open, onClose }) {
 
   return (
     <div className="fixed inset-0 backdrop-blur flex items-center justify-center z-50">
-      <div className="bg-[#2c2c2c] rounded-sm border border-gray-700 shadow-2xl max-w-5xl w-full h-[95%] mx-4 flex flex-col">
+      <div className={`rounded-sm border shadow-2xl max-w-5xl w-full h-[95%] mx-4 flex flex-col ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Title Bar */}
-        <div className="flex items-center justify-between p-1 bg-[#2f2f2f] border-b border-gray-700">
-          <h3 className="text-sm font-semibold text-gray-100 ml-2">Client: New</h3>
+        <div className={`flex items-center justify-between p-1 border-b ${mode === "dark" ? "bg-[#2f2f2f] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
+          <h3 className={`text-sm font-semibold ml-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>Client: New</h3>
           <div className="flex items-center">
-            <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-xl leading-none">?</button>
-            <button onClick={onClose} className="text-gray-400 hover:bg-red-600 hover:text-white w-8 h-6 text-xl leading-none">
+            <button className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>?</button>
+            <button onClick={onClose} className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-red-600 hover:text-white" : "text-gray-600 hover:bg-red-600 hover:text-white"}`}>
               ×
             </button>
           </div>
@@ -609,13 +621,15 @@ export default function NewClientModal({ open, onClose }) {
         {/* Body */}
         <div className="flex flex-grow overflow-hidden">
           {/* Sidebar */}
-          <div className="w-60 bg-[#2c2c2c] border-r border-gray-700 p-2 space-y-2 overflow-auto">
+          <div className={`w-60 border-r p-2 space-y-2 overflow-auto ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
             {sections.map((section) => (
               <button
                 key={section}
                 onClick={() => setActiveSection(section)}
                 className={`flex items-center w-full px-3 py-2 text-sm text-left rounded-sm transition-colors duration-100 ${
-                  activeSection === section ? "bg-gray-500 text-white" : "text-gray-300 hover:bg-gray-600"
+                  activeSection === section
+                    ? `${mode === "dark" ? "bg-gray-500 text-white" : "bg-blue-500 text-white"}`
+                    : `${mode === "dark" ? "text-gray-300 hover:bg-gray-600" : "text-gray-700 hover:bg-gray-300"}`
                 }`}
               >
                 {iconFor(section)}
@@ -626,23 +640,23 @@ export default function NewClientModal({ open, onClose }) {
 
           {/* Main */}
           <div className="flex-grow p-4 overflow-auto custom-scrollbar">
-            <h2 className="text-xl font-bold text-gray-100 mb-4">{activeSection}</h2>
+            <h2 className={`text-xl font-bold mb-4 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>{activeSection}</h2>
             {renderContent()}
           </div>
         </div>
 
         {/* Footer */}
-        <div className={`flex p-2 border-t border-gray-700 bg-[#2f2f2f] ${activeSection === "Real Trading Accounts" ? "justify-between" : "justify-end"}`}>
+        <div className={`flex p-2 border-t ${mode === "dark" ? "border-gray-700 bg-[#2f2f2f]" : "border-gray-300 bg-gray-100"} ${activeSection === "Real Trading Accounts" ? "justify-between" : "justify-end"}`}>
           {activeSection === "Client" && (
-            <button className="px-4 py-1.5 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">Export...</button>
+            <button className={`px-4 py-1.5 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-400 border-gray-400"}`}>Export...</button>
           )}
 
           {activeSection === "Documents" ? (
             <div className="space-x-2">
-              <button className="px-4 py-1.5 text-sm bg-[#3c3c3c] border border-gray-600 hover:bg-[#4a4a4a] rounded-sm">
+              <button onClick={() => setNewDocumentModalOpen(true)} className={`px-4 py-1.5 text-sm border rounded-sm ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 hover:bg-[#4a4a4a] text-gray-100" : "bg-white border-gray-400 hover:bg-gray-200 text-black"}`}>
                 New Document...
               </button>
-              <button className="px-4 py-1.5 text-sm bg-[#3c3c3c] border border-gray-600 hover:bg-[#4a4a4a] rounded-sm">
+              <button className={`px-4 py-1.5 text-sm border rounded-sm ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 hover:bg-[#4a4a4a] text-gray-100" : "bg-white border-gray-400 hover:bg-gray-200 text-black"}`}>
                 Cancel
               </button>
               <button className="px-4 py-1.5 text-sm bg-[#007acc] hover:bg-[#006bb3] text-white rounded-sm">
@@ -652,16 +666,16 @@ export default function NewClientModal({ open, onClose }) {
           ) : activeSection === "Real Trading Accounts" ? (
             <>
               <div className="flex items-center gap-3 ml-0  lg:ml-[25%]">
-                <button onClick={() => setNewAccountModalOpen(true)} className="px-4 py-1.5 text-sm bg-[#2d2d2d] border border-gray-600 text-gray-200 hover:bg-[#3a3a3a] rounded-sm">
+                <button onClick={() => setNewAccountModalOpen(true)} className={`px-4 py-1.5 text-sm border rounded-sm ${mode === "dark" ? "bg-[#2d2d2d] border-gray-600 text-gray-200 hover:bg-[#3a3a3a]" : "bg-white border-gray-400 text-black hover:bg-gray-200"}`}>
                   New Account
                 </button>
-                <button className="px-4 py-1.5 text-sm bg-[#2d2d2d] border border-gray-600 text-gray-200 hover:bg-[#3a3a3a] rounded-sm flex items-center gap-2">
+                <button className={`px-4 py-1.5 text-sm border rounded-sm flex items-center gap-2 ${mode === "dark" ? "bg-[#2d2d2d] border-gray-600 text-gray-200 hover:bg-[#3a3a3a]" : "bg-white border-gray-400 text-black hover:bg-gray-200"}`}>
                   Link Account
                   <span className="text-xs">&#9662;</span>
                 </button>
               </div>
               <div className="flex items-center gap-3">
-                <button className="px-4 py-1.5 text-sm bg-[#2d2d2d] border border-gray-600 text-gray-200 hover:bg-[#3a3a3a] rounded-sm">
+                <button className={`px-4 py-1.5 text-sm border rounded-sm ${mode === "dark" ? "bg-[#2d2d2d] border-gray-600 text-gray-200 hover:bg-[#3a3a3a]" : "bg-white border-gray-400 text-black hover:bg-gray-200"}`}>
                   Cancel
                 </button>
                 <button className="px-4 py-1.5 text-sm bg-[#007acc] hover:bg-[#006bb3] text-white rounded-sm">
@@ -671,10 +685,10 @@ export default function NewClientModal({ open, onClose }) {
             </>
           ) : activeSection === "Comments" ? (
             <div className="space-x-2">
-              <button onClick={() => setNewCommentModalOpen(true)} className="px-4 py-1.5 mr-2 lg:mr-[460px]  text-sm bg-[#3c3c3c] border border-gray-600 hover:bg-[#4a4a4a] rounded-sm">
+              <button onClick={() => setNewCommentModalOpen(true)} className={`px-4 py-1.5 mr-2 lg:mr-[460px] text-sm border rounded-sm ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 hover:bg-[#4a4a4a] text-gray-100" : "bg-white border-gray-400 hover:bg-gray-200 text-black"}`}>
                 New Comment...
               </button>
-              <button className="px-4 py-1.5 text-sm bg-[#3c3c3c] border border-gray-600 hover:bg-[#4a4a4a] rounded-sm">
+              <button className={`px-4 py-1.5 text-sm border rounded-sm ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 hover:bg-[#4a4a4a] text-gray-100" : "bg-white border-gray-400 hover:bg-gray-200 text-black"}`}>
                 Cancel
               </button>
               <button className="px-4 py-1.5 text-sm bg-[#007acc] hover:bg-[#006bb3] text-white rounded-sm">
@@ -683,10 +697,10 @@ export default function NewClientModal({ open, onClose }) {
             </div>
           ) : (
             <div className="space-x-2">
-              <button onClick={onClose} className="px-4 py-1.5 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
+              <button onClick={onClose} className={`px-4 py-1.5 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-400 border-gray-400"}`}>
                 Cancel
               </button>
-              <button className="px-4 py-1.5 text-sm border border-gray-500 text-white rounded hover:bg-blue-600">OK</button>
+              <button className={`px-4 py-1.5 text-sm border rounded hover:bg-blue-600 ${mode === "dark" ? "border-gray-500 text-white" : "border-gray-400 text-black"}`}>OK</button>
             </div>
           )}
         </div>
@@ -695,6 +709,7 @@ export default function NewClientModal({ open, onClose }) {
       <NewCommentModal open={newCommentModalOpen} onClose={() => setNewCommentModalOpen(false)} onSave={() => setNewCommentModalOpen(false)} />
       <NewAccountModal open={newAccountModalOpen} onClose={() => setNewAccountModalOpen(false)} onCreate={() => setNewAccountModalOpen(false)} />
       <UserModal open={userModalOpen} onClose={() => setUserModalOpen(false)} client={selectedAccount} hideNewClient={true} hideHelp={true} />
+      <NewDocument open={newDocumentModalOpen} onClose={() => setNewDocumentModalOpen(false)} onOk={() => setNewDocumentModalOpen(false)} />
     </div>
   );
 }

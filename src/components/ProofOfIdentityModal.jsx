@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import NewCommentModal from "./NewCommentModal";
+import Mycontext from "../context/Mycontext";
 
 export default function ProofOfIdentityModal({
   open = true,
   onClose = () => {},
 }) {
+  const { mode } = useContext(Mycontext);
   const [activeTab, setActiveTab] = useState("Document");
   const [status, setStatus] = useState("New");
   const [docType, setDocType] = useState("Proof of identity");
@@ -41,7 +43,6 @@ export default function ProofOfIdentityModal({
       ],
       expanded: false,
     },
-    // add more items if needed
   ]);
 
   function toggleHistory(id) {
@@ -52,7 +53,6 @@ export default function ProofOfIdentityModal({
 
   function handleSaveComment(commentText) {
     console.log("New comment saved:", commentText);
-    // Here you could add the comment to a comments list or send to server
     setShowNewCommentModal(false);
   }
 
@@ -67,11 +67,29 @@ export default function ProofOfIdentityModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur">
-      <div className="w-[1200px] max-w-5xl bg-[#2b2b2b] rounded shadow-lg overflow-hidden text-gray-200 h-[95%]">
+      <div
+        className={`w-[1200px] max-w-5xl rounded shadow-lg overflow-hidden h-[95%] ${
+          mode === "dark"
+            ? "bg-[#2b2b2b] text-gray-200"
+            : "bg-white text-black"
+        }`}
+      >
         <div className="flex">
           {/* Sidebar */}
-          <aside className="w-64 bg-[#232323] h-screen border-r border-gray-700 p-6">
-            <div className="mb-8 text-gray-300 font-semibold">Document</div>
+          <aside
+            className={`w-64 h-screen border-r p-6 ${
+              mode === "dark"
+                ? "bg-[#232323] border-gray-700"
+                : "bg-gray-100 border-gray-300"
+            }`}
+          >
+            <div
+              className={`mb-8 font-semibold ${
+                mode === "dark" ? "text-gray-300" : "text-gray-700"
+              }`}
+            >
+              Document
+            </div>
 
             <nav className="space-y-2">
               {tabs.map((t) => {
@@ -83,8 +101,16 @@ export default function ProofOfIdentityModal({
                     onClick={() => setActiveTab(t.key)}
                     className={`w-full flex items-center gap-3 px-3 py-2 rounded-md transition-all text-left ${
                       active
-                        ? "bg-[#343434] text-white"
-                        : "text-gray-300 hover:bg-[#2b2b2b]"
+                        ? `${
+                            mode === "dark"
+                              ? "bg-[#343434] text-white"
+                              : "bg-blue-500 text-white"
+                          }`
+                        : `${
+                            mode === "dark"
+                              ? "text-gray-300 hover:bg-[#2b2b2b]"
+                              : "text-gray-700 hover:bg-gray-200"
+                          }`
                     }`}
                   >
                     <span className="w-6 h-6 flex items-center justify-center">
@@ -103,49 +129,87 @@ export default function ProofOfIdentityModal({
               {activeTab === "Document" && (
                 <div className="max-w-2xl mx-auto space-y-2">
                   <header className="mb-4 text-center">
-                    <h2 className="text-2xl font-semibold">
+                    <h2
+                      className={`text-2xl font-semibold ${
+                        mode === "dark" ? "text-gray-200" : "text-black"
+                      }`}
+                    >
                       Proof of identity - Prasad Nanekar - Person
                     </h2>
                   </header>
                   <div className="text-center">
-                    <div className="mt-6 text-xs text-gray-300">
+                    <div
+                      className={`mt-6 text-xs ${
+                        mode === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
                       Created by: 7100020542 on 2025.11.02 16:32
                     </div>
-                    <div className="mt-2 text-xs text-gray-300">
+                    <div
+                      className={`mt-2 text-xs ${
+                        mode === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
                       Last changed by: 7100020542 on 2025.11.02 16:32
                     </div>
                   </div>
                   <div className="grid grid-cols-1 gap-2">
-                    <label className="text-sm text-gray-300">Status</label>
+                    <label
+                      className={`text-sm ${
+                        mode === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      Status
+                    </label>
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
-                      className="bg-[#333333] border border-gray-600 rounded px-3 py-1 text-sm"
+                      className={`rounded px-3 py-1 text-sm ${
+                        mode === "dark"
+                          ? "bg-[#333333] border border-gray-600 text-gray-100"
+                          : "bg-white border border-gray-500 text-black"
+                      }`}
                     >
                       <option>New</option>
                       <option>Approved</option>
                       <option>Rejected</option>
                     </select>
 
-                    <label className="text-sm text-gray-300 mt-2">
+                    <label
+                      className={`text-sm ${
+                        mode === "dark" ? "text-gray-300" : "text-gray-600"
+                      } mt-2`}
+                    >
                       Document type
                     </label>
                     <select
                       value={docType}
                       onChange={(e) => setDocType(e.target.value)}
-                      className="bg-[#333333] border border-gray-600 rounded px-3 py-1 text-sm"
+                      className={`rounded px-3 py-1 text-sm ${
+                        mode === "dark"
+                          ? "bg-[#333333] border border-gray-600 text-gray-100"
+                          : "bg-white border border-gray-400 text-black"
+                      }`}
                     >
                       <option>Proof of identity</option>
                       <option>Proof of address</option>
                     </select>
 
-                    <label className="text-sm text-gray-300 mt-2">
+                    <label
+                      className={`text-sm ${
+                        mode === "dark" ? "text-gray-300" : "text-gray-600"
+                      } mt-2`}
+                    >
                       Document subtype
                     </label>
                     <select
                       value={docSubType}
                       onChange={(e) => setDocSubType(e.target.value)}
-                      className="bg-[#333333] border border-gray-600 rounded px-3 py-1 text-sm"
+                      className={`rounded px-3 py-1 text-sm ${
+                        mode === "dark"
+                          ? "bg-[#333333] border border-gray-600 text-gray-100"
+                          : "bg-white border border-gray-400 text-black"
+                      }`}
                     >
                       <option>Driver license</option>
                       <option>Passport</option>
@@ -154,7 +218,13 @@ export default function ProofOfIdentityModal({
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label className="text-sm text-gray-300">
+                        <label
+                          className={`text-sm ${
+                            mode === "dark"
+                              ? "text-gray-300"
+                              : "text-gray-600"
+                          }`}
+                        >
                           Issue date
                         </label>
                         <div className="flex items-center gap-2 mt-1">
@@ -162,13 +232,23 @@ export default function ProofOfIdentityModal({
                             type="date"
                             value={issueDate}
                             onChange={(e) => setIssueDate(e.target.value)}
-                            className="bg-[#333333] border border-gray-600 rounded px-3 py-1 text-sm w-full"
+                            className={`rounded px-3 py-1 text-sm w-full ${
+                              mode === "dark"
+                                ? "bg-[#333333] border border-gray-600 text-gray-100"
+                                : "bg-white border border-gray-400 text-black"
+                            }`}
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="text-sm text-gray-300">
+                        <label
+                          className={`text-sm ${
+                            mode === "dark"
+                              ? "text-gray-300"
+                              : "text-gray-600"
+                          }`}
+                        >
                           Expiration date
                         </label>
                         <div className="flex items-center gap-2 mt-1">
@@ -176,37 +256,69 @@ export default function ProofOfIdentityModal({
                             type="date"
                             value={expDate}
                             onChange={(e) => setExpDate(e.target.value)}
-                            className="bg-[#333333] border border-gray-600 rounded px-3 py-1 text-sm w-full"
+                            className={`rounded px-3 py-1 text-sm w-full ${
+                              mode === "dark"
+                                ? "bg-[#333333] border border-gray-600 text-gray-100"
+                                : "bg-white border border-gray-400 text-black"
+                            }`}
                           />
                         </div>
                       </div>
                     </div>
 
-                    <label className="text-sm text-gray-300">Name</label>
+                    <label
+                      className={`text-sm ${
+                        mode === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      Name
+                    </label>
                     <input
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="bg-[#333333] border border-gray-600 rounded px-3 py-1 text-sm w-full"
+                      className={`rounded px-3 py-1 text-sm w-full ${
+                        mode === "dark"
+                          ? "bg-[#333333] border border-gray-600 text-gray-100"
+                          : "bg-white border border-gray-400 text-black"
+                      }`}
                     />
 
-                    <label className="text-sm text-gray-300">Comment</label>
+                    <label
+                      className={`text-sm ${
+                        mode === "dark" ? "text-gray-300" : "text-gray-600"
+                      }`}
+                    >
+                      Comment
+                    </label>
                     <textarea
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
                       rows={5}
-                      className="bg-[#333333] border border-gray-600 rounded px-3 py-1 text-sm w-full"
+                      className={`rounded px-3 py-1 text-sm w-full ${
+                        mode === "dark"
+                          ? "bg-[#333333] border border-gray-600 text-gray-100"
+                          : "bg-white border border-gray-400 text-black"
+                      }`}
                     />
                   </div>
 
                   <div className="flex justify-end mt-5 gap-3">
                     <button
                       onClick={onClose}
-                      className="px-4 py-1 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]"
+                      className={`px-4 py-1 border rounded ${
+                        mode === "dark"
+                          ? "border-gray-600 text-gray-200 hover:bg-[#2d2d2d]"
+                          : "border-gray-400 text-black hover:bg-gray-200"
+                      }`}
                     >
                       Cancel
                     </button>
-                    <button className="px-5 py-1 bg-[#1f6feb] rounded text-white">
+                    <button
+                      className={`px-5 py-1 rounded text-white ${
+                        mode === "dark" ? "bg-[#1f6feb]" : "bg-blue-500"
+                      }`}
+                    >
                       Update
                     </button>
                   </div>
@@ -215,52 +327,155 @@ export default function ProofOfIdentityModal({
 
               {activeTab === "Files" && (
                 <div className="flex-1 flex flex-col ">
-                  <div className="overflow-auto rounded p-2 border border-gray-600 h-[80vh]  bg-[#2b2b2b]">
-                    <table className="min-w-full border-collapse table-fixed text-sm">
-                      <thead className="sticky top-0 bg-[#2b2b2b]">
-                        <tr className="text-left text-gray-300">
-                          <th className="w-8 py-2 border-b border-gray-600">
+                  <div
+                    className={`overflow-auto rounded p-2 border h-[80vh] ${
+                      mode === "dark"
+                        ? "border-gray-600 bg-[#2b2b2b]"
+                        : "border-gray-300 bg-white"
+                    }`}
+                  >
+                    <table
+                      className={`min-w-full border-collapse table-fixed text-sm ${
+                        mode === "dark" ? "text-gray-200" : "text-black"
+                      }`}
+                    >
+                      <thead
+                        className={`sticky top-0 ${
+                          mode === "dark" ? "bg-[#2b2b2b]" : "bg-gray-100"
+                        }`}
+                      >
+                        <tr
+                          className={`text-left ${
+                            mode === "dark"
+                              ? "text-gray-300"
+                              : "text-gray-700"
+                          }`}
+                        >
+                          <th
+                            className={`w-8 py-2 border-b ${
+                              mode === "dark"
+                                ? "border-gray-600"
+                                : "border-gray-300"
+                            }`}
+                          >
                             #
                           </th>
-                          <th className="w-48 py-2 border-b border-gray-600">
+                          <th
+                            className={`w-48 py-2 border-b ${
+                              mode === "dark"
+                                ? "border-gray-600"
+                                : "border-gray-300"
+                            }`}
+                          >
                             Date
                           </th>
-                          <th className="w-36 py-2 border-b border-gray-600">
+                          <th
+                            className={`w-36 py-2 border-b ${
+                              mode === "dark"
+                                ? "border-gray-600"
+                                : "border-gray-300"
+                            }`}
+                          >
                             Author
                           </th>
-                          <th className="py-2 border-b border-gray-600">
+                          <th
+                            className={`py-2 border-b ${
+                              mode === "dark"
+                                ? "border-gray-600"
+                                : "border-gray-300"
+                            }`}
+                          >
                             Name
                           </th>
-                          <th className="w-24 py-2 border-b border-gray-600">
+                          <th
+                            className={`w-24 py-2 border-b ${
+                              mode === "dark"
+                                ? "border-gray-600"
+                                : "border-gray-300"
+                            }`}
+                          >
                             Size
                           </th>
-                          <th className="w-10 py-2 border-b border-gray-600">
+                          <th
+                            className={`w-10 py-2 border-b ${
+                              mode === "dark"
+                                ? "border-gray-600"
+                                : "border-gray-300"
+                            }`}
+                          >
                             {" "}
                           </th>
                         </tr>
                       </thead>
                       <tbody className="">
                         {files.map((f) => (
-                          <tr key={f.id} className="hover:bg-[#313131]">
-                            <td className="py-2 border-b border-gray-700">
+                          <tr
+                            key={f.id}
+                            className={
+                              mode === "dark"
+                                ? "hover:bg-[#313131]"
+                                : "hover:bg-gray-200"
+                            }
+                          >
+                            <td
+                              className={`py-2 border-b ${
+                                mode === "dark"
+                                  ? "border-gray-700 text-gray-300"
+                                  : "border-gray-300 text-gray-700"
+                              }`}
+                            >
                               {f.id}
                             </td>
-                            <td className="py-2 border-b border-gray-700 text-gray-300">
+                            <td
+                              className={`py-2 border-b ${
+                                mode === "dark"
+                                  ? "border-gray-700 text-gray-300"
+                                  : "border-gray-300 text-gray-700"
+                              }`}
+                            >
                               {f.date}
                             </td>
-                            <td className="py-2 border-b border-gray-700 text-gray-300">
+                            <td
+                              className={`py-2 border-b ${
+                                mode === "dark"
+                                  ? "border-gray-700 text-gray-300"
+                                  : "border-gray-300 text-gray-700"
+                              }`}
+                            >
                               {f.author}
                             </td>
-                            <td className="py-2 border-b border-gray-700 text-gray-300 underline cursor-pointer">
+                            <td
+                              className={`py-2 border-b underline cursor-pointer ${
+                                mode === "dark"
+                                  ? "border-gray-700 text-gray-300"
+                                  : "border-gray-300 text-gray-700"
+                              }`}
+                            >
                               {f.name}
                             </td>
-                            <td className="py-2 border-b border-gray-700 text-gray-300">
+                            <td
+                              className={`py-2 border-b ${
+                                mode === "dark"
+                                  ? "border-gray-700 text-gray-300"
+                                  : "border-gray-300 text-gray-700"
+                              }`}
+                            >
                               {f.size}
                             </td>
-                            <td className="py-2 border-b border-gray-700 text-right">
+                            <td
+                              className={`py-2 border-b text-right ${
+                                mode === "dark"
+                                  ? "border-gray-700"
+                                  : "border-gray-300"
+                              }`}
+                            >
                               <button
                                 title="Download"
-                                className="px-2 py-1 rounded border border-gray-600"
+                                className={`px-2 py-1 rounded border ${
+                                  mode === "dark"
+                                    ? "border-gray-600"
+                                    : "border-gray-400"
+                                }`}
                               >
                                 <svg
                                   viewBox="0 0 24 24"
@@ -299,7 +514,13 @@ export default function ProofOfIdentityModal({
                     <div>
                       <label className="inline-flex items-center gap-2">
                         <input type="file" className="hidden" id="add-files" />
-                        <button className="px-4 py-2 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]">
+                        <button
+                          className={`px-4 py-2 border rounded ${
+                            mode === "dark"
+                              ? "border-gray-600 text-gray-200 hover:bg-[#2d2d2d]"
+                              : "border-gray-400 text-black hover:bg-gray-200"
+                          }`}
+                        >
                           Add Files...
                         </button>
                       </label>
@@ -308,11 +529,19 @@ export default function ProofOfIdentityModal({
                     <div className="flex gap-3">
                       <button
                         onClick={onClose}
-                        className="px-4 py-2 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]"
+                        className={`px-4 py-2 border rounded ${
+                          mode === "dark"
+                            ? "border-gray-600 text-gray-200 hover:bg-[#2d2d2d]"
+                            : "border-gray-400 text-black hover:bg-gray-200"
+                        }`}
                       >
                         Cancel
                       </button>
-                      <button className="px-5 py-2 bg-[#1f6feb] rounded text-white">
+                      <button
+                        className={`px-5 py-2 rounded text-white ${
+                          mode === "dark" ? "bg-[#1f6feb]" : "bg-blue-500"
+                        }`}
+                      >
                         Update
                       </button>
                     </div>
@@ -322,25 +551,45 @@ export default function ProofOfIdentityModal({
 
               {activeTab === "History" && (
                 <>
-                  <div className="h-[80vh] overflow-auto border border-gray-600 rounded p-2 bg-[#2b2b2b]">
-                    <div className="divide-y divide-gray-700">
+                  <div
+                    className={`h-[80vh] overflow-auto border rounded p-2 ${
+                      mode === "dark"
+                        ? "border-gray-600 bg-[#2b2b2b] divide-gray-700"
+                        : "border-gray-300 bg-white divide-gray-300"
+                    }`}
+                  >
+                    <div
+                      className={`divide-y ${
+                        mode === "dark"
+                          ? "divide-gray-700"
+                          : "divide-gray-300"
+                      }`}
+                    >
                       {history.map((h) => (
                         <div key={h.id}>
                           {/* row header */}
                           <div
-                            className="flex items-center gap-4 p-2 cursor-pointer hover:bg-[#313131]"
+                            className={`flex items-center gap-4 p-2 cursor-pointer ${
+                              mode === "dark"
+                                ? "hover:bg-[#313131] text-gray-300"
+                                : "hover:bg-gray-200 text-gray-700"
+                            }`}
                             onClick={() => toggleHistory(h.id)}
                           >
-                            <div className="w-6 text-gray-300">{h.id}</div>
-                            <div className="flex-1 text-gray-300">{h.date}</div>
-                            <div className="w-40 text-gray-300 flex items-center justify-between">
+                            <div className="w-6">{h.id}</div>
+                            <div className="flex-1">{h.date}</div>
+                            <div className="w-40 flex items-center justify-between">
                               <span>{h.author}</span>
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   toggleHistory(h.id);
                                 }}
-                                className="ml-2 p-1 rounded border border-gray-600"
+                                className={`ml-2 p-1 rounded border ${
+                                  mode === "dark"
+                                    ? "border-gray-600"
+                                    : "border-gray-400"
+                                }`}
                                 aria-label={h.expanded ? "collapse" : "expand"}
                               >
                                 {h.expanded ? (
@@ -378,31 +627,81 @@ export default function ProofOfIdentityModal({
 
                           {/* expanded details */}
                           {h.expanded && (
-                            <div className="p-4 bg-[#2b2b2b] text-sm text-gray-300">
+                            <div
+                              className={`p-4 text-sm ${
+                                mode === "dark"
+                                  ? "bg-[#2b2b2b] text-gray-300"
+                                  : "bg-white text-gray-700"
+                              }`}
+                            >
                               <div className="mb-2">
-                                <span className="text-gray-200">
+                                <span
+                                  className={
+                                    mode === "dark"
+                                      ? "text-gray-200"
+                                      : "text-gray-800"
+                                  }
+                                >
                                   Related client:
                                 </span>{" "}
                                 {h.relatedClient}
                               </div>
                               <div className="mb-2">
-                                <span className="text-gray-200">Type:</span>{" "}
+                                <span
+                                  className={
+                                    mode === "dark"
+                                      ? "text-gray-200"
+                                      : "text-gray-800"
+                                  }
+                                >
+                                  Type:
+                                </span>{" "}
                                 {h.type}
                               </div>
                               <div className="mb-2">
-                                <span className="text-gray-200">Name:</span>{" "}
+                                <span
+                                  className={
+                                    mode === "dark"
+                                      ? "text-gray-200"
+                                      : "text-gray-800"
+                                  }
+                                >
+                                  Name:
+                                </span>{" "}
                                 {h.name}
                               </div>
                               <div className="mb-2">
-                                <span className="text-gray-200">Comment:</span>{" "}
+                                <span
+                                  className={
+                                    mode === "dark"
+                                      ? "text-gray-200"
+                                      : "text-gray-800"
+                                  }
+                                >
+                                  Comment:
+                                </span>{" "}
                                 {h.comment}
                               </div>
                               <div className="mb-2">
-                                <span className="text-gray-200">Subtype:</span>{" "}
+                                <span
+                                  className={
+                                    mode === "dark"
+                                      ? "text-gray-200"
+                                      : "text-gray-800"
+                                  }
+                                >
+                                  Subtype:
+                                </span>{" "}
                                 {h.subtype}
                               </div>
                               <div className="mb-2">
-                                <span className="text-gray-200">
+                                <span
+                                  className={
+                                    mode === "dark"
+                                      ? "text-gray-200"
+                                      : "text-gray-800"
+                                  }
+                                >
                                   Files added:
                                 </span>{" "}
                                 {h.filesAdded.map(
@@ -421,11 +720,19 @@ export default function ProofOfIdentityModal({
                   <div className="mt-4 flex justify-end gap-3">
                     <button
                       onClick={onClose}
-                      className="px-4 py-2 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]"
+                      className={`px-4 py-2 border rounded ${
+                        mode === "dark"
+                          ? "border-gray-600 text-gray-200 hover:bg-[#2d2d2d]"
+                          : "border-gray-400 text-black hover:bg-gray-200"
+                      }`}
                     >
                       Cancel
                     </button>
-                    <button className="px-5 py-2 bg-[#1f6feb] rounded text-white">
+                    <button
+                      className={`px-5 py-2 rounded text-white ${
+                        mode === "dark" ? "bg-[#1f6feb]" : "bg-blue-500"
+                      }`}
+                    >
                       Update
                     </button>
                   </div>
@@ -434,9 +741,19 @@ export default function ProofOfIdentityModal({
 
               {activeTab === "Comments" && (
                 <>
-                  <div className="max-w-3xl mx-auto text-gray-300">
+                  <div
+                    className={`max-w-3xl mx-auto ${
+                      mode === "dark" ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
                     <h3 className="text-lg font-medium mb-3">Comments</h3>
-                    <div className="p-4 h-[75vh] bg-[#2b2b2b] border border-gray-700 rounded">
+                    <div
+                      className={`p-4 h-[75vh] border rounded ${
+                        mode === "dark"
+                          ? "bg-[#2b2b2b] border-gray-700 text-gray-300"
+                          : "bg-white border-gray-300 text-black"
+                      }`}
+                    >
                       No comments yet.
                     </div>
                   </div>
@@ -446,7 +763,11 @@ export default function ProofOfIdentityModal({
                         <input type="file" className="hidden" id="add-files" />
                         <button
                           onClick={() => setShowNewCommentModal(true)}
-                          className="px-4 py-2 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]"
+                          className={`px-4 py-2 border rounded ${
+                            mode === "dark"
+                              ? "border-gray-600 text-gray-200 hover:bg-[#2d2d2d]"
+                              : "border-gray-400 text-black hover:bg-gray-200"
+                          }`}
                         >
                           New Comment...
                         </button>
@@ -456,11 +777,19 @@ export default function ProofOfIdentityModal({
                     <div className="flex gap-3">
                       <button
                         onClick={onClose}
-                        className="px-4 py-2 border border-gray-600 rounded text-gray-200 hover:bg-[#2d2d2d]"
+                        className={`px-4 py-2 border rounded ${
+                          mode === "dark"
+                            ? "border-gray-600 text-gray-200 hover:bg-[#2d2d2d]"
+                            : "border-gray-400 text-black hover:bg-gray-200"
+                        }`}
                       >
                         Cancel
                       </button>
-                      <button className="px-5 py-2 bg-[#1f6feb] rounded text-white">
+                      <button
+                        className={`px-5 py-2 rounded text-white ${
+                          mode === "dark" ? "bg-[#1f6feb]" : "bg-blue-500"
+                        }`}
+                      >
                         Update
                       </button>
                     </div>
