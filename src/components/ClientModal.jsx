@@ -217,7 +217,7 @@ export default function ClientModal({ open, onClose, client }) {
               </button>
               <button
                 onClick={onClose}
-                className="hover:bg-red-600 hover:text-white w-8 h-6 mb-1 text-xl leading-none"
+                className={`w-8 h-6 text-lg leading-none ${mode === "dark" ? "text-gray-400 hover:bg-red-600" : "text-gray-600 hover:bg-gray-200"}`}
               >
                 ×
               </button>
@@ -248,7 +248,7 @@ export default function ClientModal({ open, onClose, client }) {
             {/* --- Overview Content --- */}
             {activeTab === "Overview" && (
               <>
-                <div className={`text-sm space-y-1 mb-4 ${mode === "dark" ? "border-gray-100 text-white" : "border-gray-300 text-black"}`}>
+                <div className={`text-sm space-y-1 mb-4 ${mode === "dark" ? "text-white" : "text-black"}`}>
                   <p className="">
                     **{name}**, **{login}**,{" "}
                     <span className="text-blue-400 cursor-pointer" onClick={() => setIsGroupConfigOpen(true)}>OXO B\Standard</span>,{" "}
@@ -269,8 +269,8 @@ export default function ClientModal({ open, onClose, client }) {
                     Registered: **{registered}** Last access: **{lastAccess}** Last Address: **{lastAddress}**
                   </p>
                 </div>
-                <div className="border border-gray-300 rounded-sm h-2/3">
-                  <div className="flex text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                <div className={`border rounded-sm h-2/3 ${mode === "dark" ? "border-gray-300" : "border-gray-400"}`}>
+                  <div className={`flex text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="w-2/12 px-2">Symbol</span>
                     <span className="w-1/12 px-2">Type</span>
                     <span className="w-1/12 px-2">Volume</span>
@@ -281,15 +281,15 @@ export default function ClientModal({ open, onClose, client }) {
                     <span className="w-1/12 px-2 text-right">Swap</span>
                     <span className="w-2/12 px-2 text-right">Profit</span>
                   </div>
-                  <div className="flex text-sm text-gray-200 bg-gray-500/50 py-2 border-b border-gray-700">
+                  <div className={`flex text-sm py-2 border-b ${mode === "dark" ? "text-gray-200 bg-gray-500/50 border-gray-700" : "text-black bg-gray-200 border-gray-300"}`}>
                     <span className="w-6/12 px-2 font-bold">
-                      Balance: <span className="text-white font-normal">{balance} USD</span> | Equity: <span className="text-white font-normal">{equity}</span> | Free Margin: <span className="text-white font-normal">{freeMargin}</span>
+                      Balance: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{balance} USD</span> | Equity: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{equity}</span> | Free Margin: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{freeMargin}</span>
                     </span>
                     <span className="w-3/12"></span> 
                     <span className="w-1/12 px-2"></span>
                     <span className="w-1/12 px-2 text-right">{profit}</span>
                   </div>
-                  <div className="text-gray-400 text-center py-8">
+                  <div className={`text-center py-8 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     {/* No open trades/positions */}
                   </div>
                 </div>
@@ -299,7 +299,7 @@ export default function ClientModal({ open, onClose, client }) {
             {activeTab === "Exposure" && (
               <>
                 <div className="border border-gray-700 rounded-sm h-full flex flex-col">
-                  <div className="flex text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`flex text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="w-2/12 px-2">Asset</span>
                     <span className="w-2/12 px-2">Volume</span>
                     <span className="w-2/12 px-2">Rate</span>
@@ -307,9 +307,9 @@ export default function ClientModal({ open, onClose, client }) {
                     <span className="w-2/12 px-2">Graph</span>
                     <span className="w-2/12 px-2 text-right">Long Positions</span>
                   </div>
-                  <div className="flex text-sm text-gray-200 bg-[#3c3c3c] py-2 border-b border-gray-700">
+                  <div className={`flex text-sm py-2 border-b ${mode === "dark" ? "text-gray-200 bg-[#3c3c3c] border-gray-700" : "text-black bg-gray-200 border-gray-300"}`}>
                     <span className="px-2 font-bold">
-                      • Balance: <span className="text-white font-normal">{balance} USD</span> | Equity: <span className="text-white font-normal">{equity}</span> | Free Margin: <span className="text-white font-normal">{freeMargin}</span>
+                      • Balance: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{balance} USD</span> | Equity: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{equity}</span> | Free Margin: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{freeMargin}</span>
                     </span>
                   </div>
                   <div className="flex-grow ">
@@ -327,7 +327,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Name:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={firstName}
                     readOnly
                   />
@@ -339,7 +339,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Last name:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1"
+                    className={`px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={lastName}
                     readOnly
                   />
@@ -348,7 +348,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Middle name:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1"
+                    className={`px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={middleName}
                     readOnly
                   />
@@ -360,7 +360,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Company:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={company}
                     readOnly
                   />
@@ -374,7 +374,7 @@ export default function ClientModal({ open, onClose, client }) {
 
                   <div className="relative w-[688px]">
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-full px-2 py-1 pr-8"
+                      className={`w-full px-2 py-1 pr-8 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={registered}
                       readOnly
                     />
@@ -394,7 +394,7 @@ export default function ClientModal({ open, onClose, client }) {
                         Language:
                       </label>
                       <div className="relative">
-                        <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                        <select className={`w-[260px] px-2 py-1 appearance-none ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}>
                           <option>-</option>
                         </select>
                         <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
@@ -409,7 +409,7 @@ export default function ClientModal({ open, onClose, client }) {
                         ID number:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={idNumber}
                         readOnly
                       />
@@ -421,7 +421,7 @@ export default function ClientModal({ open, onClose, client }) {
                         MetaQuotes ID:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={metaQuotesId}
                         readOnly
                       />
@@ -436,7 +436,7 @@ export default function ClientModal({ open, onClose, client }) {
                         Status:
                       </label>
                       <div className="relative">
-                        <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                        <select className={`w-[260px] px-2 py-1 appearance-none ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}>
                           <option>-</option>
                         </select>
                         <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
@@ -451,7 +451,7 @@ export default function ClientModal({ open, onClose, client }) {
                         Lead campaign:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={leadCampaign}
                         readOnly
                       />
@@ -463,7 +463,7 @@ export default function ClientModal({ open, onClose, client }) {
                         Lead source:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={leadSource}
                         readOnly
                       />
@@ -477,7 +477,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Email:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={email}
                     readOnly
                   />
@@ -489,7 +489,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Phone:
                   </label>
                   <input
-                    className="bg-[#5a1f24] text-gray-100 border border-red-600 w-[260px] px-2 py-1"
+                    className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#5a1f24] text-gray-100 border border-red-600" : "bg-red-50 text-black border border-red-400"}`}
                     value={phone}
                     readOnly
                   />
@@ -502,7 +502,7 @@ export default function ClientModal({ open, onClose, client }) {
                       Country:
                     </label>
                     <div className="relative">
-                      <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                      <select className={`w-[260px] px-2 py-1 appearance-none ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}>
                         <option>India</option>
                       </select>
                       <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
@@ -516,7 +516,7 @@ export default function ClientModal({ open, onClose, client }) {
                       State:
                     </label>
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      className={`px-2 py-1 w-[260px] ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={state}
                       readOnly
                     />
@@ -530,7 +530,7 @@ export default function ClientModal({ open, onClose, client }) {
                       City:
                     </label>
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      className={`px-2 py-1 w-[260px] ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={city}
                       readOnly
                     />
@@ -541,7 +541,7 @@ export default function ClientModal({ open, onClose, client }) {
                       Zip code:
                     </label>
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      className={`px-2 py-1 w-[260px] ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={zipCode}
                       readOnly
                     />
@@ -554,7 +554,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Address:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={address}
                     readOnly
                   />
@@ -566,7 +566,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Comment:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={comment}
                     readOnly
                   />
@@ -614,34 +614,34 @@ export default function ClientModal({ open, onClose, client }) {
                 <div className="space-y-2 pt-2">
                   <div className="flex items-center">
                     <input id="enableThisAccount" type="checkbox" checked={enableAccount} className={checkboxStyle} readOnly/>
-                    <label htmlFor="enableThisAccount" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Enable this account</label>
+                    <label htmlFor="enableThisAccount" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable this account</label>
                   </div>
                   <div className="flex items-center">
                     <input id="enablePasswordChange" type="checkbox" checked={enablePasswordChange} className={checkboxStyle} readOnly/>
-                    <label htmlFor="enablePasswordChange" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Enable password change</label>
+                    <label htmlFor="enablePasswordChange" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable password change</label>
                   </div>
                   <div className="flex items-center">
                     <input id="enableOneTimePassword" type="checkbox" checked={enableOneTimePassword} className={checkboxStyle} readOnly/>
-                    <label htmlFor="enableOneTimePassword" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Enable one-time password</label>
+                    <label htmlFor="enableOneTimePassword" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable one-time password</label>
                   </div>
                   <div className="flex items-center">
                     <input id="changePasswordNextLogin" type="checkbox" checked={changePasswordNextLogin} className={checkboxStyle} readOnly/>
-                    <label htmlFor="changePasswordNextLogin" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Change password at next login</label>
+                    <label htmlFor="changePasswordNextLogin" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Change password at next login</label>
                   </div>
                 </div>
                 <div className="pt-4 ">
                   <div className="flex gap-8">
                     <div className="flex flex-col justify-between h-[250px]">
-                      <p className="text-gray-400 text-xs w-26 mb-2">Trade accounts:</p>
+                      <p className={`text-xs w-26 mb-2 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>Trade accounts:</p>
                                         <div className="flex flex-col gap-4">
-                    <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500 text-sm h-full">Add</button>
-                    <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500 text-sm h-full">Edit</button>
-                    <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500 text-sm h-full">Delete</button>
+                    <button className={`px-4 py-1 text-sm rounded border text-sm h-full ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`}>Add</button>
+                    <button className={`px-4 py-1 text-sm rounded border text-sm h-full ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`}>Edit</button>
+                    <button className={`px-4 py-1 text-sm rounded border text-sm h-full ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`}>Delete</button>
                   </div>
                     </div>
                     
-                  <div className="border border-gray-300 rounded-sm w-2xl">
-                    <div className="grid grid-cols-2 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`border rounded-sm w-2xl ${mode === "dark" ? "border-gray-300" : "border-gray-400"}`}>
+                    <div className={`grid grid-cols-2 text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                       <span className="px-4">Gateway ID</span>
                       <span className="px-4">Account</span>
                     </div>
@@ -660,47 +660,47 @@ export default function ClientModal({ open, onClose, client }) {
                   <div className="space-y-4">
                     <div className="flex items-center">
                       <input id="showToRegularManagers" type="checkbox" checked={showToRegularManagers} className={checkboxStyle} readOnly/>
-                      <label htmlFor="showToRegularManagers" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Show to regular managers</label>
+                      <label htmlFor="showToRegularManagers" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Show to regular managers</label>
                     </div>
                     <div className="flex items-center">
                       <input id="includeInServerReports" type="checkbox" checked={includeInServerReports} className={checkboxStyle} readOnly/>
-                      <label htmlFor="includeInServerReports" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Include in server reports</label>
+                      <label htmlFor="includeInServerReports" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Include in server reports</label>
                     </div>
                     <div className="flex items-center">
                       <input id="enableDailyReports" type="checkbox" checked={enableDailyReports} className={checkboxStyle} readOnly/>
-                      <label htmlFor="enableDailyReports" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable daily reports</label>
+                      <label htmlFor="enableDailyReports" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable daily reports</label>
                     </div>
                     <div className="flex items-center pt-4">
                       <input id="enableApiConnections" type="checkbox" checked={enableApiConnections} className={checkboxStyle} readOnly/>
-                      <label htmlFor="enableApiConnections" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable API connections</label>
+                      <label htmlFor="enableApiConnections" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable API connections</label>
                     </div>
                     <div className="flex items-center">
                       <input id="enableSponsoredVps" type="checkbox" checked={enableSponsoredVps} className={checkboxStyle} readOnly/>
-                      <label htmlFor="enableSponsoredVps" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable sponsored VPS hosting</label>
+                      <label htmlFor="enableSponsoredVps" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable sponsored VPS hosting</label>
                     </div>
                     <div className="flex items-center">
                       <input id="allowSubscriptionData" type="checkbox" checked={allowSubscriptionData} className={checkboxStyle} readOnly/>
-                      <label htmlFor="allowSubscriptionData" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Allow access to subscription data via data feeds</label>
+                      <label htmlFor="allowSubscriptionData" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Allow access to subscription data via data feeds</label>
                     </div>
                   </div>
                   <div className="space-y-4">
                     <div className="flex items-center">
                       <input id="enableTrading" type="checkbox" checked={enableTrading} className={checkboxStyle} readOnly/>
-                      <label htmlFor="enableTrading" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable trading</label>
+                      <label htmlFor="enableTrading" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable trading</label>
                     </div>
                     <div className="flex items-center">
                       <input id="enableAlgoTrading" type="checkbox" checked={enableAlgoTrading} className={checkboxStyle} readOnly/>
-                      <label htmlFor="enableAlgoTrading" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable algo trading by Expert Advisors</label>
+                      <label htmlFor="enableAlgoTrading" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable algo trading by Expert Advisors</label>
                     </div>
                     <div className="flex items-center">
                       <input id="enableTrailingStops" type="checkbox" checked={enableTrailingStops} className={checkboxStyle} readOnly/>
-                      <label htmlFor="enableTrailingStops" className="ml-2 text-sm font-medium text-gray-200 cursor-pointer">Enable trailing stops</label>
+                      <label htmlFor="enableTrailingStops" className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Enable trailing stops</label>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-4 pt-6 max-w-lg">
                   <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-400 w-64">
+                    <label className={`text-sm font-medium w-64 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                       Limit total value of positions:
                     </label>
                     <div className="relative flex-grow">
@@ -709,10 +709,10 @@ export default function ClientModal({ open, onClose, client }) {
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
                     </div>
-                    <span className="text-gray-200 text-sm">USD</span>
+                    <span className={`text-sm ${mode === "dark" ? "text-gray-200" : "text-black"}`}>USD</span>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-400 w-64">
+                    <label className={`text-sm font-medium w-64 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                       Limit number of active orders:
                     </label>
                     <div className="relative flex-grow">
@@ -729,17 +729,17 @@ export default function ClientModal({ open, onClose, client }) {
             {activeTab === "Profile" && (
               <div className="flex justify-center h-full items-start pt-10 overflow-y-auto">
                 <div className="w-full max-w-md text-center space-y-6">
-                  <h2 className="text-2xl font-semibold text-gray-200">
+                  <h2 className={`text-2xl font-semibold ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     MetaQuotes Support Center
                   </h2>
                   <p className="text-blue-400 text-sm">
                     https://support.metaquotes.net — Authorization
                   </p>
-                  <p className="text-gray-200 mt-6 max-w-sm mx-auto">
+                  <p className={`mt-6 max-w-sm mx-auto ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     MetaQuotes Technical Support Center features unique information
                     and provides direct access to assistance from our support team
                   </p>
-                  <p className="text-gray-400 italic">
+                  <p className={`italic ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     Only available to authorized users
                   </p>
                   <form className="space-y-6 pt-4">
@@ -774,7 +774,7 @@ export default function ClientModal({ open, onClose, client }) {
                     </button>
                   </form>
                   <div className="pt-4 text-sm">
-                    <p className="text-gray-400">
+                    <p className={`${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                       Don't have a Support Center account?{" "}
                       <a href="#" className="text-blue-400 hover:underline">
                         Register
@@ -792,8 +792,8 @@ export default function ClientModal({ open, onClose, client }) {
             )}
             {/* --- Subscriptions Content --- */}
             {activeTab === "Subscriptions" && (
-              <div className="border border-gray-700 rounded-sm h-full flex flex-col">
-                <div className="grid grid-cols-7 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+              <div className={`border rounded-sm h-full flex flex-col ${mode === "dark" ? "border-gray-700" : "border-gray-400"}`}>
+                <div className={`grid grid-cols-7 text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                   <span className="px-4">ID</span>
                   <span className="px-4">Subscription</span>
                   <span className="px-4">Status</span>
@@ -802,7 +802,7 @@ export default function ClientModal({ open, onClose, client }) {
                   <span className="px-4">Expiration time</span>
                   <span className="px-4">Price</span>
                 </div>
-                <div className="flex-grow text-gray-400 text-center py-12">
+                <div className={`flex-grow text-center py-12 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                   {/* No subscriptions listed */}
                 </div>
               </div>
@@ -814,7 +814,7 @@ export default function ClientModal({ open, onClose, client }) {
                   {/* Top Table: Active Payments/Requests */}
                   <div className="border border-gray-300 rounded-sm flex-grow min-h-[50%] flex flex-col">
                       {/* Header */}
-                      <div className="flex items-center justify-between text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                      <div className={`flex items-center justify-between text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                           <span className="px-4">ID</span>
                           <span className="px-4">Action</span>
                           <span className="px-4">State</span>
@@ -825,8 +825,8 @@ export default function ClientModal({ open, onClose, client }) {
                           <span className="px-4">User C...</span>
                       </div>
                       {/* Body */}
-                      <div className="flex-grow text-gray-400  text-left py-2 px-4 italic text-sm">
-                         <p className="bg-[#3c3c3c]"> No active payments</p>
+                      <div className={`flex-grow text-left py-2 px-4 italic text-sm ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+                         <p className={`${mode === "dark" ? "bg-[#3c3c3c]" : "bg-gray-200"}`}> No active payments</p>
                       </div>
                   </div>
 
@@ -853,7 +853,7 @@ export default function ClientModal({ open, onClose, client }) {
                           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">&#9662;</span>
                       </div>
                       
-                      <button className="px-4 py-1.5 text-sm text-white rounded-sm border border-gray-600">
+                      <button className={`px-4 py-1.5 text-sm rounded-sm border ${mode === "dark" ? "text-white border-gray-600" : "text-black border-gray-400"}`}>
                           Request
                       </button>
                   </div>
@@ -861,7 +861,7 @@ export default function ClientModal({ open, onClose, client }) {
                   {/* Bottom Table: Saved Cards/Payment Methods (shorter) */}
                   <div className="border border-gray-300 rounded-sm flex-grow min-h-[25%] flex flex-col">
                       {/* Header */}
-                      <div className="flex items-center justify-between text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                      <div className={`flex items-center justify-between text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                           <span className="px-4">ID</span>
                           <span className="px-4">Gateway</span>
                           <span className="px-4">Type</span>
@@ -899,7 +899,7 @@ export default function ClientModal({ open, onClose, client }) {
                       <label htmlFor="amount" className={labelStyle}>Amount:</label>
                       <div className="flex items-center space-x-1">
                           <input type="text" id="amount" className={inputStyle} placeholder="..." />
-                          <span className="text-gray-400 text-sm">USD</span>
+                          <span className={`text-sm ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>USD</span>
                       </div>
                     </div>
                     <div className="w-2/4 flex items-center gap-2">
@@ -917,16 +917,16 @@ export default function ClientModal({ open, onClose, client }) {
                   <div className="flex items-center space-x-6">
                     <div className="flex items-center">
                       <input id="checkFreeMargin" type="checkbox" className={checkboxStyle} />
-                      <label htmlFor="checkFreeMargin" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">
+                      <label htmlFor="checkFreeMargin" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                         Conduct balance operation without checking the free margin and the current balance on the account
                       </label>
                     </div>
                     
                     <div className="flex space-x-2">
-                      <button className="px-6 py-1 text-xs text-gray-200 rounded hover:bg-gray-500 border border-gray-500 disabled:opacity-50" disabled>
+                      <button className={`px-6 py-1 text-xs rounded border disabled:opacity-50 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`} disabled>
                         Deposit
                       </button>
-                      <button className="px-6 py-1 text-xs text-gray-200 rounded hover:bg-gray-500 border border-gray-500 disabled:opacity-50" disabled>
+                      <button className={`px-6 py-1 text-xs rounded border disabled:opacity-50 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`} disabled>
                         Withdrawal
                       </button>
                     </div>
@@ -937,7 +937,7 @@ export default function ClientModal({ open, onClose, client }) {
                 <div className="border border-gray-300 rounded-sm flex-grow flex flex-col">
                   
                   {/* Header */}
-                  <div className="grid grid-cols-4 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`grid grid-cols-4 text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="px-4">Time</span>
                     <span className="px-4">Deal</span>
                     <span className="px-4">Type</span>
@@ -945,9 +945,9 @@ export default function ClientModal({ open, onClose, client }) {
                   </div>
                   
                   {/* Balance Summary Row */}
-                  <div className="flex text-sm text-gray-200 bg-[#3c3c3c] py-2 border-b border-gray-700">
+                  <div className={`flex text-sm py-2 border-b ${mode === "dark" ? "text-gray-200 bg-[#3c3c3c] border-gray-700" : "text-black bg-gray-200 border-gray-300"}`}>
                     <span className="px-4 font-bold">
-                      • Balance: <span className="text-white font-normal">{balance} USD</span> | Equity: <span className="text-white font-normal">{equity}</span> | Free: <span className="text-white font-normal">{freeMargin}</span>
+                      • Balance: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{balance} USD</span> | Equity: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{equity}</span> | Free: <span className={`font-normal ${mode === "dark" ? "text-white" : "text-black"}`}>{freeMargin}</span>
                     </span>
                   </div>
                   
@@ -957,7 +957,7 @@ export default function ClientModal({ open, onClose, client }) {
                   </div>
                   
                   {/* Footer/Filter */}
-                  <div className="flex items-center justify-end space-x-2 p-2 border-t border-gray-700">
+                  <div className={`flex items-center justify-end space-x-2 p-2 border-t ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                       <div className="relative">
                           <select className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8">
                               <option>Last 3 months</option>
@@ -995,11 +995,11 @@ export default function ClientModal({ open, onClose, client }) {
                 {/* Left Side: Chart Area */}
                 <div className="w-3/5 border border-gray-700  relative flex flex-col overflow-hidden">
                   {/* Symbol label on top left of chart */}
-                  <div className="absolute top-2 left-2 text-gray-200 text-sm bg-black bg-opacity-50 p-1 rounded-sm z-20">
+                  <div className={`absolute top-2 left-2 text-sm p-1 rounded-sm z-20 ${mode === "dark" ? "text-gray-200 bg-black bg-opacity-50" : "text-black bg-white bg-opacity-80"}`}>
                       EURUSD, M1
                   </div>
                   {/* Price Axis */}
-                  <div className="absolute right-0 top-0 bottom-0 w-12 text-xs text-gray-400 bg-[#2c2c2c] border-l border-gray-700 flex flex-col justify-around py-2 z-20" style={{height: 'calc(100% - 24px)'}}>
+                  <div className={`absolute right-0 top-0 bottom-0 w-12 text-xs border-l flex flex-col justify-around py-2 z-20 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`} style={{height: 'calc(100% - 24px)'}}>
                       <div className="text-right pr-1">1.15475</div>
                       <div className="text-right pr-1">1.15470</div>
                       <div className="text-right pr-1 font-bold bg-blue-500 text-white py-1">1.15462</div>
@@ -1009,7 +1009,7 @@ export default function ClientModal({ open, onClose, client }) {
                       <div className="text-right pr-1">1.15445</div>
                   </div>
                   {/* Time Axis */}
-                  <div className="absolute bottom-0 left-0 right-12 h-6 text-xs text-gray-400 bg-[#2c2c2c] border-t border-gray-700 flex justify-around items-center px-2 z-20">
+                  <div className={`absolute bottom-0 left-0 right-12 h-6 text-xs border-t flex justify-around items-center px-2 z-20 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                       <span>10:49:00</span>
                       <span>10:50:00</span>
                       <span>10:51:00</span>
@@ -1023,7 +1023,7 @@ export default function ClientModal({ open, onClose, client }) {
                       {/* Horizontal Grid Lines (subtle gray lines) */}
                       <div className="absolute inset-0 w-full h-full z-0 pointer-events-none">
                           {[...Array(10)].map((_, i) => (
-                              <div key={i} className="absolute left-0 right-12 border-t border-gray-800" style={{top: `${i * 10}%`}}></div>
+                              <div key={i} className={`absolute left-0 right-12 border-t ${mode === "dark" ? "border-gray-800" : "border-gray-300"}`} style={{top: `${i * 10}%`}}></div>
                           ))}
                       </div>
 
@@ -1044,35 +1044,35 @@ export default function ClientModal({ open, onClose, client }) {
                 </div>
                 
                 {/* Right Side: Order Panel */}
-                <div className="w-3/5 pt-2 space-y-4 text-gray-100 font-sans">
+                <div className={`w-3/5 pt-2 space-y-4 font-sans ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
 
       {/* Symbol & Type */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <label htmlFor="symbol" className="text-sm text-gray-300 min-w-[100px]">Symbol:</label>
+          <label htmlFor="symbol" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>Symbol:</label>
           <div className="relative">
             <select
               id="symbol"
               defaultValue="EURUSD"
-              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+              className={`appearance-none border rounded-sm px-3 py-1 w-[320px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
             >
               <option>EURUSD, Euro vs US Dollar</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+            <div className={`pointer-events-none absolute inset-y-0 right-2 flex items-center ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>▾</div>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="type" className="text-sm text-gray-300 min-w-[100px]">Type:</label>
+          <label htmlFor="type" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>Type:</label>
           <div className="relative">
             <select
               id="type"
               defaultValue="Market Order"
-              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+              className={`appearance-none border rounded-sm px-3 py-1 w-[320px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
             >
               <option>Market Order</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+            <div className={`pointer-events-none absolute inset-y-0 right-2 flex items-center ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>▾</div>
           </div>
         </div>
       </div>
@@ -1080,30 +1080,30 @@ export default function ClientModal({ open, onClose, client }) {
       {/* Volume & Fill Policy */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <label htmlFor="volume" className="text-sm text-gray-300 min-w-[100px]">Volume:</label>
+          <label htmlFor="volume" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>Volume:</label>
           <div className="flex items-center gap-2">
             <input
               type="number"
               id="volume"
               defaultValue={volumeDefault}
               min="0"
-              className="bg-[#3c3c3c] text-[#00baff] border border-white/85 rounded-sm px-2 py-1 w-28 text-sm text-right"
+              className={`border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] text-[#00baff] border-white/85" : "bg-white text-blue-600 border-gray-400"}`}
             />
-            <span className="text-gray-400 text-sm">1 000 EUR</span>
+            <span className={`text-sm ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>1 000 EUR</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="fillPolicy" className="text-sm text-gray-300 min-w-[100px]">Fill Policy:</label>
+          <label htmlFor="fillPolicy" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>Fill Policy:</label>
           <div className="relative">
             <select
               id="fillPolicy"
               defaultValue="Fill or Kill"
-              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+              className={`appearance-none border rounded-sm px-3 py-1 w-[320px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
             >
               <option>Fill or Kill</option>
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+            <div className={`pointer-events-none absolute inset-y-0 right-2 flex items-center ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>▾</div>
           </div>
         </div>
       </div>
@@ -1112,23 +1112,23 @@ export default function ClientModal({ open, onClose, client }) {
       <div className="space-y-2">
 
         <div className="flex items-center gap-2">
-          <label htmlFor="atPrice" className="text-sm text-gray-300 min-w-[100px]">At Price:</label>
+          <label htmlFor="atPrice" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>At Price:</label>
           <div className="flex items-center gap-2">
             <input
               type="number"
               id="atPrice"
               defaultValue={atPriceDefault}
-              className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+              className={`border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
             />
             <button
               title="Update"
-              className="text-gray-400 hover:text-white text-sm"
+              className={`text-sm ${mode === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"}`}
               type="button"
             >
               ↻
             </button>
 
-            <label className="inline-flex items-center gap-2 text-sm text-gray-200 ml-3">
+            <label className={`inline-flex items-center gap-2 text-sm ml-3 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
               <input type="checkbox" defaultChecked className="accent-sky-400 w-4 h-4" />
               <span className="text-sm">Auto</span>
             </label>
@@ -1136,33 +1136,33 @@ export default function ClientModal({ open, onClose, client }) {
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="stopLoss" className="text-sm text-gray-300 min-w-[100px]">Stop Loss:</label>
+          <label htmlFor="stopLoss" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>Stop Loss:</label>
           <input
             type="number"
             id="stopLoss"
             defaultValue="0.00000"
-            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            className={`border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="takeProfit" className="text-sm text-gray-300 min-w-[100px]">Take Profit:</label>
+          <label htmlFor="takeProfit" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>Take Profit:</label>
           <input
             type="number"
             id="takeProfit"
             defaultValue="0.00000"
-            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            className={`border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
           />
         </div>
       </div>
 
       {/* Comment */}
       <div className="flex items-center gap-2 pt-2">
-        <label htmlFor="commentTrade" className="text-sm text-gray-300 min-w-[100px]">Comment:</label>
+        <label htmlFor="commentTrade" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-700"}`}>Comment:</label>
         <input
           type="text"
           id="commentTrade"
-          className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-full min-w-[360px] text-sm"
+          className={`border rounded-sm px-2 py-1 w-full min-w-[360px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
         />
       </div>
 
@@ -1193,8 +1193,8 @@ export default function ClientModal({ open, onClose, client }) {
         </button>
       </div>
 
-      {/* dark bottom bar */}
-      <div className="h-8 rounded-sm border border-white/5 mt-4" />
+      {/* bottom bar */}
+      <div className={`h-8 rounded-sm border mt-4 ${mode === "dark" ? "border-white/5" : "border-gray-300"}`} />
 
     </div>
               </div>
@@ -1208,7 +1208,7 @@ export default function ClientModal({ open, onClose, client }) {
                 <div className="border border-gray-300 rounded-sm flex-grow flex flex-col">
                   
                   {/* Header */}
-                  <div className="grid grid-cols-10 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`grid grid-cols-10 text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="px-4">Time</span>
                     <span className="px-4">Order</span>
                     <span className="px-4">Symbol</span>
@@ -1228,30 +1228,30 @@ export default function ClientModal({ open, onClose, client }) {
                 </div>
                 
                 {/* Footer/Filter */}
-                <div className="flex items-center justify-end space-x-2 p-2 border-t border-gray-700">
+                <div className={`flex items-center justify-end space-x-2 p-2 border-t ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                     <div className="relative">
-                        <select className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8">
+                        <select className={`border rounded-sm p-1.5 pr-8 text-sm ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 text-gray-100" : "bg-white border-gray-400 text-black"}`}>
                             <option>Last month</option>
                             {/* Other time periods */}
                         </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">&#9662;</div>
-                    </div>
-                    
-                    {/* Date Picker 1 */}
-                    <div className="relative">
-                        <input type="text" defaultValue="2025.11.01" className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"/>
-                        <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">&#9662;</span>
+                        <div className={`pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>&#9662;</div>
                     </div>
 
-                    <span className="text-gray-400">-</span>
-                    
+                    {/* Date Picker 1 */}
+                    <div className="relative">
+                        <input type="text" defaultValue="2025.11.01" className={`border rounded-sm p-1.5 pr-8 w-24 text-sm ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 text-gray-100" : "bg-white border-gray-400 text-black"}`}/>
+                        <span className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>&#9662;</span>
+                    </div>
+
+                    <span className={`text-gray-400 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>-</span>
+
                     {/* Date Picker 2 */}
                     <div className="relative">
-                        <input type="text" defaultValue="2025.11.21" className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"/>
-                        <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">&#9662;</span>
+                        <input type="text" defaultValue="2025.11.21" className={`border rounded-sm p-1.5 pr-8 w-24 text-sm ${mode === "dark" ? "bg-[#3c3c3c] border-gray-600 text-gray-100" : "bg-white border-gray-400 text-black"}`}/>
+                        <span className={`absolute right-2 top-1/2 transform -translate-y-1/2 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>&#9662;</span>
                     </div>
                     
-                    <button className="px-4 py-1.5 text-sm  text-white rounded-sm  border border-gray-600">
+                    <button className={`px-4 py-1.5 text-sm rounded-sm border ${mode === "dark" ? "text-white border-gray-600" : "text-black border-gray-400"}`}>
                         Request
                     </button>
                 </div>
@@ -1260,7 +1260,7 @@ export default function ClientModal({ open, onClose, client }) {
 
             {/* --- Security Content --- */}
             {activeTab === "Security" && (
-              <div className="space-y-4  max-w-2xl mx-auto text-gray-100">
+              <div className={`space-y-4 max-w-2xl mx-auto ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
                 
                 {/* Master Password */}
                 <div className="space-y-1">
@@ -1269,17 +1269,17 @@ export default function ClientModal({ open, onClose, client }) {
                   </p>
                   <div className="flex items-end space-x-2">
                     <input type="password" className={inputStyle} defaultValue="********" />
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded border w-20 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-600" : "text-black hover:bg-gray-300 border-gray-400"}`}>
                       Check
                     </button>
-                    <button className="px-4  text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded border w-20 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-600" : "text-black hover:bg-gray-300 border-gray-400"}`}>
                       Change
                     </button>
-                    <button className="px-4  text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-24">
+                    <button className={`px-4 text-sm rounded border w-24 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-600" : "text-black hover:bg-gray-300 border-gray-400"}`}>
                       Generate
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 pl-1">minimum 8 characters</p>
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>minimum 8 characters</p>
                 </div>
 
                 {/* Investor Password */}
@@ -1289,14 +1289,14 @@ export default function ClientModal({ open, onClose, client }) {
                   </p>
                   <div className="flex items-end space-x-2">
                     <input type="password" className={inputStyle} defaultValue="********" />
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded border w-20 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-600" : "text-black hover:bg-gray-300 border-gray-400"}`}>
                       Check
                     </button>
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded border w-20 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-600" : "text-black hover:bg-gray-300 border-gray-400"}`}>
                       Change
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 pl-1">minimum 8 characters</p>
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>minimum 8 characters</p>
                 </div>
 
                 {/* API Password */}
@@ -1306,14 +1306,14 @@ export default function ClientModal({ open, onClose, client }) {
                   </p>
                   <div className="flex items-end space-x-2">
                     <input type="password" className={inputStyle} defaultValue="********" />
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded border w-20 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-600" : "text-black hover:bg-gray-300 border-gray-400"}`}>
                       Check
                     </button>
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded border w-20 ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-600" : "text-black hover:bg-gray-300 border-gray-400"}`}>
                       Change
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 pl-1">minimum 8 characters</p>
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>minimum 8 characters</p>
                 </div>
                 
                 {/* Phone Password */}
@@ -1323,7 +1323,7 @@ export default function ClientModal({ open, onClose, client }) {
                   </p>
                   <div className="relative">
                     <input type="password" className={inputStyle} defaultValue="****" />
-                    <p className="text-xs text-gray-400 pl-1 mt-1">
+                    <p className={`text-xs pl-1 mt-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                       to view password set focus to field
                     </p>
                   </div>
@@ -1334,7 +1334,7 @@ export default function ClientModal({ open, onClose, client }) {
                   <p className="text-sm">
                     **Shared secret key** in combination with the current timestamp is used to generate one-time password
                   </p>
-                  <p className="text-xs text-gray-400 pl-1">OTP secret key</p>
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>OTP secret key</p>
                   <input type="text" className={inputStyle} defaultValue="... secret key ..." />
                 </div>
               </div>
