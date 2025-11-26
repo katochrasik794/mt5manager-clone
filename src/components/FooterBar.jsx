@@ -115,7 +115,7 @@ export default function App() {
                 {/* Logs Content Area */}
                 <div className={`p-2 transition-opacity duration-300 ${isLogsPanelOpen ? 'opacity-100' : 'opacity-0 h-0'}`}>
                     <div
-                        className="h-64 overflow-y-auto rounded-sm custom-scrollbar"
+                        className={`h-64 overflow-y-auto rounded-sm ${mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light'}`}
                         style={{ border: `1px solid ${styles.borderColor}`, backgroundColor: styles.logDefaultBg }}
                     >
                         {/* Table Header Row */}
@@ -158,11 +158,11 @@ export default function App() {
                 className="p-3 text-sm flex items-center justify-between shadow-lg"
                 style={{ backgroundColor: styles.panelBg, borderTop: `1px solid ${styles.borderColor}` }}
             >
-                <div className="text-gray-400">
-                    Login time: <span className="font-medium text-white">{login}</span>
+                <div className={`${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+                    Login time: <span className={`font-medium ${mode === "dark" ? "text-white" : "text-black"}`}>{login}</span>
                 </div>
-                <div className="text-gray-400">
-                    Logout time: <span className="font-medium text-white">{logout}</span>
+                <div className={`${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+                    Logout time: <span className={`font-medium ${mode === "dark" ? "text-white" : "text-black"}`}>{logout}</span>
                 </div>
             </footer>
         </div>

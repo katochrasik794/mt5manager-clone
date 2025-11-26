@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import Mycontext from "../context/Mycontext";
 
 // Modal for adding or editing a specific symbol's commission parameters.
 export default function CommissionAddEditModal({ open, onClose, isEditing = false, initialData = {} }) {
-    
+    const { mode } = useContext(Mycontext);
+
     // States for input fields based on the image
     const [name, setName] = useState(initialData.name || "");
     const [description, setDescription] = useState(initialData.description || "");
@@ -14,12 +16,18 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
 
     if (!open) return null;
 
-    // Generic dark theme styling
-    const inputStyle = "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block";
-    const labelStyle = "block text-xs font-medium text-gray-400 mb-1";
-    const radioStyle = "w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 focus:ring-blue-500";
-    const buttonStyle = "px-4 py-1 text-sm bg-gray-600 text-gray-200 rounded hover:bg-gray-500";
-    const smallButtonStyle = "px-4 py-1 text-sm border border-gray-600 text-gray-200 rounded hover:bg-[#4c4c4c]";
+    // Generic styling
+    const inputStyle = mode === "dark"
+        ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block"
+        : "bg-white border border-gray-400 text-black text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block";
+    const labelStyle = `block text-xs font-medium mb-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`;
+    const radioStyle = mode === "dark"
+        ? "w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 focus:ring-blue-500"
+        : "w-4 h-4 text-blue-600 bg-white border-gray-400 focus:ring-blue-500";
+    const buttonStyle = mode === "dark"
+        ? "px-4 py-1 text-sm bg-gray-600 text-gray-200 rounded hover:bg-gray-500"
+        : "px-4 py-1 text-sm bg-gray-300 text-black rounded hover:bg-gray-400";
+    const smallButtonStyle = `px-4 py-1 text-sm border rounded ${mode === "dark" ? "border-gray-600 text-gray-200 hover:bg-[#4c4c4c]" : "border-gray-400 text-black hover:bg-gray-300"}`;
 
 
     // Placeholder for save logic
@@ -34,11 +42,11 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
 
     return (
         <div className="fixed inset-0 backdrop-blur  flex items-center justify-center z-[70]">
-            <div className="bg-[#2c2c2c] rounded-sm border border-gray-700 shadow-2xl max-w-xl w-full">
-                
+            <div className={`rounded-sm border shadow-2xl max-w-xl w-full ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
+
                 {/* Title Bar */}
-                <div className="flex items-center justify-between p-1 bg-[#2c2c2c] border-b border-gray-700">
-                    <h3 className="text-sm font-semibold text-gray-100 ml-2">
+                <div className={`flex items-center justify-between p-1 border-b ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
+                    <h3 className={`text-sm font-semibold ml-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
                         {title}
                     </h3>
                     <button onClick={onClose} className="text-gray-400 hover:bg-red-600 hover:text-white w-8 h-6 text-xl leading-none">
@@ -55,7 +63,7 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
                         <div className="px-4 py-2 bg-yellow-700/50 rounded-lg">
                             <span className="text-3xl text-yellow-400 font-bold">$</span>
                         </div>
-                        <p className="text-gray-200 text-xs pt-3.5">Adjustment of commissions parameters of the symbol.</p>
+                        <p className={`text-xs pt-3.5 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Adjustment of commissions parameters of the symbol.</p>
                     </div>
 
                     {/* Input Fields and Radio Buttons */}
@@ -113,19 +121,19 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
                         {/* Column 2: Charge & Turnover Currency */}
                         <div className="space-y-2">
 
-                        <fieldset className="p-2 space-y-2 border border-gray-300 rounded-sm self-start">
+                        <fieldset className={`p-2 space-y-2 border rounded-sm self-start ${mode === "dark" ? "border-gray-300" : "border-gray-400"}`}>
                             <legend className="sr-only">Commission Type</legend>
                             <div className="flex items-center">
                                 <input id="standardCommission" type="radio" value="Standard commission" checked={commissionType === "Standard commission"} onChange={(e) => setCommissionType(e.target.value)} className={radioStyle} />
-                                <label htmlFor="standardCommission" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Standard commission</label>
+                                <label htmlFor="standardCommission" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Standard commission</label>
                             </div>
                             <div className="flex items-center">
                                 <input id="agentCommission" type="radio" value="Agent commission" checked={commissionType === "Agent commission"} onChange={(e) => setCommissionType(e.target.value)} className={radioStyle} />
-                                <label htmlFor="agentCommission" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Agent commission</label>
+                                <label htmlFor="agentCommission" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Agent commission</label>
                             </div>
                             <div className="flex items-center">
                                 <input id="fee" type="radio" value="Fee" checked={commissionType === "Fee"} onChange={(e) => setCommissionType(e.target.value)} className={radioStyle} />
-                                <label htmlFor="fee" className="ml-2 text-xs font-medium text-gray-200 cursor-pointer">Fee</label>
+                                <label htmlFor="fee" className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}>Fee</label>
                             </div>
                         </fieldset>
                             
@@ -140,21 +148,21 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
 
                     {/* Commissions Table (Empty Placeholder) */}
                     <div className="flex space-x-4 pt-4">
-                        <div className="flex-grow border border-gray-600 h-40 overflow-auto custom-scrollbar">
-                            <table className="min-w-full divide-y divide-gray-600">
+                        <div className={`flex-grow border h-40 overflow-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"} ${mode === "dark" ? "border-gray-600" : "border-gray-400"}`}>
+                            <table className={`min-w-full divide-y ${mode === "dark" ? "divide-gray-600" : "divide-gray-400"}`}>
                                 <thead>
                                     <tr>
                                         {['From', 'To', 'Commission', 'Minimal', 'Maximal', 'Mode', 'Currency', 'Type'].map((header) => (
-                                            <th key={header} className="px-3 py-1.5 text-left text-xs font-medium text-gray-400 uppercase tracking-wider bg-[#2c2c2c] whitespace-nowrap">
+                                            <th key={header} className={`px-3 py-1.5 text-left text-xs font-medium uppercase tracking-wider whitespace-nowrap ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c]" : "text-gray-600 bg-gray-100"}`}>
                                                 {header}
                                             </th>
                                         ))}
                                     </tr>
                                 </thead>
                                 {/* Empty Tbody as seen in the image */}
-                                <tbody className=" divide-y divide-gray-700 text-sm text-gray-300">
+                                <tbody className={`divide-y text-sm ${mode === "dark" ? "divide-gray-700 text-gray-300" : "divide-gray-400 text-black"}`}>
                                     <tr>
-                                        <td colSpan={8} className="text-center p-4 text-gray-500 italic bg-[#1e1e1e]">No commission tiers defined.</td>
+                                        <td colSpan={8} className={`text-center p-4 italic ${mode === "dark" ? "text-gray-500 bg-[#1e1e1e]" : "text-gray-600 bg-gray-50"}`}>No commission tiers defined.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -170,8 +178,8 @@ export default function CommissionAddEditModal({ open, onClose, isEditing = fals
                 </div>
 
                 {/* Footer Buttons */}
-                <div className="flex justify-end p-2 bg-[#2c2c2c] border-t border-gray-700 space-x-2">
-                    <button onClick={handleSave} className="px-4 py-1 text-sm border border-gray-600 hover:bg-gray-600 text-white rounded ">
+                <div className={`flex justify-end p-2 border-t space-x-2 ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
+                    <button onClick={handleSave} className={`px-4 py-1 text-sm border rounded ${mode === "dark" ? "border-gray-600 hover:bg-gray-600 text-white" : "border-gray-400 hover:bg-gray-400 text-black"}`}>
                         OK
                     </button>
                     <button onClick={onClose} className={buttonStyle}>

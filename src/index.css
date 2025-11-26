@@ -30,6 +30,23 @@ body {
     scrollbar-color: #3c3c3c #2c2c2c; /* thumb track */
 }
 
+/* Light mode scrollbar */
+.custom-scrollbar-light::-webkit-scrollbar {
+    width: 8px;
+}
+
+.custom-scrollbar-light::-webkit-scrollbar-track {
+    background: white; /* scrollbar background */
+}
+
+.custom-scrollbar-light::-webkit-scrollbar-thumb {
+    background: #2c2c2c; /* thumb color */
+}
+
+.custom-scrollbar-light {
+    scrollbar-color: #2c2c2c white; /* thumb track */
+}
+
 /* Sidebar scrollbar styles */
 .sidebar-scroll::-webkit-scrollbar {
   background: #111827;

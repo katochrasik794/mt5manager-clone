@@ -243,7 +243,7 @@ export default function ClientModal({ open, onClose, client }) {
 
           {/* Main Content Area */}
           {/* Only the Profile tab is forced to have no scroll; others can scroll if content exceeds height */}
-          <div className={`p-4 h-[calc(100%-65px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${(activeTab === 'Personal' || activeTab === 'Trade' || activeTab === 'Profile') ? 'custom-scrollbar' : ''}`}>
+          <div className={`p-4 h-[calc(100%-65px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${(activeTab === 'Personal' || activeTab === 'Trade' || activeTab === 'Profile') ? (mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light') : ''}`}>
             
             {/* --- Overview Content --- */}
             {activeTab === "Overview" && (
