@@ -1,7 +1,8 @@
 
-import React from "react";
+import React, { useContext } from "react";
 import { FaUser } from 'react-icons/fa';
 import ClientModal from "../../components/ClientModal";
+import Mycontext from "../../context/Mycontext";
 
 const sampleData = (count = 80) => {
   const rows = [];
@@ -24,6 +25,7 @@ const sampleData = (count = 80) => {
 };
 
 export default function TradingAccounts() {
+  const { mode } = useContext(Mycontext);
   // If you have a prop or real data, replace this with your real array.
   const rows = sampleData(11); // many rows to demonstrate scrolling
   const [selectedClient, setSelectedClient] = React.useState(null);
@@ -41,23 +43,23 @@ export default function TradingAccounts() {
         <div className="text-sm text-gray-400">Showing table — scroll to see more</div>
       </div> */}
 
-      <div className="bg-[#2c2c2c] rounded-md border h-[75vh] border-gray-700 shadow-sm overflow-hidden ">
+      <div className={`rounded-md border h-[75vh] shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Table header */}
         <div className="w-full overflow-x-auto">
           <table className="min-w-full table-auto border-collapse">
             <thead>
               <tr className="">
                 {/* sticky header: using position: sticky via utility classes */}
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[88px]">Login</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[180px]">Name</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[160px]">Group</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[96px]">Country</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[80px]">Client</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[120px]">Balance</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[140px]">Balance / Checked</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[100px]">Equity</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[120px]">Profit</th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[72px]">Currency</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[88px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Login</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[180px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Name</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[160px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Group</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[96px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Country</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[80px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Client</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[120px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Balance</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[140px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Balance / Checked</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[100px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Equity</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[120px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Profit</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[72px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Currency</th>
               </tr>
             </thead>
           </table>
@@ -71,19 +73,19 @@ export default function TradingAccounts() {
                 <tr
                   key={r.login + "-" + idx}
                   onDoubleClick={() => onRowDoubleClick(r)}
-                  className={`border-b border-gray-800 hover:bg-gray-800/40 cursor-pointer ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}`}
+                  className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                   title="Double-click to open client details"
                 >
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[88px] flex gap-2 items-center"><FaUser /> {r.login}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[180px]">{r.name}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[160px]">{r.group}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[96px]">{r.country}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[80px]">{r.client}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[120px]">{r.balance}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[140px]">{r.balanceChecked}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[100px]">{r.equity}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[120px]">{r.profit}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[72px]">{r.currency}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[88px] flex gap-2 items-center ${mode === "dark" ? "text-gray-200" : "text-black"}`}><FaUser /> {r.login}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.name}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.group}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[96px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.country}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.client}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balance}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[140px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balanceChecked}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.equity}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.profit}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[72px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.currency}</td>
                 </tr>
               ))}
             </tbody>

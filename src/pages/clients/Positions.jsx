@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaUser } from 'react-icons/fa';
 import UserModal from "../../components/UserModal";
+import Mycontext from "../../context/Mycontext";
 
 const sampleData = () => {
   // Rows taken from the screenshot (order preserved)
@@ -23,6 +24,7 @@ const sampleData = () => {
 };
 
 export default function Positions() {
+  const { mode } = useContext(Mycontext);
   // Use the specific rows that match the screenshot
   const rows = sampleData();
   const [selectedClient, setSelectedClient] = React.useState(null);
@@ -35,21 +37,21 @@ export default function Positions() {
 
   return (
     <div className="">
-      <div className="bg-[#2c2c2c] rounded-md border h-[75vh] border-gray-700 shadow-sm overflow-hidden ">
+      <div className={`rounded-md border h-[75vh] shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Table header - allow horizontal scroll for small screens */}
         <div className="w-full overflow-x-auto">
           <table className="w-full table-auto border-collapse min-w-0">
             <thead>
               <tr>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[88px]">Login</th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[120px]">Position</th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[120px]">Symbol</th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[80px]">Type</th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[80px]">Volume</th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[100px]">Price</th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[100px]">Price</th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[120px]">Reason</th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 min-w-[72px]">Swap</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[88px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Login</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[120px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Position</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[120px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Symbol</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[80px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Type</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[80px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Volume</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[100px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Price</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[100px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Price</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b min-w-[120px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Reason</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b min-w-[72px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-700 border-gray-300"}`}>Swap</th>
               </tr>
             </thead>
           </table>
@@ -63,18 +65,18 @@ export default function Positions() {
                 <tr
                   key={r.position + "-" + idx}
                   onDoubleClick={() => onRowDoubleClick(r)}
-                  className={`border-b border-gray-800 hover:bg-gray-800/40 cursor-pointer ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}`}
+                  className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                   title="Double-click to open client details"
                 >
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[88px] flex gap-2 items-center truncate"><FaUser /> <span className="truncate">{r.login}</span></td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[120px] truncate">{r.position}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[120px] truncate">{r.symbol}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[80px] truncate">{r.type}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[80px] truncate">{r.volume}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[100px] truncate">{r.priceOpen}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[100px] truncate">{r.priceClose}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 min-w-[120px] truncate">{r.reason}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right min-w-[72px] truncate">{r.swap}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[88px] flex gap-2 items-center truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}><FaUser /> <span className="truncate">{r.login}</span></td>
+                  <td className={`px-3 py-2 text-sm min-w-[120px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.position}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[120px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.symbol}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[80px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.type}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[80px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.volume}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[100px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.priceOpen}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[100px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.priceClose}</td>
+                  <td className={`px-3 py-2 text-sm min-w-[120px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.reason}</td>
+                  <td className={`px-3 py-2 text-sm text-right min-w-[72px] truncate ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.swap}</td>
                 </tr>
               ))}
             </tbody>
