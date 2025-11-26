@@ -475,8 +475,7 @@ export default function Topbar() {
 
   const containerClasses =
     "flex items-center border border-gray-400 rounded-md";
-  const buttonBaseClasses =
-    "px-3 py-2 md:px-4 md:py-2 hover:bg-gray-700 transition-colors flex items-center gap-2 h-full";
+  const buttonBaseClasses = `px-3 py-2 md:px-4 md:py-2 transition-colors flex items-center gap-2 h-full ${mode === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200"}`;
   const iconClasses = "h-5 w-5 md:h-6 md:w-6 ";
 
   const toggleFunnelMenu = () => {

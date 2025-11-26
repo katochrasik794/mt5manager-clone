@@ -228,7 +228,7 @@ const navItems = [
  * @param {string} activeItem - Currently active item path
  * @param {function} setActiveItem - Function to set active item
  */
-const NavItem = ({ item, level = 0, path, activeItem, setActiveItem }) => {
+const NavItem = ({ item, level = 0, path, activeItem, setActiveItem, mode }) => {
   const navigate = useNavigate();
   const Icon = item.icon;
   const isActive = activeItem === path;
@@ -256,11 +256,11 @@ const NavItem = ({ item, level = 0, path, activeItem, setActiveItem }) => {
     }
     // Logic for leaf item clicks can be added here
   };
-  
+
   // Base classes for item styling
-  const navItemClasses = 
+  const navItemClasses =
     `flex items-center gap-3 py-0.5 text-xs cursor-pointer transition-colors w-full ${
-      isActive ? "bg-[#374151] text-white" : "hover:bg-gray-700"
+      isActive ? (mode === "dark" ? "bg-[#374151] text-white" : "bg-gray-200 text-black") : (mode === "dark" ? "hover:bg-gray-700" : "hover:bg-gray-200")
     }`;
     
   // Indentation using Tailwind's 'pl-x' class
@@ -279,7 +279,7 @@ const NavItem = ({ item, level = 0, path, activeItem, setActiveItem }) => {
           {/* Expansion Arrow/Icon - Conditionally applied rotation */}
           {item.isParent ? (
              <button
-                className={`text-gray-100 text-sm font-semibold transition-transform duration-200 ${isOpen ? 'rotate-90' : ''}`}
+                className={`text-sm font-semibold transition-transform duration-200 ${isOpen ? 'rotate-90' : ''} ${mode === "dark" ? "text-gray-100" : "text-gray-800"}`}
                 onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
                 style={{ marginRight: '4px', background: 'none', border: 'none', cursor: 'pointer' }}
              >
@@ -304,7 +304,7 @@ const NavItem = ({ item, level = 0, path, activeItem, setActiveItem }) => {
       {isOpen && hasChildren && (
         <div className="flex flex-col">
           {item.children.map((child, index) => (
-            <NavItem key={index} item={child} level={level + 1} path={`${path}/${child.name}`} activeItem={activeItem} setActiveItem={setActiveItem} />
+            <NavItem key={index} item={child} level={level + 1} path={`${path}/${child.name}`} activeItem={activeItem} setActiveItem={setActiveItem} mode={mode} />
           ))}
         </div>
       )}
@@ -356,7 +356,7 @@ export default function NavigatorSidebar() {
         >
           {/* Render the top-level items */}
           {navItems.map((item, index) => (
-            <NavItem key={index} item={item} level={0} path={item.name} activeItem={activeItem} setActiveItem={setActiveItem} />
+            <NavItem key={index} item={item} level={0} path={item.name} activeItem={activeItem} setActiveItem={setActiveItem} mode={mode} />
           ))}
           
         </nav>

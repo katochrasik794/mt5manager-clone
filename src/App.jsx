@@ -59,7 +59,7 @@ export default function App() {
       <Topbar onToggleSidebar={() => setSidebarOpen((s) => !s)} />
 
       {/* Middle area: sidebar + changing dashboard content */}
-      <div className="flex flex-1">
+      <div className="flex">
         <NavigatorSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Dashboard area that will change by route */}

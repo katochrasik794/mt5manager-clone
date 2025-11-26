@@ -37,12 +37,7 @@ export default function ClientPage() {
 
   return (
     <div className="">
-      {/* <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-gray-100">Dashboard</h2>
-        <div className="text-sm text-gray-400">Showing table — scroll to see more</div>
-      </div> */}
-
-      <div className={`rounded-md shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border border-gray-700" : "bg-white border border-gray-300"}`}>
+      <div className={`overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border border-gray-600" : "bg-white border border-gray-300"}`}>
         {/* Table header */}
         <div className="w-full overflow-x-auto">
           <table className="min-w-full table-fixed border-collapse">
@@ -65,7 +60,7 @@ export default function ClientPage() {
         </div>
 
         {/* Scrollable body: fixed height so ~20 rows are visible (adjust h-[720px] if you need exact fit) */}
-        <div className={`max-h-[520px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
+        <div className={`max-h-[550px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-fixed border-collapse">
             <tbody>
               {rows.map((r, idx) => (
