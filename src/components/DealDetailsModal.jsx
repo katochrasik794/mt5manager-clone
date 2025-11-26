@@ -1,8 +1,10 @@
 // DealDetailsModal.jsx
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import UserModal from "./UserModal";
+import Mycontext from "../context/Mycontext";
 
 export default function DealDetailsModal({ open, onClose, dealData }) {
+  const { mode } = useContext(Mycontext);
   // Tab state: 'details' (default) or 'journal'
   const [activeTab, setActiveTab] = useState("details");
 
@@ -35,9 +37,10 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
     onClose();
   };
 
-  const commonInputClasses =
-    "bg-[#3c3c3c] border border-[#5a5a5a] text-gray-100 text-xs h-6 px-2 rounded-sm focus:outline-none focus:border-blue-500";
-  const labelClasses = "text-xs text-gray-400 min-w-[100px] text-right pr-3";
+  const commonInputClasses = mode === "dark"
+    ? "bg-[#3c3c3c] border border-[#5a5a5a] text-gray-100 text-xs h-6 px-2 rounded-sm focus:outline-none focus:border-blue-500"
+    : "bg-white border border-gray-400 text-black text-xs h-6 px-2 rounded-sm focus:outline-none focus:border-blue-500";
+  const labelClasses = `text-xs min-w-[100px] text-right pr-3 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`;
   const rowClasses = "flex items-center space-x-2";
   // const sectionHeaderClasses = "text-xs font-semibold px-2 py-1";
   const buttonClasses = "px-4 py-1 text-sm rounded-sm";
@@ -48,19 +51,19 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
       onClick={onClose}
     >
       <div
-        className="relative bg-[#3c3c3c] text-gray-100 w-4xl h-[680px] flex flex-col overflow-hidden"
+        className={`relative w-4xl h-[680px] flex flex-col overflow-hidden ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100" : "bg-white text-black"}`}
         onClick={(e) => e.stopPropagation()}
         style={{ boxShadow: "0 0 10px rgba(0,0,0,0.5)" }}
       >
         {/* Title Bar */}
-        <div className="bg-[#2c2c2c] px-4 text-sm font-semibold py-1.5 flex justify-between items-center border-b border-[#5a5a5a]">
+        <div className={`px-4 text-sm font-semibold py-1.5 flex justify-between items-center border-b ${mode === "dark" ? "bg-[#2c2c2c] border-[#5a5a5a]" : "bg-gray-100 border-gray-300"}`}>
           <span>
             Deal #{formData.deal} <span className="font-normal">**{formData.type}**</span>{" "}
             {formData.volume} [Admin Approved Deposit]
           </span>
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white leading-none px-2"
+            className={`leading-none px-2 ${mode === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"}`}
             aria-label="Close"
           >
             ✕
@@ -89,9 +92,9 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
 
 
         {/* Top: simulated grid row */}
-        <div className="flex flex-col py-2 mx-4 my-2 text-xs border border-gray-300/50 bg-[#2c2c2c] h-56">
+        <div className={`flex flex-col py-2 mx-4 my-2 text-xs border h-56 ${mode === "dark" ? "border-gray-300/50 bg-[#2c2c2c]" : "border-gray-400 bg-gray-100"}`}>
           {/* Header Row */}
-          <div className="flex w-full text-gray-400 font-semibold text-center">
+          <div className={`flex w-full font-semibold text-center ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
             <span className="w-[8%]">Ticket</span>
             <span className="w-[20%]">Time</span>
             <span className="w-[6%]">ID</span>
@@ -118,14 +121,14 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
         </div>
 
         {/* Tabs */}
-        <div className="flex bg-[#2c2c2c] px-4">
+        <div className={`flex px-4 ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-gray-100"}`}>
           <button
             onClick={() => setActiveTab("details")}
             className={
               "text-xs px-4 py-2 focus:outline-none " +
               (activeTab === "details"
-                ? "text-white bg-[#3c3c3c] border-r border-t border-[#5a5a5a] translate-y-[1px]"
-                : "text-gray-400")
+                ? `${mode === "dark" ? "text-white bg-[#3c3c3c] border-r border-t border-[#5a5a5a]" : "text-black bg-white border-r border-t border-gray-300"} translate-y-[1px]`
+                : `${mode === "dark" ? "text-gray-400" : "text-gray-600"}`)
             }
           >
             Details
@@ -135,7 +138,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
             onClick={() => setActiveTab("journal")}
             className={
               "text-xs px-4 py-2 focus:outline-none " +
-              (activeTab === "journal" ? "text-white bg-[#3c3c3c] border-r border-t border-[#5a5a5a] translate-y-[1px]" : "text-gray-400")
+              (activeTab === "journal" ? `${mode === "dark" ? "text-white bg-[#3c3c3c] border-r border-t border-[#5a5a5a]" : "text-black bg-white border-r border-t border-gray-300"} translate-y-[1px]` : `${mode === "dark" ? "text-gray-400" : "text-gray-600"}`)
             }
           >
             Journal
@@ -143,9 +146,9 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
         </div>
 
         {/* Content area (switches by tab) */}
-        <div className="flex flex-col flex-grow overflow-hidden mx-4 mt-2 mb-2 bg-[#2c2c2c]">
+        <div className={`flex flex-col flex-grow overflow-hidden mx-4 mt-2 mb-2 ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"}`}>
           {activeTab === "details" ? (
-            <div className="py-2 bg-[#2c2c2c] space-y-3 px-10 mb-2 ">
+            <div className={`py-2 space-y-3 px-10 mb-2 ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"}`}>
               <div className="space-y-2">
                 {/* Deal */}
                 <div className={rowClasses}>
@@ -266,17 +269,17 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
                 />
               </div>
 
-              <div className=" pl-4 pt-4 text-xs text-gray-500">Modifications:</div>
+              <div className={`pl-4 pt-4 text-xs ${mode === "dark" ? "text-gray-500" : "text-gray-600"}`}>Modifications:</div>
               <div className="h-24 border border-transparent" />
             </div>
           ) : (
             /* Journal tab content */
             <div className="flex flex-col flex-grow overflow-hidden">
               {/* Large dark area with bordered inner box */}
-              <div className="m-4 flex-grow border border-[#5a5a5a] rounded-sm bg-[#2e2e2e]">
+              <div className={`m-4 flex-grow border rounded-sm ${mode === "dark" ? "border-[#5a5a5a] bg-[#2e2e2e]" : "border-gray-400 bg-gray-200"}`}>
                 {/* Journal header row (column titles) */}
-                <div className="sticky top-0 bg-[#2b2b2b] border-b border-[#5a5a5a]">
-                  <div className="flex text-gray-300 text-xs font-semibold px-3 py-2">
+                <div className={`sticky top-0 border-b ${mode === "dark" ? "bg-[#2b2b2b] border-[#5a5a5a]" : "bg-gray-100 border-gray-300"}`}>
+                  <div className={`flex text-xs font-semibold px-3 py-2 ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>
                     <div className="w-[16%]">Time</div>
                     <div className="w-[16%]">IP</div>
                     <div className="flex-1">Message</div>
@@ -284,13 +287,13 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
                 </div>
 
                 {/* Empty / error placeholder centered like screenshot */}
-                <div className="h-full flex items-center justify-center text-gray-500 italic text-sm p-6">
+                <div className={`h-full flex items-center justify-center italic text-sm p-6 ${mode === "dark" ? "text-gray-500" : "text-gray-600"}`}>
                   Journal request error.
                 </div>
               </div>
 
               {/* Bottom filter bar (like screenshot) */}
-              <div className="flex items-center gap-3 p-2 border-t border-[#5a5a5a] bg-[#2b2b2b]">
+              <div className={`flex items-center gap-3 p-2 border-t ${mode === "dark" ? "border-[#5a5a5a] bg-[#2b2b2b]" : "border-gray-300 bg-gray-100"}`}>
                 {/* Search dropdown / input */}
                 <div className="flex items-center space-x-2 w-[200px]">
                   <select className={commonInputClasses + " w-20"}>
@@ -321,7 +324,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
                 <input type="date" className={commonInputClasses + " w-40"} />
                 <input type="date" className={commonInputClasses + " w-40"} />
 
-                <button className="mr-1 px-4 py-1 text-sm rounded-sm bg-[#007acc] hover:bg-[#006bb3]">
+                <button className="mr-1 px-4 py-1 text-sm text-white rounded-sm bg-[#007acc] hover:bg-[#006bb3]">
                   Request
                 </button>
               </div>
@@ -330,9 +333,9 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
         </div>
 
         {/* Footer Buttons */}
-        <div className="flex justify-between items-center bg-[#2c2c2c] p-3 border-t border-[#5a5a5a]">
+        <div className={`flex justify-between items-center p-3 border-t ${mode === "dark" ? "bg-[#2c2c2c] border-[#5a5a5a]" : "bg-gray-100 border-gray-300"}`}>
           <button
-            className={buttonClasses + " bg-[#3c3c3c] text-gray-400 border border-[#5a5a5a] hover:bg-[#4a4a4a]"}
+            className={`${buttonClasses} ${mode === "dark" ? "bg-[#3c3c3c] text-gray-400 border border-[#5a5a5a] hover:bg-[#4a4a4a]" : "bg-white text-gray-600 border border-gray-400 hover:bg-gray-200"}`}
           >
             Report...
           </button>
@@ -346,12 +349,12 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
             </button>
             <button
               onClick={onClose}
-              className={buttonClasses + " bg-[#3c3c3c] text-white border border-[#5a5a5a] hover:bg-[#4a4a4a]"}
+              className={`${buttonClasses} ${mode === "dark" ? "bg-[#3c3c3c] text-white border border-[#5a5a5a] hover:bg-[#4a4a4a]" : "bg-white text-black border border-gray-400 hover:bg-gray-200"}`}
             >
               Cancel
             </button>
             <button
-              className={buttonClasses + " bg-[#3c3c3c] text-white border border-[#5a5a5a] hover:bg-[#4a4a4a]"}
+              className={`${buttonClasses} ${mode === "dark" ? "bg-[#3c3c3c] text-white border border-[#5a5a5a] hover:bg-[#4a4a4a]" : "bg-white text-black border border-gray-400 hover:bg-gray-200"}`}
             >
               Help
             </button>

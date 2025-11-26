@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import NewClientModal from "../components/NewClientModal"; // Import the new component
 import GroupConfigModal from "../components/GroupConfigModal"; // Import GroupConfigModal
 // import DealModal from "./DealDetailsModal"
 import DealDetailsModal from "./DealDetailsModal";
+import Mycontext from "../context/Mycontext";
 
 export default function UserModal({ open, onClose, client, hideNewClient = false, hideHelp = false, initialTab = "Overview" }) {
+  const { mode } = useContext(Mycontext);
   // Destructure client data with defaults
   const {
     login = "369003",
@@ -122,21 +124,28 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
      if (!open) return null;
 
   // Generic styling
-  const inputStyle =
-    "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-[2px]";
-  const labelStyle = "block text-xs font-medium  text-gray-400";
-  const checkboxStyle =
-    "w-4 h-3 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500";
+  const getInputStyle = (mode) =>
+    mode === "dark"
+      ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-[2px]"
+      : "bg-white border border-gray-400 text-black text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-[2px]";
+  const getLabelStyle = (mode) => `block text-xs font-medium ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`;
+  const getCheckboxStyle = (mode) =>
+    mode === "dark"
+      ? "w-4 h-3 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+      : "w-4 h-3 text-blue-600 bg-white border-gray-400 rounded focus:ring-blue-500";
 
   // Custom styling for the MetaQuotes input fields (used in Profile)
-  const mqInputStyle =
-    "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-4 py-3";
-  const mqIconStyle =
-    "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg";
+  const getMqInputStyle = (mode) =>
+    mode === "dark"
+      ? "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-4 py-3"
+      : "bg-white border border-gray-400 text-black text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-4 py-3";
+  const getMqIconStyle = (mode) => `absolute left-3 top-1/2 transform -translate-y-1/2 text-lg ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`;
 
   // Custom styling for select dropdowns
-  const selectStyle = (width = "full") =>
-    `bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-[2px] pr-8 block w-${width}`;
+  const getSelectStyle = (mode, width = "full") =>
+    mode === "dark"
+      ? `bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-[2px] pr-8 block w-${width}`
+      : `bg-white border border-gray-400 text-black text-xs rounded-sm p-[2px] pr-8 block w-${width}`;
 
   // Dummy Candlestick Component (purely visual)
   const Candlestick = ({ color, height, offset, wickHeight, isCurrent }) => {
@@ -236,10 +245,10 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
       {/* Client Account Modal (The main modal) */}
       <div className="fixed inset-0 -top-12 backdrop-blur  flex items-center justify-center z-50">
         {/* Main Content Area - mimics the window from the image */}
-        <div className="bg-[#1e1e1e] rounded-sm border border-gray-700 shadow-2xl max-w-4xl w-full h-5/6 mx-4">
+        <div className={`rounded-sm border shadow-2xl max-w-4xl w-full h-5/6 mx-4 ${mode === "dark" ? "bg-[#1e1e1e] border-gray-700" : "bg-white border-gray-300"}`}>
           {/* Title Bar */}
-          <div className="flex items-center justify-between p-1 bg-[#2c2c2c] border-b border-gray-700">
-            <h3 className="text-sm font-semibold text-gray-100 ml-2">
+          <div className={`flex items-center justify-between p-1 border-b ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
+            <h3 className={`text-sm font-semibold ml-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
               Account: **{login}**, **{name}**, **{currency}**, **{group}**
             </h3>
             <div className="flex items-center">
@@ -261,16 +270,16 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex bg-[#2c2c2c] border-b border-[#1e1e1e] p-0">
+          <div className={`flex border-b p-0 ${mode === "dark" ? "bg-[#2c2c2c] border-[#1e1e1e]" : "bg-gray-100 border-gray-300"}`}>
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-2 py-2 text-xs font-medium ${
+                className={`px-2 py-2 text-xs font-medium transition-colors duration-150 rounded-t-sm ${
                   activeTab === tab
-                    ? "bg-[#1e1e1e] text-white border-b-2 border-blue-500"
-                    : "text-gray-400 hover:bg-[#3e3e3e]"
-                } transition-colors duration-150 rounded-t-sm`}
+                    ? mode === "dark" ? "bg-[#1e1e1e] text-white border-b-2 border-blue-500" : "bg-white text-black border-b-2 border-blue-500"
+                    : mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"
+                }`}
               >
                 {tab}
               </button>
@@ -280,15 +289,15 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
           {/* Main Content Area */}
           {/* Only the Profile tab is forced to have no scroll; others can scroll if content exceeds height */}
           <div
-            className={`p-4 bg-[#2c2c2c] h-[calc(100%-65px)] overflow-auto ${
-              activeTab === "Personal" || activeTab === "Trade" || activeTab === "Profile" || activeTab === "Balance" ? "custom-scrollbar" : ""
+            className={`p-4 h-[calc(100%-65px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${
+              activeTab === "Personal" || activeTab === "Trade" || activeTab === "Profile" || activeTab === "Balance" ? mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light" : ""
             }`}
           >
             {/* --- Overview Content --- */}
             {activeTab === "Overview" && (
               <>
                 <div className="text-sm space-y-1 mb-4">
-                  <p className="text-gray-100">
+                  <p className={mode === "dark" ? "text-gray-100" : "text-black"}>
                     **{name}**, **{login}**,{" "}
                     <span
                       className="text-blue-400 cursor-pointer"
@@ -298,19 +307,19 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     </span>
                     , <span className="text-red-500">**{leverage}**</span>
                   </p>
-                  <p className="text-gray-400">- India, -, -, -</p>
-                  <p className="text-gray-400">
+                  <p className={mode === "dark" ? "text-gray-400" : "text-gray-600"}>- India, -, -, -</p>
+                  <p className={mode === "dark" ? "text-gray-400" : "text-gray-600"}>
                     0000000000 MetaQuotes ID: **{metaQuotesId}**
                   </p>
                   <p className="text-red-500 underline">{email}</p>
-                  <p className="text-gray-400">
+                  <p className={mode === "dark" ? "text-gray-400" : "text-gray-600"}>
                     Registered: **{registered}** Last access: **{lastAccess}**
                     Last Address: **{lastAddress}**
                   </p>
                 </div>
-                <div className="border border-gray-300 rounded-sm h-2/3">
+                <div className={`border rounded-sm h-2/3 ${mode === "dark" ? "border-gray-300" : "border-gray-400"}`}>
                   {/* HEADER */}
-                  <div className="flex text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`flex text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="w-2/12 px-2">Symbol</span>
                     <span className="w-1/12 px-2">Type</span>
                     <span className="w-1/12 px-2">Volume</span>
@@ -324,7 +333,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
 
                   {/* ROW 1 — SELECTED */}
                   <div
-                    className="flex text-sm text-gray-100 py-1 border-b border-gray-700 cursor-pointer"
+                    className={`flex text-sm py-1 border-b cursor-pointer ${mode === "dark" ? "text-gray-100 border-gray-700" : "text-black border-gray-300"}`}
                     onDoubleClick={() => setActiveTab("Trade")}
                   >
                     <span className="w-2/12 px-2">usoil.ffx</span>
@@ -340,7 +349,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
 
                   {/* ROW 2 — SELECTED */}
                   <div
-                    className="flex text-sm text-gray-100 bg-[#3c3c3c] py-1 border-b border-gray-700 cursor-pointer"
+                    className={`flex text-sm py-1 border-b cursor-pointer ${mode === "dark" ? "text-gray-100 bg-[#3c3c3c] border-gray-700" : "text-black bg-gray-200 border-gray-300"}`}
                     onDoubleClick={() => setActiveTab("Trade")}
                   >
                     <span className="w-2/12 px-2">xauusd.e</span>
@@ -355,16 +364,16 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   </div>
 
                   {/* BALANCE / EQUITY BAR */}
-                  <div className="flex text-sm text-gray-200 bg-gray-500/50 py-2 ">
+                  <div className={`flex text-sm py-2 ${mode === "dark" ? "text-gray-200 bg-gray-500/50" : "text-black bg-gray-300"}`}>
                     <span className="w-8/12 px-2 font-bold">
                       Balance:&nbsp;
-                      <span className="text-white font-normal">819.47 USD</span>
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>819.47 USD</span>
                       &nbsp;&nbsp; Equity:&nbsp;
-                      <span className="text-white font-normal">831.18</span>
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>831.18</span>
                       &nbsp;&nbsp; Margin:&nbsp;
-                      <span className="text-white font-normal">10.41</span>
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>10.41</span>
                       &nbsp;&nbsp; Free Margin:&nbsp;
-                      <span className="text-white font-normal">820.77</span>
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>820.77</span>
                     </span>
 
                     <span className="ml-8 px-2">0.00</span>
@@ -372,10 +381,10 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   </div>
 
                   {/* MARGIN LEVEL ROW */}
-                  <div className="flex text-sm text-gray-300 bg-gray-500/50 py-2 ">
+                  <div className={`flex text-sm py-2 ${mode === "dark" ? "text-gray-300 bg-gray-500/50" : "text-gray-700 bg-gray-300"}`}>
                     <span className="px-2 font-bold">
                       Margin Level:&nbsp;
-                      <span className="text-gray-100">7 984.44 %</span>
+                      <span className={mode === "dark" ? "text-gray-100" : "text-black"}>7 984.44 %</span>
                     </span>
                   </div>
 
@@ -387,9 +396,9 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
             {/* --- Exposure Content --- */}
             {activeTab === "Exposure" && (
               <>
-                <div className="border border-gray-700 rounded-sm h-full flex flex-col relative">
+                <div className={`border rounded-sm h-full flex flex-col relative ${mode === "dark" ? "border-gray-700" : "border-gray-400"}`}>
                   {/* HEADER */}
-                  <div className="flex text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`flex text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="w-2/12 px-2">Asset</span>
                     <span className="w-2/12 px-2">Volume</span>
                     <span className="w-2/12 px-2">Rate</span>
@@ -403,7 +412,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   {/* ROWS */}
                   <div className="flex flex-col">
                     {/* Row 1: USD */}
-                    <div className="flex items-center text-sm text-gray-200 bg-[#3c3c3c] border-b border-gray-700 py-2">
+                    <div className={`flex items-center text-sm border-b py-2 ${mode === "dark" ? "text-gray-200 bg-[#3c3c3c] border-gray-700" : "text-black bg-gray-200 border-gray-300"}`}>
                       <span className="w-2/12 px-2 flex items-center gap-2">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-sm bg-yellow-700 text-yellow-100 text-xs">
                           ＄
@@ -434,7 +443,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     </div>
 
                     {/* Row 2: USOil.ffx */}
-                    <div className="flex items-center text-sm text-gray-200 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                    <div className={`flex items-center text-sm border-b py-2 ${mode === "dark" ? "text-gray-200 bg-[#2c2c2c] border-gray-700" : "text-black bg-white border-gray-300"}`}>
                       <span className="w-2/12 px-2 flex items-center gap-2">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-sm bg-orange-700 text-orange-100 text-xs">
                           ⛽
@@ -464,7 +473,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     </div>
 
                     {/* Row 3: XAU */}
-                    <div className="flex items-center text-sm text-gray-200 bg-[#3c3c3c] border-b border-gray-700 py-2">
+                    <div className={`flex items-center text-sm border-b py-2 ${mode === "dark" ? "text-gray-200 bg-[#3c3c3c] border-gray-700" : "text-black bg-gray-200 border-gray-300"}`}>
                       <span className="w-2/12 px-2 flex items-center gap-2">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-sm bg-yellow-800 text-yellow-100 text-xs">
                           ◎
@@ -540,18 +549,18 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   </div>
 
                   {/* BALANCE / EQUITY / MARGIN ROW */}
-                  <div className="flex text-sm text-gray-200 bg-gray-500/50 py-2 ">
+                  <div className={`flex text-sm py-2 ${mode === "dark" ? "text-gray-200 bg-gray-500/50" : "text-black bg-gray-300"}`}>
                     <span className="w-10/12 px-2 font-bold">
                       • Balance:{" "}
-                      <span className="text-white font-normal">
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>
                         {balance} USD
                       </span>
                       &nbsp; Equity:{" "}
-                      <span className="text-white font-normal">{equity}</span>
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>{equity}</span>
                       &nbsp; Margin:{" "}
-                      <span className="text-white font-normal">10.41</span>
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>10.41</span>
                       &nbsp; Free Margin:{" "}
-                      <span className="text-white font-normal">
+                      <span className={mode === "dark" ? "text-white" : "text-black"}>
                         {freeMargin}
                       </span>
                     </span>
@@ -560,10 +569,10 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   </div>
 
                   {/* MARGIN LEVEL */}
-                  <div className="flex items-center text-sm text-gray-300 bg-gray-500/50 pl-3">
+                  <div className={`flex items-center text-sm pl-3 ${mode === "dark" ? "text-gray-300 bg-gray-500/50" : "text-gray-700 bg-gray-300"}`}>
                     <span className="px-2 font-bold">
                       Margin Level:{" "}
-                      <span className="text-gray-100">7 949.28 %</span>
+                      <span className={mode === "dark" ? "text-gray-100" : "text-black"}>7 949.28 %</span>
                     </span>
                   </div>
 
@@ -581,7 +590,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Name:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={firstName}
                     readOnly
                   />
@@ -593,7 +602,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Last name:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1"
+                    className={`px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={lastName}
                     readOnly
                   />
@@ -602,7 +611,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Middle name:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1"
+                    className={`px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={middleName}
                     readOnly
                   />
@@ -614,7 +623,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Company:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={company}
                     readOnly
                   />
@@ -628,7 +637,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
 
                   <div className="relative w-[688px]">
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-full px-2 py-1 pr-8"
+                      className={`w-full px-2 py-1 pr-8 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={registered}
                       readOnly
                     />
@@ -648,7 +657,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         Language:
                       </label>
                       <div className="relative">
-                        <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                        <select className={`w-[260px] px-2 py-1 appearance-none ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}>
                           <option>-</option>
                         </select>
                         <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
@@ -663,7 +672,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         ID number:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={idNumber}
                         readOnly
                       />
@@ -675,7 +684,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         MetaQuotes ID:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={metaQuotesId}
                         readOnly
                       />
@@ -690,7 +699,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         Status:
                       </label>
                       <div className="relative">
-                        <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                        <select className={`w-[260px] px-2 py-1 appearance-none ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}>
                           <option>-</option>
                         </select>
                         <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
@@ -705,7 +714,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         Lead campaign:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={leadCampaign}
                         readOnly
                       />
@@ -717,7 +726,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         Lead source:
                       </label>
                       <input
-                        className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1"
+                        className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                         value={leadSource}
                         readOnly
                       />
@@ -731,7 +740,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Email:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={email}
                     readOnly
                   />
@@ -743,7 +752,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Phone:
                   </label>
                   <input
-                    className="bg-[#5a1f24] text-gray-100 border border-red-600 w-[260px] px-2 py-1"
+                    className={`w-[260px] px-2 py-1 ${mode === "dark" ? "bg-[#5a1f24] text-gray-100 border border-red-600" : "bg-red-50 text-black border border-red-400"}`}
                     value={phone}
                     readOnly
                   />
@@ -756,7 +765,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       Country:
                     </label>
                     <div className="relative">
-                      <select className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[260px] px-2 py-1 appearance-none">
+                      <select className={`w-[260px] px-2 py-1 appearance-none ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}>
                         <option>India</option>
                       </select>
                       <span className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400">
@@ -770,7 +779,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       State:
                     </label>
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      className={`px-2 py-1 w-[260px] ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={state}
                       readOnly
                     />
@@ -784,7 +793,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       City:
                     </label>
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      className={`px-2 py-1 w-[260px] ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={city}
                       readOnly
                     />
@@ -795,7 +804,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       Zip code:
                     </label>
                     <input
-                      className="bg-[#2b2b2b] text-gray-100 border border-gray-300 px-2 py-1 w-[260px]"
+                      className={`px-2 py-1 w-[260px] ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                       value={zipCode}
                       readOnly
                     />
@@ -808,7 +817,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Address:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={address}
                     readOnly
                   />
@@ -820,23 +829,24 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     Comment:
                   </label>
                   <input
-                    className="bg-[#2b2b2b] text-gray-100 border border-gray-300 w-[688px] px-2 py-1"
+                    className={`w-[688px] px-2 py-1 ${mode === "dark" ? "bg-[#2b2b2b] text-gray-100 border border-gray-300" : "bg-white text-black border border-gray-400"}`}
                     value={comment}
                     readOnly
                   />
                 </div>
               </div>
+
             )}
             {/* --- Account Content --- */}
             {activeTab === "Account" && (
               <div className="space-y-4">
                 <div className="grid grid-cols-3 gap-4 items-end">
                   <div className="flex items-center gap-6">
-                    <label htmlFor="group" className={labelStyle}>
+                    <label htmlFor="group" className={getLabelStyle(mode)}>
                       Group:
                     </label>
                     <div className="relative">
-                      <select id="group" className={inputStyle} value={group}>
+                      <select id="group" className={getInputStyle(mode)} value={group}>
                         <option value="OXO_B\Standard">{group}</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
@@ -845,11 +855,11 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     </div>
                   </div>
                   <div className="flex items-center gap-6">
-                    <label htmlFor="color" className={labelStyle}>
+                    <label htmlFor="color" className={getLabelStyle(mode)}>
                       Color:
                     </label>
                     <div className="relative">
-                      <select id="color" className={inputStyle} value={color}>
+                      <select id="color" className={getInputStyle(mode)} value={color}>
                         <option value="None">None</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
@@ -858,13 +868,13 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
-                    <label htmlFor="leverage" className={labelStyle}>
+                    <label htmlFor="leverage" className={getLabelStyle(mode)}>
                       Leverage:
                     </label>
                     <input
                       type="text"
                       id="leverage"
-                      className={inputStyle}
+                      className={getInputStyle(mode)}
                       value={leverage}
                       readOnly
                     />
@@ -874,14 +884,14 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   <div className="flex items-center gap-4">
                     <label
                       htmlFor="bankAccount"
-                      className="block text-xs font-medium  text-gray-400 w-26"
+                      className={`block text-xs font-medium w-26 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}
                     >
                       Bank account:
                     </label>
                     <input
                       type="text"
                       id="bankAccount"
-                      className={inputStyle}
+                      className={getInputStyle(mode)}
                       value={bankAccount}
                       readOnly
                     />
@@ -889,14 +899,14 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   <div className="flex items-center gap-4">
                     <label
                       htmlFor="agentAccount"
-                      className="block text-xs font-medium  text-gray-400 w-30"
+                      className={`block text-xs font-medium w-30 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}
                     >
                       Agent account:
                     </label>
                     <input
                       type="text"
                       id="agentAccount"
-                      className={inputStyle}
+                      className={getInputStyle(mode)}
                       value={agentAccount}
                       readOnly
                     />
@@ -908,12 +918,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       id="enableThisAccount"
                       type="checkbox"
                       checked={enableAccount}
-                      className={checkboxStyle}
+                      className={getCheckboxStyle(mode)}
                       readOnly
                     />
                     <label
                       htmlFor="enableThisAccount"
-                      className="ml-2 text-xs font-medium text-gray-200 cursor-pointer"
+                      className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                     >
                       Enable this account
                     </label>
@@ -923,12 +933,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       id="enablePasswordChange"
                       type="checkbox"
                       checked={enablePasswordChange}
-                      className={checkboxStyle}
+                      className={getCheckboxStyle(mode)}
                       readOnly
                     />
                     <label
                       htmlFor="enablePasswordChange"
-                      className="ml-2 text-xs font-medium text-gray-200 cursor-pointer"
+                      className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                     >
                       Enable password change
                     </label>
@@ -938,12 +948,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       id="enableOneTimePassword"
                       type="checkbox"
                       checked={enableOneTimePassword}
-                      className={checkboxStyle}
+                      className={getCheckboxStyle(mode)}
                       readOnly
                     />
                     <label
                       htmlFor="enableOneTimePassword"
-                      className="ml-2 text-xs font-medium text-gray-200 cursor-pointer"
+                      className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                     >
                       Enable one-time password
                     </label>
@@ -953,12 +963,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       id="changePasswordNextLogin"
                       type="checkbox"
                       checked={changePasswordNextLogin}
-                      className={checkboxStyle}
+                      className={getCheckboxStyle(mode)}
                       readOnly
                     />
                     <label
                       htmlFor="changePasswordNextLogin"
-                      className="ml-2 text-xs font-medium text-gray-200 cursor-pointer"
+                      className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                     >
                       Change password at next login
                     </label>
@@ -1006,12 +1016,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="showToRegularManagers"
                         type="checkbox"
                         checked={showToRegularManagers}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="showToRegularManagers"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Show to regular managers
                       </label>
@@ -1021,12 +1031,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="includeInServerReports"
                         type="checkbox"
                         checked={includeInServerReports}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="includeInServerReports"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Include in server reports
                       </label>
@@ -1036,12 +1046,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="enableDailyReports"
                         type="checkbox"
                         checked={enableDailyReports}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="enableDailyReports"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Enable daily reports
                       </label>
@@ -1051,12 +1061,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="enableApiConnections"
                         type="checkbox"
                         checked={enableApiConnections}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="enableApiConnections"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Enable API connections
                       </label>
@@ -1066,12 +1076,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="enableSponsoredVps"
                         type="checkbox"
                         checked={enableSponsoredVps}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="enableSponsoredVps"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Enable sponsored VPS hosting
                       </label>
@@ -1081,12 +1091,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="allowSubscriptionData"
                         type="checkbox"
                         checked={allowSubscriptionData}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="allowSubscriptionData"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Allow access to subscription data via data feeds
                       </label>
@@ -1098,12 +1108,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="enableTrading"
                         type="checkbox"
                         checked={enableTrading}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="enableTrading"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Enable trading
                       </label>
@@ -1113,12 +1123,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="enableAlgoTrading"
                         type="checkbox"
                         checked={enableAlgoTrading}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="enableAlgoTrading"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Enable algo trading by Expert Advisors
                       </label>
@@ -1128,12 +1138,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                         id="enableTrailingStops"
                         type="checkbox"
                         checked={enableTrailingStops}
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                         readOnly
                       />
                       <label
                         htmlFor="enableTrailingStops"
-                        className="ml-2 text-sm font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-sm font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Enable trailing stops
                       </label>
@@ -1142,11 +1152,11 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                 </div>
                 <div className="space-y-4 pt-6 max-w-lg">
                   <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-400 w-64">
+                    <label className={`text-sm font-medium w-64 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                       Limit total value of positions:
                     </label>
                     <div className="relative flex-grow">
-                      <select className={inputStyle} value={limitTotalValue}>
+                      <select className={getInputStyle(mode)} value={limitTotalValue}>
                         <option value="Default">Default</option>
                       </select>
                       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
@@ -1156,12 +1166,12 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     <span className="text-gray-200 text-sm">USD</span>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <label className="text-sm font-medium text-gray-400 w-64">
+                    <label className={`text-sm font-medium w-64 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                       Limit number of active orders:
                     </label>
                     <div className="relative flex-grow">
                       <select
-                        className={inputStyle}
+                        className={getInputStyle(mode)}
                         value={limitNumberOfOrders}
                       >
                         <option value="Default">Default</option>
@@ -1178,36 +1188,36 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
             {activeTab === "Profile" && (
               <div className="flex justify-center h-full items-start pt-10 overflow-y-auto">
                 <div className="w-full max-w-md text-center space-y-6">
-                  <h2 className="text-2xl font-semibold text-gray-200">
+                  <h2 className={`text-2xl font-semibold ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     MetaQuotes Support Center
                   </h2>
                   <p className="text-blue-400 text-sm">
                     https://support.metaquotes.net — Authorization
                   </p>
-                  <p className="text-gray-200 mt-6 max-w-sm mx-auto">
+                  <p className={`mt-6 max-w-sm mx-auto ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     MetaQuotes Technical Support Center features unique
                     information and provides direct access to assistance from
                     our support team
                   </p>
-                  <p className="text-gray-400 italic">
+                  <p className={`italic ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     Only available to authorized users
                   </p>
                   <form className="space-y-6 pt-4">
                     <div className="relative">
-                      <i className={mqIconStyle}>&#9993;</i>
+                      <i className={getMqIconStyle(mode)}>&#9993;</i>
                       <input
                         type="email"
                         placeholder="Your email"
-                        className={mqInputStyle}
+                        className={getMqInputStyle(mode)}
                         defaultValue={supportCenterEmail}
                       />
                     </div>
                     <div className="relative">
-                      <i className={mqIconStyle}>&#128274;</i>
+                      <i className={getMqIconStyle(mode)}>&#128274;</i>
                       <input
                         type="password"
                         placeholder="Support Center password"
-                        className={mqInputStyle}
+                        className={getMqInputStyle(mode)}
                         defaultValue={supportCenterPassword}
                       />
                     </div>
@@ -1227,7 +1237,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     </button>
                   </form>
                   <div className="pt-4 text-sm">
-                    <p className="text-gray-400">
+                    <p className={mode === "dark" ? "text-gray-400" : "text-gray-600"}>
                       Don't have a Support Center account?{" "}
                       <a href="#" className="text-blue-400 hover:underline">
                         Register
@@ -1245,8 +1255,8 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
             )}
             {/* --- Subscriptions Content --- */}
             {activeTab === "Subscriptions" && (
-              <div className="border border-gray-700 rounded-sm h-full flex flex-col">
-                <div className="grid grid-cols-7 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+              <div className={`border rounded-sm h-full flex flex-col ${mode === "dark" ? "border-gray-700" : "border-gray-400"}`}>
+                <div className={`grid grid-cols-7 text-xs font-medium py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-b border-gray-700" : "text-gray-600 bg-gray-100 border-b border-gray-300"}`}>
                   <span className="px-4">ID</span>
                   <span className="px-4">Subscription</span>
                   <span className="px-4">Status</span>
@@ -1255,7 +1265,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   <span className="px-4">Expiration time</span>
                   <span className="px-4">Price</span>
                 </div>
-                <div className="flex-grow text-gray-400 text-center py-12">
+                <div className={`flex-grow text-center py-12 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                   {/* No subscriptions listed */}
                 </div>
               </div>
@@ -1265,9 +1275,9 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
             {activeTab === "Payments" && (
               <div className="flex flex-col h-full space-y-4">
                 {/* Top Table: Active Payments/Requests */}
-                <div className="border border-gray-300 rounded-sm flex-grow min-h-[50%] flex flex-col">
+                <div className={`border rounded-sm flex-grow min-h-[50%] flex flex-col ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                   {/* Header */}
-                  <div className="flex items-center justify-between text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`flex items-center justify-between text-xs font-medium py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-b border-gray-700" : "text-gray-600 bg-gray-100 border-b border-gray-300"}`}>
                     <span className="px-4">ID</span>
                     <span className="px-4">Action</span>
                     <span className="px-4">State</span>
@@ -1278,15 +1288,15 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     <span className="px-4">User C...</span>
                   </div>
                   {/* Body */}
-                  <div className="flex-grow text-gray-400  text-left py-2 px-4 italic text-sm">
-                    <p className="bg-[#3c3c3c]"> No active payments</p>
+                  <div className={`flex-grow text-left py-2 px-4 italic text-sm ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+                    <p className={mode === "dark" ? "bg-[#3c3c3c]" : "bg-gray-200"}> No active payments</p>
                   </div>
                 </div>
 
                 {/* Date Filter and Request Button */}
                 <div className="flex items-center justify-end space-x-2 p-2">
                   <div className="relative">
-                    <select className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8">
+                    <select className={mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8" : "bg-white border border-gray-400 text-black text-sm rounded-sm p-1.5 pr-8"}>
                       <option>Today</option>
                     </select>
                     <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
@@ -1299,36 +1309,36 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     <input
                       type="text"
                       defaultValue="2025.11.21"
-                      className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"
+                      className={mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24" : "bg-white border border-gray-400 text-black text-sm rounded-sm p-1.5 pr-8 w-24"}
                     />
                     <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
                       &#9662;
                     </span>
                   </div>
 
-                  <span className="text-gray-400">-</span>
+                  <span className={mode === "dark" ? "text-gray-400" : "text-gray-600"}>-</span>
 
                   {/* Date Picker 2 */}
                   <div className="relative">
                     <input
                       type="text"
                       defaultValue="2025.11.21"
-                      className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"
+                      className={mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24" : "bg-white border border-gray-400 text-black text-sm rounded-sm p-1.5 pr-8 w-24"}
                     />
                     <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
                       &#9662;
                     </span>
                   </div>
 
-                  <button className="px-4 py-1.5 text-sm text-white rounded-sm border border-gray-600">
+                  <button className={`px-4 py-1.5 text-sm rounded-sm border border-gray-600 ${mode === "dark" ? "text-white" : "text-black"}`}>
                     Request
                   </button>
                 </div>
 
                 {/* Bottom Table: Saved Cards/Payment Methods (shorter) */}
-                <div className="border border-gray-300 rounded-sm flex-grow min-h-[25%] flex flex-col">
+                <div className={`border rounded-sm flex-grow min-h-[25%] flex flex-col ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                   {/* Header */}
-                  <div className="flex items-center justify-between text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`flex items-center justify-between text-xs font-medium py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-b border-gray-700" : "text-gray-600 bg-gray-100 border-b border-gray-300"}`}>
                     <span className="px-4">ID</span>
                     <span className="px-4">Gateway</span>
                     <span className="px-4">Type</span>
@@ -1350,16 +1360,16 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
             {activeTab === "Balance" && (
               <div className="flex flex-col h-full space-y-4">
                 {/* Top Section: Operation Input */}
-                <div className="space-y-4 border-b border-gray-700 pb-4">
+                <div className={`space-y-4 border-b pb-4 ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                   <div className="flex flex-col items-start gap-4">
                     <div className="w-1/4 flex items-center gap-2">
-                      <label htmlFor="operation" className={labelStyle}>
+                      <label htmlFor="operation" className={getLabelStyle(mode)}>
                         Operation:
                       </label>
                       <div className="relative">
                         <select
                           id="operation"
-                          className={selectStyle("full")}
+                          className={getSelectStyle(mode, "full")}
                           defaultValue="Balance"
                         >
                           <option>Balance</option>
@@ -1370,27 +1380,27 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       </div>
                     </div>
                     <div className="w-1/4 flex items-center gap-4">
-                      <label htmlFor="amount" className={labelStyle}>
+                      <label htmlFor="amount" className={getLabelStyle(mode)}>
                         Amount:
                       </label>
                       <div className="flex items-center space-x-1">
                         <input
                           type="text"
                           id="amount"
-                          className={inputStyle}
+                          className={getInputStyle(mode)}
                           placeholder="..."
                         />
-                        <span className="text-gray-400 text-sm">USD</span>
+                        <span className={mode === "dark" ? "text-gray-400" : "text-gray-600"} text-sm>USD</span>
                       </div>
                     </div>
                     <div className="w-2/4 flex items-center gap-2">
-                      <label htmlFor="comment" className={labelStyle}>
+                      <label htmlFor="comment" className={getLabelStyle(mode)}>
                         Comment:
                       </label>
                       <div className="relative">
                         <select
                           id="comment"
-                          className={selectStyle("full")}
+                          className={getSelectStyle(mode, "full")}
                           defaultValue="... put your comment here ..."
                         >
                           <option disabled>
@@ -1410,11 +1420,11 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       <input
                         id="checkFreeMargin"
                         type="checkbox"
-                        className={checkboxStyle}
+                        className={getCheckboxStyle(mode)}
                       />
                       <label
                         htmlFor="checkFreeMargin"
-                        className="ml-2 text-xs font-medium text-gray-200 cursor-pointer"
+                        className={`ml-2 text-xs font-medium cursor-pointer ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                       >
                         Conduct balance operation without checking the free
                         margin and the current balance on the account
@@ -1423,13 +1433,13 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
 
                     <div className="flex items-center space-x-2">
                       <button
-                        className="px-6 py-1 text-xs text-gray-200 rounded bg-blue-600 hover:bg-blue-700 border border-blue-600 disabled:opacity-50"
+                        className={`px-6 py-1 text-xs rounded bg-blue-600 hover:bg-blue-700 border border-blue-600 disabled:opacity-50 ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                         disabled
                       >
                         Deposit
                       </button>
                       <button
-                        className="px-6 py-1 text-xs text-gray-200 rounded bg-red-600 hover:bg-red-700 border border-red-600 disabled:opacity-50"
+                        className={`px-6 py-1 text-xs rounded bg-red-600 hover:bg-red-700 border border-red-600 disabled:opacity-50 ${mode === "dark" ? "text-gray-200" : "text-black"}`}
                         disabled
                       >
                         Withdrawal
@@ -1439,9 +1449,9 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                 </div>
 
                 {/* Bottom Section: Deal History Table */}
-                <div className="border border-gray-300 rounded-sm flex-grow flex flex-col relative">
+                <div className={`border rounded-sm flex-grow flex flex-col relative ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
       {/* Header */}
-      <div className="grid grid-cols-4 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+      <div className={`grid grid-cols-4 text-xs font-medium py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-b border-gray-700" : "text-gray-600 bg-gray-100 border-b border-gray-300"}`}>
         <span className="px-4">Time</span>
         <span className="px-4">Deal</span>
         <span className="px-4">Type</span>
@@ -1455,16 +1465,16 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
           <div
             key={d.id}
             onDoubleClick={() => onRowDoubleClick(d)}
-            className={`flex items-center text-sm text-gray-200 ${
-              idx % 2 === 0 ? "bg-[#3c3c3c]" : "bg-[#2c2c2c]"
-            } border-b border-gray-700 py-2 px-2 cursor-pointer`}
+            className={`flex items-center text-sm ${
+              idx % 2 === 0 ? (mode === "dark" ? "bg-[#3c3c3c]" : "bg-gray-200") : (mode === "dark" ? "bg-[#2c2c2c]" : "bg-gray-100")
+            } border-b py-2 px-2 cursor-pointer ${mode === "dark" ? "text-gray-200 border-gray-700" : "text-black border-gray-300"}`}
             title="Double-click to open details"
             role="button"
           >
             {/* Time — left column */}
             <div className="w-1/4 px-4">
-              <div className="flex items-center gap-2 text-xs text-gray-300">
-                <span className="inline-block text-gray-400">⊕</span>
+              <div className={`flex items-center gap-2 text-xs ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>
+                <span className={`inline-block ${mode === "dark" ? "text-gray-400" : "text-gray-500"}`}>⊕</span>
                 <div className="leading-4">
                   <div className="text-[11px]">{d.time}</div>
                 </div>
@@ -1473,40 +1483,40 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
 
             {/* Deal */}
             <div className="w-1/4 px-4">
-              <div className="text-sm text-gray-100">{d.deal}</div>
+              <div className={`text-sm ${mode === "dark" ? "text-gray-100" : "text-black"}`}>{d.deal}</div>
             </div>
 
             {/* Type */}
             <div className="w-1/4 px-4">
-              <div className="text-sm text-gray-100">{d.type}</div>
+              <div className={`text-sm ${mode === "dark" ? "text-gray-100" : "text-black"}`}>{d.type}</div>
             </div>
 
             {/* Amount (right aligned) */}
             <div className="w-1/4 px-4 text-right">
-              <div className="text-sm text-gray-100">{d.amount}</div>
+              <div className={`text-sm ${mode === "dark" ? "text-gray-100" : "text-black"}`}>{d.amount}</div>
             </div>
           </div>
         ))}
 
         {/* Balance Summary Row */}
-        <div className="flex text-sm text-gray-200 bg-[#3c3c3c] py-2 border-b border-gray-700 px-2">
+        <div className={`flex text-sm py-2 border-b px-2 ${mode === "dark" ? "text-gray-200 bg-[#3c3c3c] border-gray-700" : "text-black bg-gray-200 border-gray-300"}`}>
           <span className="px-4 font-bold">
             • Balance:{" "}
-            <span className="text-white font-normal">{balance} USD</span> | Equity:{" "}
-            <span className="text-white font-normal">{equity}</span> | Free:{" "}
-            <span className="text-white font-normal">{freeMargin}</span> /{" "}
-            <span className="text-white font-normal">297 128.57 %</span>
+            <span className={`${mode === "dark" ? "text-white" : "text-black"} font-normal`}>{balance} USD</span> | Equity:{" "}
+            <span className={`${mode === "dark" ? "text-white" : "text-black"} font-normal`}>{equity}</span> | Free:{" "}
+            <span className={`${mode === "dark" ? "text-white" : "text-black"} font-normal`}>{freeMargin}</span> /{" "}
+            <span className={`${mode === "dark" ? "text-white" : "text-black"} font-normal`}>297 128.57 %</span>
           </span>
         </div>
 
         {/* filler empty area (matches screenshot) */}
-        <div className="h-[320px] bg-[#2f2f2f]" />
+        <div className={`h-[320px] ${mode === "dark" ? "bg-[#2f2f2f]" : "bg-gray-300"}`} />
       </div>
 
       {/* Footer / Filter area */}
-      <div className="flex items-center justify-end space-x-2 p-2 border-t border-gray-700">
+      <div className={`flex items-center justify-end space-x-2 p-2 border-t ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
         <div className="relative">
-          <select className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8">
+          <select className={mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8" : "bg-white border border-gray-400 text-black text-xs rounded-sm p-1.5 pr-8"}>
             <option>Last 3 months</option>
           </select>
           <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-400">
@@ -1519,28 +1529,28 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
           <input
             type="text"
             defaultValue="2025.09.01"
-            className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8 w-24"
+            className={mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8 w-24" : "bg-white border border-gray-400 text-black text-xs rounded-sm p-1.5 pr-8 w-24"}
           />
           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
             &#9662;
           </span>
         </div>
 
-        <span className="text-gray-400">-</span>
+        <span className={mode === "dark" ? "text-gray-400" : "text-gray-600"}>-</span>
 
         {/* Date Picker 2 */}
         <div className="relative">
           <input
             type="text"
             defaultValue="2025.11.21"
-            className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8 w-24"
+            className={mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-1.5 pr-8 w-24" : "bg-white border border-gray-400 text-black text-xs rounded-sm p-1.5 pr-8 w-24"}
           />
           <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
             &#9662;
           </span>
         </div>
 
-        <button className="px-4 py-1.5 text-xs border border-gray-600 text-white rounded-sm">
+        <button className={`px-4 py-1.5 text-xs border border-gray-600 rounded-sm ${mode === "dark" ? "text-white" : "text-black"}`}>
           Request
         </button>
       </div>
@@ -1552,14 +1562,14 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
             {activeTab === "Trade" && (
               <div className="flex h-full space-x-4 p-0">
                 {/* Left Side: Chart Area */}
-                <div className="w-3/5 border border-gray-700  relative flex flex-col overflow-hidden">
+                <div className={`w-3/5 border relative flex flex-col overflow-hidden ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                   {/* Symbol label on top left of chart */}
-                  <div className="absolute top-2 left-2 text-gray-200 text-sm bg-black bg-opacity-50 p-1 rounded-sm z-20">
+                  <div className={`absolute top-2 left-2 text-sm bg-opacity-50 p-1 rounded-sm z-20 ${mode === "dark" ? "text-gray-200 bg-black" : "text-black bg-white"}`}>
                     EURUSD, M1
                   </div>
                   {/* Price Axis */}
                   <div
-                    className="absolute right-0 top-0 bottom-0 w-12 text-xs text-gray-400 bg-[#2c2c2c] border-l border-gray-700 flex flex-col justify-around py-2 z-20"
+                    className={`absolute right-0 top-0 bottom-0 w-12 text-xs border-l flex flex-col justify-around py-2 z-20 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}
                     style={{ height: "calc(100% - 24px)" }}
                   >
                     <div className="text-right pr-1">1.15475</div>
@@ -1573,7 +1583,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     <div className="text-right pr-1">1.15445</div>
                   </div>
                   {/* Time Axis */}
-                  <div className="absolute bottom-0 left-0 right-12 h-6 text-xs text-gray-400 bg-[#2c2c2c] border-t border-gray-700 flex justify-around items-center px-2 z-20">
+                  <div className={`absolute bottom-0 left-0 right-12 h-6 text-xs border-t flex justify-around items-center px-2 z-20 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span>10:49:00</span>
                     <span>10:50:00</span>
                     <span>10:51:00</span>
@@ -1592,7 +1602,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                       {[...Array(10)].map((_, i) => (
                         <div
                           key={i}
-                          className="absolute left-0 right-12 border-t border-gray-800"
+                          className={`absolute left-0 right-12 border-t ${mode === "dark" ? "border-gray-800" : "border-gray-300"}`}
                           style={{ top: `${i * 10}%` }}
                         ></div>
                       ))}
@@ -1615,62 +1625,62 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                 </div>
 
                 {/* Right Side: Order Panel */}
-                 <div className="w-3/5 pt-2 space-y-4 text-gray-100 font-sans">
+                 <div className={`w-3/5 pt-2 space-y-4 font-sans ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
 
-      {/* Symbol & Type */}
-      <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <label htmlFor="symbol" className="text-sm text-gray-300 min-w-[100px]">Symbol:</label>
-          <div className="relative">
-            <select
-              id="symbol"
-              defaultValue="EURUSD"
-              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
-            >
-              <option>EURUSD, Euro vs US Dollar</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
-          </div>
-        </div>
+       {/* Symbol & Type */}
+       <div className="space-y-2">
+         <div className="flex items-center gap-2">
+           <label htmlFor="symbol" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>Symbol:</label>
+           <div className="relative">
+             <select
+               id="symbol"
+               defaultValue="EURUSD"
+               className={`appearance-none rounded-sm px-3 py-1 w-[320px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border border-white/80" : "bg-white text-black border border-gray-400"}`}
+             >
+               <option>EURUSD, Euro vs US Dollar</option>
+             </select>
+             <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+           </div>
+         </div>
 
-        <div className="flex items-center gap-2">
-          <label htmlFor="type" className="text-sm text-gray-300 min-w-[100px]">Type:</label>
-          <div className="relative">
-            <select
-              id="type"
-              defaultValue="Market Order"
-              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
-            >
-              <option>Market Order</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
-          </div>
-        </div>
-      </div>
+         <div className="flex items-center gap-2">
+           <label htmlFor="type" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>Type:</label>
+           <div className="relative">
+             <select
+               id="type"
+               defaultValue="Market Order"
+               className={`appearance-none rounded-sm px-3 py-1 w-[320px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border border-white/80" : "bg-white text-black border border-gray-400"}`}
+             >
+               <option>Market Order</option>
+             </select>
+             <div className="pointer-events-none absolute inset-y-0 right-2 flex items-center text-gray-400">▾</div>
+           </div>
+         </div>
+       </div>
 
       {/* Volume & Fill Policy */}
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <label htmlFor="volume" className="text-sm text-gray-300 min-w-[100px]">Volume:</label>
+          <label htmlFor="volume" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>Volume:</label>
           <div className="flex items-center gap-2">
             <input
               type="number"
               id="volume"
               defaultValue={volumeDefault}
               min="0"
-              className="bg-[#3c3c3c] text-[#00baff] border border-white/85 rounded-sm px-2 py-1 w-28 text-sm text-right"
+              className={`text-[#00baff] border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] border-white/85" : "bg-white border-gray-400"}`}
             />
-            <span className="text-gray-400 text-sm">1 000 EUR</span>
+            <span className={`text-sm ${mode === "dark" ? "text-gray-400" : "text-gray-500"}`}>1 000 EUR</span>
           </div>
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="fillPolicy" className="text-sm text-gray-300 min-w-[100px]">Fill Policy:</label>
+          <label htmlFor="fillPolicy" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>Fill Policy:</label>
           <div className="relative">
             <select
               id="fillPolicy"
               defaultValue="Fill or Kill"
-              className="appearance-none bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-3 py-1 w-[320px] text-sm"
+              className={`appearance-none rounded-sm px-3 py-1 w-[320px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border border-white/80" : "bg-white text-black border border-gray-400"}`}
             >
               <option>Fill or Kill</option>
             </select>
@@ -1683,23 +1693,23 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
       <div className="space-y-2">
 
         <div className="flex items-center gap-2">
-          <label htmlFor="atPrice" className="text-sm text-gray-300 min-w-[100px]">At Price:</label>
+          <label htmlFor="atPrice" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>At Price:</label>
           <div className="flex items-center gap-2">
             <input
               type="number"
               id="atPrice"
               defaultValue={atPriceDefault}
-              className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+              className={`border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
             />
             <button
               title="Update"
-              className="text-gray-400 hover:text-white text-sm"
+              className={`text-sm ${mode === "dark" ? "text-gray-400 hover:text-white" : "text-gray-500 hover:text-black"}`}
               type="button"
             >
               ↻
             </button>
 
-            <label className="inline-flex items-center gap-2 text-sm text-gray-200 ml-3">
+            <label className={`inline-flex items-center gap-2 text-sm ml-3 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
               <input type="checkbox" defaultChecked className="accent-sky-400 w-4 h-4" />
               <span className="text-sm">Auto</span>
             </label>
@@ -1707,37 +1717,37 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="stopLoss" className="text-sm text-gray-300 min-w-[100px]">Stop Loss:</label>
+          <label htmlFor="stopLoss" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>Stop Loss:</label>
           <input
             type="number"
             id="stopLoss"
             defaultValue="0.00000"
-            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            className={`border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
           />
         </div>
 
         <div className="flex items-center gap-2">
-          <label htmlFor="takeProfit" className="text-sm text-gray-300 min-w-[100px]">Take Profit:</label>
+          <label htmlFor="takeProfit" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>Take Profit:</label>
           <input
             type="number"
             id="takeProfit"
             defaultValue="0.00000"
-            className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-28 text-sm text-right"
+            className={`border rounded-sm px-2 py-1 w-28 text-sm text-right ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
           />
         </div>
       </div>
 
       {/* Comment */}
       <div className="flex items-center gap-2 pt-2">
-        <label htmlFor="commentTrade" className="text-sm text-gray-300 min-w-[100px]">Comment:</label>
+        <label htmlFor="commentTrade" className={`text-sm min-w-[100px] ${mode === "dark" ? "text-gray-300" : "text-gray-600"}`}>Comment:</label>
         <input
           type="text"
           id="commentTrade"
-          className="bg-[#3c3c3c] text-gray-100 border border-white/80 rounded-sm px-2 py-1 w-full min-w-[360px] text-sm"
+          className={`border rounded-sm px-2 py-1 w-full min-w-[360px] text-sm ${mode === "dark" ? "bg-[#3c3c3c] text-gray-100 border-white/80" : "bg-white text-black border-gray-400"}`}
         />
       </div>
 
-      <hr className="border-t border-white/6 mt-6 mb-6" />
+      <hr className={`border-t mt-6 mb-6 ${mode === "dark" ? "border-white/6" : "border-gray-300"}`} />
 
       {/* Mid price */}
       <div className="text-center">
@@ -1765,7 +1775,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
       </div>
 
       {/* dark bottom bar */}
-      <div className="h-8 rounded-sm border border-white/5 mt-4" />
+      <div className={`h-8 rounded-sm border mt-4 ${mode === "dark" ? "border-white/5" : "border-gray-300"}`} />
 
     </div>
               </div>
@@ -1775,9 +1785,9 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
             {activeTab === "History" && (
               <div className="flex flex-col h-full space-y-4">
                 {/* History Table */}
-                <div className="border border-gray-300 rounded-sm flex-grow flex flex-col">
+                <div className={`border rounded-sm flex-grow flex flex-col ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                   {/* Header */}
-                  <div className="grid grid-cols-10 text-xs font-medium text-gray-400 bg-[#2c2c2c] border-b border-gray-700 py-2">
+                  <div className={`grid grid-cols-10 text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="px-4">Time</span>
                     <span className="px-4">Order</span>
                     <span className="px-4">Symbol</span>
@@ -1797,9 +1807,9 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                 </div>
 
                 {/* Footer/Filter */}
-                <div className="flex items-center justify-end space-x-2 p-2 border-t border-gray-700">
+                <div className={`flex items-center justify-end space-x-2 p-2 border-t ${mode === "dark" ? "border-gray-700" : "border-gray-300"}`}>
                   <div className="relative">
-                    <select className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8">
+                    <select className={`text-sm rounded-sm p-1.5 pr-8 ${mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100" : "bg-white border border-gray-400 text-black"}`}>
                       <option>Last month</option>
                       {/* Other time periods */}
                     </select>
@@ -1813,28 +1823,28 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     <input
                       type="text"
                       defaultValue="2025.11.01"
-                      className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"
+                      className={`text-sm rounded-sm p-1.5 pr-8 w-24 ${mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100" : "bg-white border border-gray-400 text-black"}`}
                     />
                     <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
                       &#9662;
                     </span>
                   </div>
 
-                  <span className="text-gray-400">-</span>
+                  <span className={mode === "dark" ? "text-gray-400" : "text-gray-600"}>-</span>
 
                   {/* Date Picker 2 */}
                   <div className="relative">
                     <input
                       type="text"
                       defaultValue="2025.11.21"
-                      className="bg-[#3c3c3c] border border-gray-600 text-gray-100 text-sm rounded-sm p-1.5 pr-8 w-24"
+                      className={`text-sm rounded-sm p-1.5 pr-8 w-24 ${mode === "dark" ? "bg-[#3c3c3c] border border-gray-600 text-gray-100" : "bg-white border border-gray-400 text-black"}`}
                     />
                     <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
                       &#9662;
                     </span>
                   </div>
 
-                  <button className="px-4 py-1.5 text-sm  text-white rounded-sm  border border-gray-600">
+                  <button className={`px-4 py-1.5 text-sm rounded-sm border border-gray-600 ${mode === "dark" ? "text-white" : "text-black"}`}>
                     Request
                   </button>
                 </div>
@@ -1843,7 +1853,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
 
             {/* --- Security Content --- */}
             {activeTab === "Security" && (
-              <div className="space-y-4  max-w-2xl mx-auto text-gray-100">
+              <div className={`space-y-4 max-w-2xl mx-auto ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
                 {/* Master Password */}
                 <div className="space-y-1">
                   <p className="text-sm">
@@ -1853,20 +1863,20 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   <div className="flex items-end space-x-2">
                     <input
                       type="password"
-                      className={inputStyle}
+                      className={getInputStyle(mode)}
                       defaultValue="********"
                     />
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded hover:bg-gray-500 border border-gray-600 w-20 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                       Check
                     </button>
-                    <button className="px-4  text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded hover:bg-gray-500 border border-gray-600 w-20 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                       Change
                     </button>
-                    <button className="px-4  text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-24">
+                    <button className={`px-4 text-sm rounded hover:bg-gray-500 border border-gray-600 w-24 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                       Generate
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 pl-1">
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     minimum 8 characters
                   </p>
                 </div>
@@ -1880,17 +1890,17 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   <div className="flex items-end space-x-2">
                     <input
                       type="password"
-                      className={inputStyle}
+                      className={getInputStyle(mode)}
                       defaultValue="********"
                     />
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded hover:bg-gray-500 border border-gray-600 w-20 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                       Check
                     </button>
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded hover:bg-gray-500 border border-gray-600 w-20 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                       Change
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 pl-1">
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     minimum 8 characters
                   </p>
                 </div>
@@ -1904,17 +1914,17 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   <div className="flex items-end space-x-2">
                     <input
                       type="password"
-                      className={inputStyle}
+                      className={getInputStyle(mode)}
                       defaultValue="********"
                     />
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded hover:bg-gray-500 border border-gray-600 w-20 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                       Check
                     </button>
-                    <button className="px-4 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-600 w-20">
+                    <button className={`px-4 text-sm rounded hover:bg-gray-500 border border-gray-600 w-20 ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                       Change
                     </button>
                   </div>
-                  <p className="text-xs text-gray-400 pl-1">
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     minimum 8 characters
                   </p>
                 </div>
@@ -1928,10 +1938,10 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                   <div className="relative">
                     <input
                       type="password"
-                      className={inputStyle}
+                      className={getInputStyle(mode)}
                       defaultValue="****"
                     />
-                    <p className="text-xs text-gray-400 pl-1 mt-1">
+                    <p className={`text-xs pl-1 mt-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                       to view password set focus to field
                     </p>
                   </div>
@@ -1943,10 +1953,10 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
                     **Shared secret key** in combination with the current
                     timestamp is used to generate one-time password
                   </p>
-                  <p className="text-xs text-gray-400 pl-1">OTP secret key</p>
+                  <p className={`text-xs pl-1 ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>OTP secret key</p>
                   <input
                     type="text"
-                    className={inputStyle}
+                    className={getInputStyle(mode)}
                     defaultValue="... secret key ..."
                   />
                 </div>
@@ -1955,29 +1965,29 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
           </div>
 
           {/* Footer/Action Buttons - consistent across tabs */}
-          <div className="flex justify-between p-2 border-t border-gray-700 bg-[#2c2c2c]">
+          <div className={`flex justify-between p-2 border-t ${mode === "dark" ? "border-gray-700 bg-[#2c2c2c]" : "border-gray-300 bg-gray-100"}`}>
             <div>
               {!hideNewClient && (
                 <button
                   onClick={() => setIsNewClientOpen(true)} // Open NewClientModal
-                  className="px-4 py-1 text-sm text-gray-200 rounded-l hover:bg-gray-500 border border-gray-500"
+                  className={`px-4 py-1 text-sm rounded-l border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-400 border-gray-400"}`}
                 >
                   New Client
                 </button>
               )}
             </div>
             <div className="space-x-2">
-              <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
+              <button className={`px-4 py-1 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-400 border-gray-400"}`}>
                 Update
               </button>
               <button
                 onClick={onClose}
-                className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
+                className={`px-4 py-1 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-400 border-gray-400"}`}
               >
                 Cancel
               </button>
               {!hideHelp && (
-                <button className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500">
+                <button className={`px-4 py-1 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-400 border-gray-400"}`}>
                   Help
                 </button>
               )}

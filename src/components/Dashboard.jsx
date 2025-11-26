@@ -146,7 +146,8 @@
 
 
 
-import React from "react";
+import React, { useContext } from "react";
+import Mycontext from "../context/Mycontext";
 
 /**
  * Dashboard.jsx
@@ -182,6 +183,7 @@ const sampleData = (count = 80) => {
 };
 
 export default function Dashboard() {
+  const { mode } = useContext(Mycontext);
   // If you have a prop or real data, replace this with your real array.
   const rows = sampleData(120); // many rows to demonstrate scrolling
 
@@ -192,23 +194,23 @@ export default function Dashboard() {
         <div className="text-sm text-gray-400">Showing table — scroll to see more</div>
       </div> */}
 
-      <div className="bg-[#2c2c2c] rounded-md border border-gray-700 shadow-sm overflow-hidden">
+      <div className={`rounded-md shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border border-gray-700" : "bg-white border border-gray-300"}`}>
         {/* Table header */}
         <div className="w-full overflow-x-auto ">
           <table className="min-w-full table-fixed border-collapse ">
             <thead>
               <tr className="">
                 {/* sticky header: using position: sticky via utility classes */}
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Login</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Name</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Group</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Country</th>
-                <th className="sticky top-0  text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Client</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Balance</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Balance / Checked</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Equity</th>
-                <th className="sticky top-0  text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Profit</th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700">Currency</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Login</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Name</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Group</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Country</th>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Client</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Balance</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Balance / Checked</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Equity</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Profit</th>
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>Currency</th>
               </tr>
             </thead>
           </table>
@@ -221,18 +223,18 @@ export default function Dashboard() {
               {rows.map((r, idx) => (
                 <tr
                   key={r.login + "-" + idx}
-                  className={`border-b border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}`}
+                  className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                 >
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[88px]">{r.login}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200">{r.name}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200">{r.group}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[96px]">{r.country}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[80px]">{r.client}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right w-[120px]">{r.balance}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right w-[140px]">{r.balanceChecked}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right w-[100px]">{r.equity}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right w-[120px]">{r.profit}</td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right w-[72px]">{r.currency}</td>
+                  <td className={`px-3 py-2 text-sm w-[88px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.login}</td>
+                  <td className={`px-3 py-2 text-sm ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.name}</td>
+                  <td className={`px-3 py-2 text-sm ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.group}</td>
+                  <td className={`px-3 py-2 text-sm w-[96px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.country}</td>
+                  <td className={`px-3 py-2 text-sm w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.client}</td>
+                  <td className={`px-3 py-2 text-sm text-right w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balance}</td>
+                  <td className={`px-3 py-2 text-sm text-right w-[140px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balanceChecked}</td>
+                  <td className={`px-3 py-2 text-sm text-right w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.equity}</td>
+                  <td className={`px-3 py-2 text-sm text-right w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.profit}</td>
+                  <td className={`px-3 py-2 text-sm text-right w-[72px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.currency}</td>
                 </tr>
               ))}
             </tbody>

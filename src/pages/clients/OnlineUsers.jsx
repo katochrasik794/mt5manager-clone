@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ClientModal from "../../components/ClientModal";
 import {
   ComputerDesktopIcon,
@@ -6,6 +6,7 @@ import {
   CloudIcon,
 } from "@heroicons/react/24/solid";
 import UserModal from "../../components/UserModal";
+import Mycontext from "../../context/Mycontext";
 
 const sampleData = (count = 80) => {
   const rows = [];
@@ -67,6 +68,7 @@ const renderLoginIcon = (clientType) => {
 };
 
 export default function OnlineUsers() {
+  const { mode } = useContext(Mycontext);
   // If you have a prop or real data, replace this with your real array.
   const rows = sampleData(120); // many rows to demonstrate scrolling
   const [selectedClient, setSelectedClient] = React.useState(null);
@@ -84,34 +86,34 @@ export default function OnlineUsers() {
         <div className="text-sm text-gray-400">Showing table — scroll to see more</div>
       </div> */}
 
-      <div className="bg-[#2c2c2c] rounded-md border border-gray-700 shadow-sm overflow-hidden">
+      <div className={`rounded-md shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border border-gray-700" : "bg-white border border-gray-300"}`}>
         {/* HEADER */}
         <div className="w-full overflow-x-auto">
           <table className="min-w-full table-fixed border-collapse">
             <thead>
               <tr>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[90px]">
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[90px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   Login
                 </th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[180px]">
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[180px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   Group
                 </th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[200px]">
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[200px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   Name
                 </th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[110px]">
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[110px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   Client
                 </th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[90px]">
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[90px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   Version
                 </th>
-                <th className="sticky top-0 text-left px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[160px]">
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[160px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   IP
                 </th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[100px]">
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b w-[100px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   Equity
                 </th>
-                <th className="sticky top-0 text-right px-3 py-2 text-xs font-medium text-gray-300 border-b border-gray-700 w-[80px]">
+                <th className={`sticky top-0 text-right px-3 py-2 text-xs font-medium border-b w-[80px] ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-black border-gray-300"}`}>
                   Currency
                 </th>
               </tr>
@@ -120,43 +122,41 @@ export default function OnlineUsers() {
         </div>
 
         {/* BODY */}
-        <div className="max-h-[520px] overflow-y-auto custom-scrollbar">
+        <div className={`max-h-[520px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-fixed border-collapse">
             <tbody>
               {rows.map((r, idx) => (
                 <tr
                   key={r.login + "-" + idx}
                   onDoubleClick={() => onRowDoubleClick(r)}
-                  className={`border-b border-gray-800 hover:bg-gray-800/40 cursor-pointer ${
-                    idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"
-                  }`}
+                  className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                 >
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[90px]">
+                  <td className={`px-3 py-2 text-sm w-[90px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     <div className="flex items-center gap-2">
                       {renderLoginIcon(r.client)}
                       {r.login}
                     </div>
                   </td>
 
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[180px]">
+                  <td className={`px-3 py-2 text-sm w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.group}
                   </td>
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[200px]">
+                  <td className={`px-3 py-2 text-sm w-[200px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.name}
                   </td>
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[110px]">
+                  <td className={`px-3 py-2 text-sm w-[110px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.client}
                   </td>
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[90px]">
+                  <td className={`px-3 py-2 text-sm w-[90px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.version || "5430"}
                   </td>
-                  <td className="px-3 py-2 text-sm text-gray-200 w-[160px]">
+                  <td className={`px-3 py-2 text-sm w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.ip || "0.0.0.0"}
                   </td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right w-[100px]">
+                  <td className={`px-3 py-2 text-sm text-right w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.equity}
                   </td>
-                  <td className="px-3 py-2 text-sm text-gray-200 text-right w-[80px]">
+                  <td className={`px-3 py-2 text-sm text-right w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.currency}
                   </td>
                 </tr>

@@ -10,12 +10,12 @@ const ToggleBtn = () => {
     <>
       <button
         onClick={toggleMode}
-        className="px-3 py-0.5 rounded-full transition text-sm font-semibold border bg-transparet cursor-pointer"
-        style={{
-          background: mode === "dark" ? "white" : "black",
-          color: mode === "dark" ? "white" : "white",
-          borderColor: mode === "dark" ? "white" : "black",
-        }}
+        className="transition text-2xl font-semibold bg-transparet cursor-pointer"
+        // style={{
+        //   background: mode === "dark" ? "white" : "black",
+        //   color: mode === "dark" ? "white" : "white",
+        //   borderColor: mode === "dark" ? "white" : "black",
+        // }}
       >
         {mode === "dark" ? "🌞" : "🌙"}
       </button>
