@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 // Import Heroicons
+import Mycontext from "../context/Mycontext";
+import ToggleBtn from "./ToggleBtn";
 import {
   XMarkIcon,
   ServerStackIcon,
@@ -313,32 +315,30 @@ const NavItem = ({ item, level = 0, path, activeItem, setActiveItem }) => {
 
 export default function NavigatorSidebar() {
   const [activeItem, setActiveItem] = useState(null);
+   const { mode } = useContext(Mycontext);
+
+  //  const toggleMenu = () => setOpen(!open);
+
+  // // Sync body mode
+  // useEffect(() => {
+  //   document.body.className =
+  //     mode === "dark" ? "bg-black text-white" : "bg-white text-black";
+  // }, [mode]);
 
   // Define classes for dark theme styling
   const sidebarClasses =
-    "w-72 mb-10 bg-[#2c2c2c] text-gray-300 flex flex-col font-sans";
+    "w-72 bg-[#2c2c2c]  flex flex-col font-sans";
 
   const headerClasses =
-    "px-4 py-1 bg-gray-600/50 flex items-center justify-between";
+    "px-4 py-1  flex items-center justify-between";
 
 
   return (
-    <aside className={sidebarClasses}>
-<style>
-{`
-.sidebar-scroll::-webkit-scrollbar {
-  background: #111827;
-  width: 10px;  
-}
-.sidebar-scroll::-webkit-scrollbar-thumb {
-  background: #959595;
-  border-radius: 4px; 
-}
-`}
-</style>
+    <aside className={sidebarClasses +  ` ${mode === "dark" ? "border-gray-100 text-white" : "border-gray-300 text-black"}`}
+    style={{ background: mode === "dark" ? "#2c2c2c" : "white" }}>
       {/* --- Navigator Header --- */}
       <div className={headerClasses}>
-        <span className="font-semibold text-md text-white">Navigator</span>
+        <span className="font-semibold text-md">Navigator</span>
         <button
           className="p-1 text-gray-400 hover:text-white"
           aria-label="Close"
@@ -349,14 +349,16 @@ export default function NavigatorSidebar() {
 
       {/* --- Menu Items --- */}
       <div className="flex-1 overflow-auto p-1 sidebar-scroll">
-        <div className="text-sm font-semibold p-2 text-white">
+        <div className="text-sm font-semibold p-2">
           MetaTrader 5 Manager
         </div>
-        <nav className="text-sm">
+        <nav className="text-sm "
+        >
           {/* Render the top-level items */}
           {navItems.map((item, index) => (
             <NavItem key={index} item={item} level={0} path={item.name} activeItem={activeItem} setActiveItem={setActiveItem} />
           ))}
+          
         </nav>
       </div>
     </aside>

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import NewClientModal from "../components/NewClientModal"; // Import the new component
 import GroupConfigModal from "../components/GroupConfigModal"; // Import GroupConfigModal
+import Mycontext from "../context/Mycontext";
 
 export default function ClientModal({ open, onClose, client }) {
   // Destructure client data with defaults
@@ -25,12 +26,12 @@ export default function ClientModal({ open, onClose, client }) {
     lastName = "Pawar",
     middleName = "",
     company = "",
-    language = "",
-    status = "",
+    // language = "",
+    // status = "",
     idNumber = "",
     leadCampaign = "",
     leadSource = "",
-    country = "India",
+    // country = "India",
     state = "",
     city = "",
     zipCode = "",
@@ -60,6 +61,8 @@ export default function ClientModal({ open, onClose, client }) {
     supportCenterEmail = "your.email@example.com", 
     supportCenterPassword = "",
   } = client || {};
+
+  const { mode } = useContext(Mycontext);
 
   // List of tabs
   const tabs = [
@@ -94,23 +97,31 @@ export default function ClientModal({ open, onClose, client }) {
 
   // Generic styling
   const inputStyle =
-    "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-[2px]";
-  const labelStyle = "block text-xs font-medium  text-gray-400";
-  const checkboxStyle = "w-4 h-3 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500";
+    mode === "dark"
+      ? "bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-[2px]"
+      : "bg-white border border-gray-400 text-black text-xs rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-[2px]";
+  const labelStyle = `block text-xs font-medium ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`;
+  const checkboxStyle = mode === "dark"
+    ? "w-4 h-3 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500"
+    : "w-4 h-3 text-blue-600 bg-white border-gray-400 rounded focus:ring-blue-500";
   
   // Custom styling for the MetaQuotes input fields (used in Profile)
-  const mqInputStyle = "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-4 py-3";
-  const mqIconStyle = "absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg";
+  const mqInputStyle = mode === "dark"
+    ? "bg-[#1e1e1e] border border-gray-600 text-gray-100 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-4 py-3"
+    : "bg-white border border-gray-400 text-black text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 pr-4 py-3";
+  const mqIconStyle = `absolute left-3 top-1/2 transform -translate-y-1/2 text-lg ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`;
   
   // Custom styling for select dropdowns
-  const selectStyle = (width = 'full') => 
-    `bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-[2px] pr-8 block w-${width}`;
+  const selectStyle = (width = 'full') =>
+    mode === "dark"
+      ? `bg-[#3c3c3c] border border-gray-600 text-gray-100 text-xs rounded-sm p-[2px] pr-8 block w-${width}`
+      : `bg-white border border-gray-400 text-black text-xs rounded-sm p-[2px] pr-8 block w-${width}`;
 
     // Dummy Candlestick Component (purely visual)
     const Candlestick = ({ color, height, offset, wickHeight, isCurrent }) => {
         const hClass = `h-[${height}px]`;
-        const topClass = `top-[${offset}px]`; // Offset from top
-        const wickClass = `h-[${wickHeight}px]`;
+        // const topClass = `top-[${offset}px]`;
+        // const wickClass = `h-[${wickHeight}px]`;
 
         // The candle itself (body)
         const body = (
@@ -191,22 +202,22 @@ export default function ClientModal({ open, onClose, client }) {
       {/* Client Account Modal (The main modal) */}
       <div className="fixed inset-0 -top-12 backdrop-blur  flex items-center justify-center z-50">
         {/* Main Content Area - mimics the window from the image */}
-        <div className="bg-[#1e1e1e] rounded-sm border border-gray-700 shadow-2xl max-w-4xl w-full h-5/6 mx-4">
+        <div className={`rounded-sm shadow-2xl max-w-4xl w-full h-5/6 mx-4 ${mode === "dark" ? "bg-[#1e1e1e] border border-gray-700" : "bg-white border border-gray-300"}`}>
           {/* Title Bar */}
-          <div className="flex items-center justify-between p-1 bg-[#2c2c2c] border-b border-gray-700">
-            <h3 className="text-sm font-semibold text-gray-100 ml-2">
+          <div className={`flex items-center justify-between p-1 border-b ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
+            <h3 className={`text-sm font-semibold ml-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
               Account: **{login}**, **{name}**, **{currency}**, **{group}**
             </h3>
             <div className="flex items-center">
-              <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-3xl mb-2 leading-none">
+              <button className={`w-8 h-6 text-3xl mb-2 leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>
                 <span className="inline-block transform -translate-y-0.5">-</span>
               </button>
-              <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-lg leading-none">
+              <button className={`w-8 h-6 text-lg leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>
                 ☐
               </button>
               <button
                 onClick={onClose}
-                className="text-gray-400 hover:bg-red-600 hover:text-white w-8 h-6 mb-1 text-xl leading-none"
+                className="hover:bg-red-600 hover:text-white w-8 h-6 mb-1 text-xl leading-none"
               >
                 ×
               </button>
@@ -214,16 +225,16 @@ export default function ClientModal({ open, onClose, client }) {
           </div>
 
           {/* Tab Navigation */}
-          <div className="flex bg-[#2c2c2c] border-b border-[#1e1e1e] p-0">
+          <div className={`flex border-b p-0 ${mode === "dark" ? "bg-[#2c2c2c] border-[#1e1e1e]" : "bg-gray-100 border-gray-300"}`}>
             {tabs.map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`px-2 py-2 text-xs font-medium ${
+                className={`px-2 py-2 text-xs font-medium transition-colors duration-150 rounded-t-sm ${
                   activeTab === tab
-                    ? "bg-[#1e1e1e] text-white border-b-2 border-blue-500"
-                    : "text-gray-400 hover:bg-[#3e3e3e]"
-                } transition-colors duration-150 rounded-t-sm`}
+                    ? mode === "dark" ? "bg-[#1e1e1e] text-white border-b-2 border-blue-500" : "bg-white text-black border-b-2 border-blue-500"
+                    : mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"
+                }`}
               >
                 {tab}
               </button>
@@ -232,13 +243,13 @@ export default function ClientModal({ open, onClose, client }) {
 
           {/* Main Content Area */}
           {/* Only the Profile tab is forced to have no scroll; others can scroll if content exceeds height */}
-          <div className={`p-4 bg-[#2c2c2c] h-[calc(100%-65px)] overflow-auto ${(activeTab === 'Personal' || activeTab === 'Trade' || activeTab === 'Profile') ? 'custom-scrollbar' : ''}`}>
+          <div className={`p-4 h-[calc(100%-65px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${(activeTab === 'Personal' || activeTab === 'Trade' || activeTab === 'Profile') ? 'custom-scrollbar' : ''}`}>
             
             {/* --- Overview Content --- */}
             {activeTab === "Overview" && (
               <>
-                <div className="text-sm space-y-1 mb-4">
-                  <p className="text-gray-100">
+                <div className={`text-sm space-y-1 mb-4 ${mode === "dark" ? "border-gray-100 text-white" : "border-gray-300 text-black"}`}>
+                  <p className="">
                     **{name}**, **{login}**,{" "}
                     <span className="text-blue-400 cursor-pointer" onClick={() => setIsGroupConfigOpen(true)}>OXO B\Standard</span>,{" "}
                     <span className="text-red-500">
@@ -1331,27 +1342,27 @@ export default function ClientModal({ open, onClose, client }) {
           </div>
           
           {/* Footer/Action Buttons - consistent across tabs */}
-          <div className="flex justify-between p-2 border-t border-gray-700 bg-[#2c2c2c]">
+          <div className={`flex justify-between p-2 border-t ${mode === "dark" ? "border-gray-700 bg-[#2c2c2c]" : "border-gray-300 bg-gray-100"}`}>
             <button
               onClick={() => setIsNewClientOpen(true)} // Open NewClientModal
-              className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
+              className={`px-4 py-1 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`}
             >
               New Client
             </button>
             <div className="space-x-2">
               <button
-                className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
+                className={`px-4 py-1 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`}
               >
                 Update
               </button>
               <button
                 onClick={onClose}
-                className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
+                className={`px-4 py-1 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`}
               >
                 Cancel
               </button>
               <button
-                className="px-4 py-1 text-sm text-gray-200 rounded hover:bg-gray-500 border border-gray-500"
+                className={`px-4 py-1 text-sm rounded border ${mode === "dark" ? "text-gray-200 hover:bg-gray-500 border-gray-500" : "text-black hover:bg-gray-300 border-gray-400"}`}
               >
                 Help
               </button>

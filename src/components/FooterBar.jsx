@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
+import Mycontext from "../context/Mycontext";
 
 // Define the colors/variables based on the provided code's intent (MetaTrader 5 Manager style)
-const styles = {
+const darkStyles = {
   // Main background color for the overall application content area
-  appBg: '#111827', 
+  appBg: '#111827',
   // Panel background (used for the log box and the footer bar itself)
-  panelBg: '#2c2c2c', 
+  panelBg: '#2c2c2c',
   // Border color (used to separate elements)
   borderColor: '#b2b2b2',
   // Muted text (used for titles and timestamps)
-  mutedText: '#9CA3AF', 
+  mutedText: '#9CA3AF',
   // Text color
   mainText: '#FFFFFF',
   // Success/Green log background (used for successful operations)
@@ -21,6 +22,27 @@ const styles = {
   logDefaultBg: '#343434', // Darker gray for alternating row/default look
   // Log Text color (for the non-muted content)
   logTextColor: '#FFFFFF',
+};
+
+const lightStyles = {
+  // Main background color for the overall application content area
+  appBg: '#f9fafb',
+  // Panel background (used for the log box and the footer bar itself)
+  panelBg: '#ffffff',
+  // Border color (used to separate elements)
+  borderColor: '#d1d5db',
+  // Muted text (used for titles and timestamps)
+  mutedText: '#6b7280',
+  // Text color
+  mainText: '#111827',
+  // Success/Green log background (used for successful operations)
+  logSuccessBg: 'rgba(16, 185, 129, 0.1)',
+  // Error/Red log background (used for failed/error operations)
+  logErrorBg: 'rgba(239, 68, 68, 0.1)',
+  // Default/White log background - This should be close to the panelBg but distinct
+  logDefaultBg: '#f3f4f6',
+  // Log Text color (for the non-muted content)
+  logTextColor: '#111827',
 };
 
 // Mock data reflecting the entries in the uploaded image (image_39b622.png)
@@ -43,6 +65,8 @@ const logEntries = [
 const gridColClasses = "grid-cols-[140px_80px_80px_minmax(0,1fr)_120px]";
 
 export default function App() {
+  const { mode } = useContext(Mycontext);
+  const styles = mode === "dark" ? darkStyles : lightStyles;
   const login = "2025.11.20 08:50:33";
   const logout = "—";
   const [isLogsPanelOpen, setIsLogsPanelOpen] = useState(true);

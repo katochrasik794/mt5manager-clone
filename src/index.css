@@ -30,3 +30,14 @@ body {
     scrollbar-color: #3c3c3c #2c2c2c; /* thumb track */
 }
 
+/* Sidebar scrollbar styles */
+.sidebar-scroll::-webkit-scrollbar {
+  background: #111827;
+  width: 10px;
+}
+
+.sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #959595;
+  border-radius: 4px;
+}
+
