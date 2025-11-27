@@ -24,9 +24,17 @@ const sampleData = (count = 80) => {
 };
 
 export default function ClientPage() {
-  const { mode } = useContext(Mycontext);
+  const { mode, searchTerm } = useContext(Mycontext);
   // If you have a prop or real data, replace this with your real array.
-  const rows = sampleData(120); // many rows to demonstrate scrolling
+  const allRows = sampleData(120); // many rows to demonstrate scrolling
+
+  // Filter rows based on search term
+  const rows = searchTerm ? allRows.filter(row =>
+    row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.login.includes(searchTerm) ||
+    row.group.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.country.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : allRows;
   const [selectedClient, setSelectedClient] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -39,7 +47,7 @@ export default function ClientPage() {
     <div className="">
       <div className={`overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border border-gray-600" : "bg-white border border-gray-300"}`}>
         {/* Table header */}
-        <div className="w-full overflow-x-auto">
+        <div className={`w-full overflow-x-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-fixed border-collapse">
             <thead>
               <tr className="">

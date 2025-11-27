@@ -329,8 +329,8 @@ export default function NavigatorSidebar() {
   const sidebarClasses =
     "w-68 bg-[#2c2c2c]  flex flex-col font-sans";
 
-  const headerClasses =
-    "px-4 py-1  flex items-center justify-between";
+  // const headerClasses =
+  //   "px-4 py-1  flex items-center justify-between";
 
 
   return (

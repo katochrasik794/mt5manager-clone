@@ -24,9 +24,18 @@ const sampleData = () => {
 };
 
 export default function Positions() {
-  const { mode } = useContext(Mycontext);
+  const { mode, searchTerm } = useContext(Mycontext);
   // Use the specific rows that match the screenshot
-  const rows = sampleData();
+  const allRows = sampleData();
+
+  // Filter rows based on search term
+  const rows = searchTerm ? allRows.filter(row =>
+    row.login.includes(searchTerm) ||
+    row.position.includes(searchTerm) ||
+    row.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.reason.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : allRows;
   const [selectedClient, setSelectedClient] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -39,7 +48,7 @@ export default function Positions() {
     <div className="">
       <div className={`border-t overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Table header - allow horizontal scroll for small screens */}
-        <div className="w-full overflow-x-auto">
+        <div className={`w-full overflow-x-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="w-full table-auto border-collapse min-w-0">
             <thead>
               <tr>
@@ -58,7 +67,7 @@ export default function Positions() {
         </div>
 
         {/* Scrollable body - allow horizontal + vertical scroll (responsive) */}
-        <div className="max-h-[520px] overflow-auto overflow-x-auto custom-scrollbar">
+        <div className={`max-h-[520px] overflow-auto overflow-x-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="w-full table-auto border-collapse min-w-0">
             <tbody>
               {rows.map((r, idx) => (

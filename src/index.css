@@ -19,7 +19,7 @@ body.light {
 
 /* For Chrome, Edge, Safari */
 .custom-scrollbar::-webkit-scrollbar {
-    width: 8px; /* keep your existing width */
+    width: 4px; /* thin scrollbar */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -37,7 +37,7 @@ body.light {
 
 /* Light mode scrollbar */
 .custom-scrollbar-light::-webkit-scrollbar {
-    width: 8px;
+    width: 4px;
 }
 
 .custom-scrollbar-light::-webkit-scrollbar-track {
@@ -49,7 +49,7 @@ body.light {
 }
 
 .custom-scrollbar-light {
-    scrollbar-color: #2c2c2c white; /* thumb track */
+    scrollbar-color: #8b8b8b white; /* thumb track */
 }
 
 /* Sidebar scrollbar styles */

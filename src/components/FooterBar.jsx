@@ -64,7 +64,7 @@ const logEntries = [
 // Helper to define column sizing for the grid
 const gridColClasses = "grid-cols-[140px_80px_80px_minmax(0,1fr)_120px]";
 
-export default function FooterBar({ footerHeight, setFooterHeight }) {
+export default function FooterBar({ setFooterHeight }) {
   const { mode } = useContext(Mycontext);
   const styles = mode === "dark" ? darkStyles : lightStyles;
 //   const login = "2025.11.20 08:50:33";

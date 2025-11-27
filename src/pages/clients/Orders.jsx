@@ -105,9 +105,17 @@ const sampleData = () => {
   ];
 };
 
-export default function Positions() {
-  const { mode } = useContext(Mycontext);
-  const rows = sampleData();
+export default function Orders() {
+  const { mode, searchTerm } = useContext(Mycontext);
+  const allRows = sampleData();
+
+  // Filter rows based on search term
+  const rows = searchTerm ? allRows.filter(row =>
+    row.login.includes(searchTerm) ||
+    row.order.includes(searchTerm) ||
+    row.symbol.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.type.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : allRows;
   const [selectedClient, setSelectedClient] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -120,7 +128,7 @@ export default function Positions() {
     <div className="">
       <div className={`border-t overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Header */}
-        <div className="w-full overflow-x-auto">
+        <div className={`w-full overflow-x-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="w-full table-auto border-collapse min-w-0">
             <thead>
               <tr>
@@ -140,7 +148,7 @@ export default function Positions() {
         </div>
 
         {/* Body */}
-        <div className="max-h-[520px] overflow-auto custom-scrollbar">
+        <div className={`max-h-[520px] overflow-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="w-full table-auto border-collapse min-w-0">
             <tbody>
               {rows.map((r, idx) => (

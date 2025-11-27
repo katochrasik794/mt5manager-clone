@@ -4,9 +4,9 @@ import ClientsModal from "../../components/ClientsModal";
 import Mycontext from "../../context/Mycontext";
 
 export default function Clients() {
-  const { mode } = useContext(Mycontext);
+  const { mode, searchTerm } = useContext(Mycontext);
   // Replaced dynamic generator with the exact (2) entries to match screenshot.
-  const rows = [
+  const allRows = [
     {
       id: "8440",
       name: "Prasad Nanekar",
@@ -45,6 +45,15 @@ export default function Clients() {
     },
     // If you want only 2 entries, remove the second object above.
   ];
+
+  // Filter rows based on search term
+  const rows = searchTerm ? allRows.filter(row =>
+    row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.phone.includes(searchTerm) ||
+    row.id.includes(searchTerm)
+  ) : allRows;
 
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -120,7 +129,7 @@ export default function Clients() {
         </div>
 
         {/* BODY */}
-        <div className="max-h-[520px] overflow-y-auto custom-scrollbar">
+        <div className={`max-h-[520px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-fixed border-collapse">
             <tbody>
               {rows.map((r, idx) => (

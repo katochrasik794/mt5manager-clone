@@ -25,9 +25,17 @@ const sampleData = (count = 80) => {
 };
 
 export default function TradingAccounts() {
-  const { mode } = useContext(Mycontext);
+  const { mode, searchTerm } = useContext(Mycontext);
   // If you have a prop or real data, replace this with your real array.
-  const rows = sampleData(11); // many rows to demonstrate scrolling
+  const allRows = sampleData(11); // many rows to demonstrate scrolling
+
+  // Filter rows based on search term
+  const rows = searchTerm ? allRows.filter(row =>
+    row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.login.includes(searchTerm) ||
+    row.group.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.country.toLowerCase().includes(searchTerm.toLowerCase())
+  ) : allRows;
   const [selectedClient, setSelectedClient] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 
@@ -45,7 +53,7 @@ export default function TradingAccounts() {
 
       <div className={`border-t overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Table header */}
-        <div className="w-full h-full overflow-x-auto">
+        <div className={`w-full h-full overflow-x-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-auto border-collapse">
             <thead>
               <tr className="">
@@ -66,7 +74,7 @@ export default function TradingAccounts() {
         </div>
 
         {/* Scrollable body: fixed height so ~20 rows are visible (adjust h-[720px] if you need exact fit) */}
-        <div className="max-h-[520px] overflow-y-auto custom-scrollbar">
+        <div className={`max-h-[520px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-auto border-collapse">
             <tbody>
               {rows.map((r, idx) => (

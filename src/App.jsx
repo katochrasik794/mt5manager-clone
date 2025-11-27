@@ -76,8 +76,7 @@ import OnlineUsers from "./pages/clients/OnlineUsers";
 import TradingAccounts from "./pages/clients/TradingAccounts";
 import Positions from "./pages/clients/Positions";
 import Orders from "./pages/clients/Orders";
-// If you have other page components, import them here:
-// import SettingsPage from "./pages/SettingsPage";
+
 
 export default function App() {
   const { mode } = useContext(Mycontext);
@@ -188,8 +187,8 @@ export default function App() {
           <div
             className={`relative h-full overflow-y-auto overflow-x-hidden border-r ${
               mode === "dark"
-                ? "border-gray-700 bg-[#2c2c2c]"
-                : "border-gray-200 bg-white"
+                ? "border-gray-700 bg-[#2c2c2c] custom-scrollbar"
+                : "border-gray-200 bg-white custom-scrollbar-light"
             }`}
           >
             <NavigatorSidebar
@@ -212,7 +211,7 @@ export default function App() {
           {/* Main area - stretches smoothly when sidebar is resized */}
           <main
             className={`overflow-auto relative ${
-              mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"
+              mode === "dark" ? "bg-[#2c2c2c] custom-scrollbar" : "bg-white custom-scrollbar-light"
             }`}
           >
             {/* Horizontal resize handle on main's left border */}

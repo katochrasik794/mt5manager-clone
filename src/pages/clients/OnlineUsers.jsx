@@ -68,9 +68,18 @@ const renderLoginIcon = (clientType) => {
 };
 
 export default function OnlineUsers() {
-  const { mode } = useContext(Mycontext);
+  const { mode, searchTerm } = useContext(Mycontext);
   // If you have a prop or real data, replace this with your real array.
-  const rows = sampleData(120); // many rows to demonstrate scrolling
+  const allRows = sampleData(120); // many rows to demonstrate scrolling
+
+  // Filter rows based on search term
+  const rows = searchTerm ? allRows.filter(row =>
+    row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.login.includes(searchTerm) ||
+    row.group.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.client.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    row.ip.includes(searchTerm)
+  ) : allRows;
   const [selectedClient, setSelectedClient] = React.useState(null);
   const [modalOpen, setModalOpen] = React.useState(false);
 

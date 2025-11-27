@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 function Mystate(props) {
   const [mode, setMode] = useState("light");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const toggleMode = () => {
     const newMode = mode === "light" ? "dark" : "light";
@@ -14,7 +15,7 @@ function Mystate(props) {
   };
 
   return (
-    <Mycontext.Provider value={{ mode, toggleMode }}>
+    <Mycontext.Provider value={{ mode, toggleMode, searchTerm, setSearchTerm }}>
       {props.children}
     </Mycontext.Provider>
   );
