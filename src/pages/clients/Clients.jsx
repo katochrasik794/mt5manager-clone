@@ -54,7 +54,7 @@ export default function Clients() {
 
   return (
     <div className="">
-      <div className={`rounded-md border shadow-sm overflow-hidden h-[75vh] ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
+      <div className={`border-t overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* RESPONSIVE TABLE WRAPPER */}
         <div className="w-full overflow-x-auto">
           <table className="min-w-full table-fixed border-collapse">
@@ -66,7 +66,7 @@ export default function Clients() {
                 </th>
 
                 {/* Name - always visible */}
-                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[100px] whitespace-nowrap ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-600 border-gray-300"}`}>
+                <th className={`sticky top-0 text-left px-3 py-2 text-xs font-medium border-b w-[120px] whitespace-nowrap ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-600 border-gray-300"}`}>
                   Name
                 </th>
 
@@ -86,7 +86,7 @@ export default function Clients() {
                 </th>
 
                 {/* KYC Status - visible from lg */}
-                <th className={`sticky top-0 hidden xl:table-cell text-left px-3 py-2 text-xs font-medium border-b w-[90px] whitespace-nowrap ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-600 border-gray-300"}`}>
+                <th className={`sticky top-0 hidden xl:table-cell text-left px-3 py-2 text-xs font-medium border-b w-[110px] whitespace-nowrap ${mode === "dark" ? "text-gray-300 border-gray-700" : "text-gray-600 border-gray-300"}`}>
                   KYC Status
                 </th>
 
@@ -135,7 +135,7 @@ export default function Clients() {
                   title="Double-click to open client details"
                 >
                   {/* ID */}
-                  <td className={`px-3 py-2 text-sm w-[70px] align-top whitespace-nowrap ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[70px] align-top whitespace-nowrap ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     <div className="flex items-center gap-2">
                       <span className="text-yellow-500">🔒</span>
                       <span>{r.id}</span>
@@ -143,57 +143,57 @@ export default function Clients() {
                   </td>
 
                   {/* Name */}
-                  <td className={`px-3 py-2 text-sm w-[120px] align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[120px] align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.name}
                   </td>
 
                   {/* City (hidden on xs) */}
-                  <td className={`px-3 py-2 text-sm w-[80px] hidden sm:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[80px] hidden sm:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.city}
                   </td>
 
                   {/* Type (hidden on sm, shown on md+) */}
-                  <td className={`px-3 py-2 text-sm w-[120px] hidden md:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[120px] hidden md:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.type}
                   </td>
 
                   {/* Status (visible on lg+) */}
-                  <td className={`px-3 py-2 text-sm w-[130px] hidden lg:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[130px] hidden lg:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.status}
                   </td>
 
                   {/* KYC Status (visible on xl+) */}
-                  <td className={`px-3 py-2 text-sm w-[110px] hidden xl:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[110px] hidden xl:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.kycStatus}
                   </td>
 
                   {/* Assigned Manager (visible on 2xl+) */}
-                  <td className={`px-3 py-2 text-sm w-[90px] hidden 2xl:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[90px] hidden 2xl:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.assignedManager}
                   </td>
 
                   {/* Company (visible on lg+) */}
-                  <td className={`px-3 py-2 text-sm w-[60px] hidden lg:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[60px] hidden lg:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.company}
                   </td>
 
                   {/* Email (visible on sm+) */}
-                  <td className={`px-3 py-2 text-sm w-[200px] hidden sm:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[200px] hidden sm:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.email}
                   </td>
 
                   {/* Phone (visible on sm+) */}
-                  <td className={`px-3 py-2 text-sm w-[100px] hidden sm:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[100px] hidden sm:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.phone}
                   </td>
 
                   {/* Country (visible on md+) */}
-                  <td className={`px-3 py-2 text-sm w-[60px] hidden md:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[60px] hidden md:table-cell align-top ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.country}
                   </td>
 
                   {/* For very small screens, show a compact stacked fallback under the row (using a full-row td) */}
-                  <td className={`px-3 py-2 text-sm w-full sm:hidden ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
+                  <td className={`px-3 py-2 text-xs w-full sm:hidden ${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     {/* compact details visible only on xs */}
                     <div className="flex flex-col gap-1 text-xs">
                       <span>Email: {r.email}</span>

@@ -86,9 +86,9 @@ export default function OnlineUsers() {
         <div className="text-sm text-gray-400">Showing table — scroll to see more</div>
       </div> */}
 
-      <div className={`rounded-md shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border border-gray-700" : "bg-white border border-gray-300"}`}>
+      <div className={`overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border border-gray-700" : "bg-white border border-gray-300"}`}>
         {/* HEADER */}
-        <div className="w-full overflow-x-auto">
+        <div className="w-full h-full overflow-x-auto">
           <table className="min-w-full table-fixed border-collapse">
             <thead>
               <tr>
@@ -131,32 +131,32 @@ export default function OnlineUsers() {
                   onDoubleClick={() => onRowDoubleClick(r)}
                   className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                 >
-                  <td className={`px-3 py-2 text-sm w-[90px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[90px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     <div className="flex items-center gap-2">
                       {renderLoginIcon(r.client)}
                       {r.login}
                     </div>
                   </td>
 
-                  <td className={`px-3 py-2 text-sm w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.group}
                   </td>
-                  <td className={`px-3 py-2 text-sm w-[200px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[200px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.name}
                   </td>
-                  <td className={`px-3 py-2 text-sm w-[110px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[110px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.client}
                   </td>
-                  <td className={`px-3 py-2 text-sm w-[90px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[90px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.version || "5430"}
                   </td>
-                  <td className={`px-3 py-2 text-sm w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.ip || "0.0.0.0"}
                   </td>
-                  <td className={`px-3 py-2 text-sm text-right w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs text-right w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.equity}
                   </td>
-                  <td className={`px-3 py-2 text-sm text-right w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs text-right w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     {r.currency}
                   </td>
                 </tr>

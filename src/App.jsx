@@ -83,7 +83,7 @@ export default function App() {
   const { mode } = useContext(Mycontext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarWidth, setSidebarWidth] = useState(240); // default sidebar width
-  const [footerHeight, setFooterHeight] = useState(40); // default footer height
+  const [footerHeight, setFooterHeight] = useState(40); // will be overridden to 10% of screen
   const [isSidebarResizing, setIsSidebarResizing] = useState(false);
   const [isMainResizing, setIsMainResizing] = useState(false);
   const [isFooterResizing, setIsFooterResizing] = useState(false);
@@ -95,6 +95,13 @@ export default function App() {
   useEffect(() => {
     setSidebarOpen(false);
   }, [location]);
+
+  // Set initial footerHeight to 10% of screen height
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setFooterHeight(window.innerHeight * 0.1);
+    }
+  }, []);
 
   useEffect(() => {
     function handleMouseMove(e) {
@@ -159,12 +166,17 @@ export default function App() {
       className={`h-screen flex flex-col ${isResizing ? "select-none" : ""} ${mode}`}
       style={{ backgroundColor: mode === "dark" ? "#2c2c2c" : "white" }}
     >
-      {/* Topbar - always visible */}
-      <Topbar onToggleSidebar={() => setSidebarOpen((s) => !s)} />
+      {/* Topbar - fixed to ~10% of screen height */}
+      {/* <div style={{ height: "10vh", borderBottom: "1px solid #ccc" }}>
+        <Topbar onToggleSidebar={() => setSidebarOpen((s) => !s)} />
+      </div> */}
+      <Topbar />
 
-      {/* Wrapper for middle (sidebar + main) and footer */}
-      <div className="flex flex-col overflow-hidden">
-        {/* Middle area: sidebar + changing dashboard content */}
+      {/* Wrapper for middle (sidebar + main) and footer - occupies remaining 90% */}
+      <div className="flex flex-col overflow-hidden" style={{ height: "90vh",
+        padding: "10px 0px 0px 0px"
+       }}>
+        {/* Middle area: sidebar + changing dashboard content (≈80% initially) */}
         <div
           className="flex-1 grid overflow-hidden"
           style={{
@@ -198,7 +210,11 @@ export default function App() {
           <div></div>
 
           {/* Main area - stretches smoothly when sidebar is resized */}
-          <main className="overflow-auto relative">
+          <main
+            className={`overflow-auto relative ${
+              mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"
+            }`}
+          >
             {/* Horizontal resize handle on main's left border */}
             <div
               onMouseDown={handleMainResizeMouseDown}
@@ -233,7 +249,7 @@ export default function App() {
           }`}
         />
 
-        {/* Footer always visible, but height stretchable */}
+        {/* Footer always visible, but height stretchable (initially ~10% of screen) */}
         <div
           className={`shrink-0 overflow-hidden border-t ${
             mode === "dark"
@@ -248,3 +264,4 @@ export default function App() {
     </div>
   );
 }
+

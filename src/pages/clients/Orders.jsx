@@ -118,7 +118,7 @@ export default function Positions() {
 
   return (
     <div className="">
-      <div className={`rounded-md border h-[75vh] shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
+      <div className={`border-t overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Header */}
         <div className="w-full overflow-x-auto">
           <table className="w-full table-auto border-collapse min-w-0">
@@ -149,18 +149,18 @@ export default function Positions() {
                   onDoubleClick={() => onRowDoubleClick(r)}
                   className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                 >
-                  <td className={`px-3 py-2 text-sm flex gap-2 items-center min-w-[88px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
+                  <td className={`px-3 py-2 text-xs flex gap-2 items-center min-w-[88px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>
                     <FaUser /> {r.login}
                   </td>
-                  <td className={`px-3 py-2 text-sm min-w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.order}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.symbol}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.time}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.type}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.volume}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.price}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.sl}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.tp}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.price2}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.order}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.symbol}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.time}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.type}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.volume}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.price}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.sl}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.tp}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[90px] text-right ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.price2}</td>
                 </tr>
               ))}
             </tbody>

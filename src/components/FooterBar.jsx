@@ -69,7 +69,7 @@ export default function FooterBar({ footerHeight, setFooterHeight }) {
   const styles = mode === "dark" ? darkStyles : lightStyles;
 //   const login = "2025.11.20 08:50:33";
 //   const logout = "—";
-  const [isLogsPanelOpen, setIsLogsPanelOpen] = useState(true);
+  const [isLogsPanelOpen, setIsLogsPanelOpen] = useState(false);
 
   useEffect(() => {
     setFooterHeight(isLogsPanelOpen ? 280 : 50);

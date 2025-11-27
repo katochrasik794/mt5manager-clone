@@ -43,9 +43,9 @@ export default function TradingAccounts() {
         <div className="text-sm text-gray-400">Showing table — scroll to see more</div>
       </div> */}
 
-      <div className={`rounded-md border h-[75vh] shadow-sm overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
+      <div className={`border-t overflow-hidden ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
         {/* Table header */}
-        <div className="w-full overflow-x-auto">
+        <div className="w-full h-full overflow-x-auto">
           <table className="min-w-full table-auto border-collapse">
             <thead>
               <tr className="">
@@ -76,16 +76,16 @@ export default function TradingAccounts() {
                   className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                   title="Double-click to open client details"
                 >
-                  <td className={`px-3 py-2 text-sm min-w-[88px] flex gap-2 items-center ${mode === "dark" ? "text-gray-200" : "text-black"}`}><FaUser /> {r.login}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.name}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.group}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[96px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.country}</td>
-                  <td className={`px-3 py-2 text-sm min-w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.client}</td>
-                  <td className={`px-3 py-2 text-sm text-right min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balance}</td>
-                  <td className={`px-3 py-2 text-sm text-right min-w-[140px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balanceChecked}</td>
-                  <td className={`px-3 py-2 text-sm text-right min-w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.equity}</td>
-                  <td className={`px-3 py-2 text-sm text-right min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.profit}</td>
-                  <td className={`px-3 py-2 text-sm text-right min-w-[72px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.currency}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[88px] flex gap-2 items-center ${mode === "dark" ? "text-gray-200" : "text-black"}`}><FaUser /> {r.login}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.name}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.group}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[96px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.country}</td>
+                  <td className={`px-3 py-2 text-xs min-w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.client}</td>
+                  <td className={`px-3 py-2 text-xs text-right min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balance}</td>
+                  <td className={`px-3 py-2 text-xs text-right min-w-[140px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balanceChecked}</td>
+                  <td className={`px-3 py-2 text-xs text-right min-w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.equity}</td>
+                  <td className={`px-3 py-2 text-xs text-right min-w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.profit}</td>
+                  <td className={`px-3 py-2 text-xs text-right min-w-[72px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.currency}</td>
                 </tr>
               ))}
             </tbody>

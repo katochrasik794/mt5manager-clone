@@ -60,7 +60,7 @@ export default function ClientPage() {
         </div>
 
         {/* Scrollable body: fixed height so ~20 rows are visible (adjust h-[720px] if you need exact fit) */}
-        <div className={`max-h-[530px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
+        <div className={`overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-fixed border-collapse">
             <tbody>
               {rows.map((r, idx) => (
