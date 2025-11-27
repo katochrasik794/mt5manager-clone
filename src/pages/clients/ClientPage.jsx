@@ -60,7 +60,7 @@ export default function ClientPage() {
         </div>
 
         {/* Scrollable body: fixed height so ~20 rows are visible (adjust h-[720px] if you need exact fit) */}
-        <div className={`max-h-[550px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
+        <div className={`max-h-[530px] overflow-y-auto ${mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light"}`}>
           <table className="min-w-full table-fixed border-collapse">
             <tbody>
               {rows.map((r, idx) => (
@@ -70,16 +70,16 @@ export default function ClientPage() {
                   className={`border-b cursor-pointer ${mode === "dark" ? `border-gray-800 hover:bg-gray-800/40 ${idx % 2 === 0 ? "bg-[#2c2c2c]" : "bg-[#343434]"}` : `border-gray-300 hover:bg-gray-200 ${idx % 2 === 0 ? "bg-white" : "bg-gray-50"}`}`}
                   title="Double-click to open client details"
                 >
-                  <td className={`px-3 py-2 text-sm w-[88px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.login}</td>
-                  <td className={`px-3 py-2 text-sm w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.name}</td>
-                  <td className={`px-3 py-2 text-sm w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.group}</td>
-                  <td className={`px-3 py-2 text-sm w-[96px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.country}</td>
-                  <td className={`px-3 py-2 text-sm w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.client}</td>
-                  <td className={`px-3 py-2 text-sm text-right w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balance}</td>
-                  <td className={`px-3 py-2 text-sm text-right w-[140px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balanceChecked}</td>
-                  <td className={`px-3 py-2 text-sm text-right w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.equity}</td>
-                  <td className={`px-3 py-2 text-sm text-right w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.profit}</td>
-                  <td className={`px-3 py-2 text-sm text-right w-[72px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.currency}</td>
+                  <td className={`px-3 py-2 text-xs w-[88px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.login}</td>
+                  <td className={`px-3 py-2 text-xs w-[180px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.name}</td>
+                  <td className={`px-3 py-2 text-xs w-[160px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.group}</td>
+                  <td className={`px-3 py-2 text-xs w-[96px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.country}</td>
+                  <td className={`px-3 py-2 text-xs w-[80px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.client}</td>
+                  <td className={`px-3 py-2 text-xs text-right w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balance}</td>
+                  <td className={`px-3 py-2 text-xs text-right w-[140px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.balanceChecked}</td>
+                  <td className={`px-3 py-2 text-xs text-right w-[100px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.equity}</td>
+                  <td className={`px-3 py-2 text-xs text-right w-[120px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.profit}</td>
+                  <td className={`px-3 py-2 text-xs text-right w-[72px] ${mode === "dark" ? "text-gray-200" : "text-black"}`}>{r.currency}</td>
                 </tr>
               ))}
             </tbody>

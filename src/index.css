@@ -8,8 +8,13 @@ body,
 
 
 body {
-  background: #2c2c2c;
+  background: #111827;
   color: #e5e7eb;
+}
+
+body.light {
+  background: white;
+  color: #111827;
 }
 
 /* For Chrome, Edge, Safari */

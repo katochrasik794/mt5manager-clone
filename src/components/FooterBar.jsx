@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/solid';
 import Mycontext from "../context/Mycontext";
 
@@ -64,12 +64,16 @@ const logEntries = [
 // Helper to define column sizing for the grid
 const gridColClasses = "grid-cols-[140px_80px_80px_minmax(0,1fr)_120px]";
 
-export default function App() {
+export default function FooterBar({ footerHeight, setFooterHeight }) {
   const { mode } = useContext(Mycontext);
   const styles = mode === "dark" ? darkStyles : lightStyles;
-  const login = "2025.11.20 08:50:33";
-  const logout = "—";
+//   const login = "2025.11.20 08:50:33";
+//   const logout = "—";
   const [isLogsPanelOpen, setIsLogsPanelOpen] = useState(true);
+
+  useEffect(() => {
+    setFooterHeight(isLogsPanelOpen ? 280 : 50);
+  }, [isLogsPanelOpen, setFooterHeight]);
 
   // Function to determine background color based on log entry type
   const getBackgroundColor = (type) => {
@@ -92,17 +96,17 @@ export default function App() {
         {/* Footer Bar System */}
         <div className="w-full">
             {/* Logs Panel (Collapsible) */}
-            <div 
-                className={`transition-all duration-300 overflow-hidden ${isLogsPanelOpen ? 'max-h-96 border-t' : 'max-h-12'}`}
+            <div
+                className={`transition-all duration-300 overflow-hidden ${isLogsPanelOpen ? 'h-76 border-t' : 'h-12'}`}
                 style={{ backgroundColor: styles.panelBg, borderColor: styles.borderColor }}
             >
                 {/* Panel Header/Toggler */}
                 <div 
-                    className="flex justify-between items-center p-2 cursor-pointer border-b"
+                    className="flex justify-between items-center px-2 py-1 cursor-pointer border-b"
                     onClick={() => setIsLogsPanelOpen(!isLogsPanelOpen)}
                     style={{ borderColor: isLogsPanelOpen ? styles.borderColor : styles.panelBg }}
                 >
-                    <div className="text-sm font-semibold" style={{ color: styles.mutedText }}>
+                    <div className="text-xs font-semibold" style={{ color: styles.mutedText }}>
                         Toolbox / Logs
                     </div>
                     {isLogsPanelOpen ? (
@@ -113,7 +117,7 @@ export default function App() {
                 </div>
 
                 {/* Logs Content Area */}
-                <div className={`p-2 transition-opacity duration-300 ${isLogsPanelOpen ? 'opacity-100' : 'opacity-0 h-0'}`}>
+                <div className={`p- transition-opacity duration-300 ${isLogsPanelOpen ? 'opacity-100' : 'opacity-0 h-0'}`}>
                     <div
                         className={`h-64 overflow-y-auto rounded-sm ${mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light'}`}
                         style={{ border: `1px solid ${styles.borderColor}`, backgroundColor: styles.logDefaultBg }}
@@ -154,7 +158,7 @@ export default function App() {
             </div>
 
             {/* Actual Footer Bar */}
-            <footer 
+            {/* <footer 
                 className="p-3 text-sm flex items-center justify-between shadow-lg"
                 style={{ backgroundColor: styles.panelBg, borderTop: `1px solid ${styles.borderColor}` }}
             >
@@ -164,7 +168,7 @@ export default function App() {
                 <div className={`${mode === "dark" ? "text-gray-400" : "text-gray-600"}`}>
                     Logout time: <span className={`font-medium ${mode === "dark" ? "text-white" : "text-black"}`}>{logout}</span>
                 </div>
-            </footer>
+            </footer> */}
         </div>
     </div>
   );

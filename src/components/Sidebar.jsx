@@ -327,7 +327,7 @@ export default function NavigatorSidebar() {
 
   // Define classes for dark theme styling
   const sidebarClasses =
-    "w-72 bg-[#2c2c2c]  flex flex-col font-sans";
+    "w-68 bg-[#2c2c2c]  flex flex-col font-sans";
 
   const headerClasses =
     "px-4 py-1  flex items-center justify-between";
@@ -337,19 +337,19 @@ export default function NavigatorSidebar() {
     <aside className={sidebarClasses +  ` ${mode === "dark" ? "border-gray-100 text-white" : "border-gray-300 text-black"}`}
     style={{ background: mode === "dark" ? "#2c2c2c" : "white" }}>
       {/* --- Navigator Header --- */}
-      <div className={headerClasses}>
+      {/* <div className={headerClasses}>
         <span className="font-semibold text-md">Navigator</span>
         <button
           className="p-1 text-gray-400 hover:text-white"
           aria-label="Close"
         >
-          {/* <XMarkIcon className="w-5 h-5" /> */}
+          <XMarkIcon className="w-5 h-5" />
         </button>
-      </div>
+      </div> */}
 
       {/* --- Menu Items --- */}
-      <div className="flex-1 overflow-auto p-1 sidebar-scroll">
-        <div className="text-sm font-semibold p-2">
+      <div className="flex-1 overflow-auto px-1 sidebar-scroll">
+        <div className="text-sm font-semibold px-2">
           MetaTrader 5 Manager
         </div>
         <nav className="text-sm "
