@@ -326,9 +326,9 @@ export default function NewClientModal({ open, onClose }) {
           </h3>
           <div className="flex items-center">
             {/* Standard Window Controls (Minimize, Maximize, Close) */}
-            <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-xl leading-none">
+            {/* <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-xl leading-none">
               ?
-            </button>
+            </button> */}
             <button
               onClick={onClose}
               className="text-gray-400 hover:bg-red-600 hover:text-white w-8 h-6 text-xl leading-none"

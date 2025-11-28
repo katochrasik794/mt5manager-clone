@@ -202,19 +202,19 @@ export default function ClientModal({ open, onClose, client }) {
       {/* Client Account Modal (The main modal) */}
       <div className="fixed inset-0 -top-12 backdrop-blur  flex items-center justify-center z-50">
         {/* Main Content Area - mimics the window from the image */}
-        <div className={`rounded-sm shadow-2xl max-w-4xl w-full h-5/6 mx-4 ${mode === "dark" ? "bg-[#1e1e1e] border border-gray-700" : "bg-white border border-gray-300"}`}>
+        <div className={`rounded-sm shadow-2xl max-w-4xl w-full h-4/6 mx-4 ${mode === "dark" ? "bg-[#1e1e1e] border border-gray-700" : "bg-white border border-gray-300"}`}>
           {/* Title Bar */}
           <div className={`flex items-center justify-between p-1 border-b ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
             <h3 className={`text-sm font-semibold ml-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
               Account: **{login}**, **{name}**, **{currency}**, **{group}**
             </h3>
             <div className="flex items-center">
-              <button className={`w-8 h-6 text-3xl mb-2 leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>
+              {/* <button className={`w-8 h-6 text-3xl mb-2 leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>
                 <span className="inline-block transform -translate-y-0.5">-</span>
               </button>
               <button className={`w-8 h-6 text-lg leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>
                 ☐
-              </button>
+              </button> */}
               <button
                 onClick={onClose}
                 className={`w-8 h-6 text-lg leading-none ${mode === "dark" ? "text-gray-400 hover:bg-red-600" : "text-gray-600 hover:bg-gray-200"}`}
@@ -243,7 +243,7 @@ export default function ClientModal({ open, onClose, client }) {
 
           {/* Main Content Area */}
           {/* Only the Profile tab is forced to have no scroll; others can scroll if content exceeds height */}
-          <div className={`p-4 h-[calc(100%-65px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${(activeTab === 'Personal' || activeTab === 'Trade' || activeTab === 'Profile') ? (mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light') : ''}`}>
+          <div className={`p-4 h-[calc(100%-80px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${(activeTab === 'Personal' || activeTab === 'Trade' || activeTab === 'Profile') ? (mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light') : ''}`}>
             
             {/* --- Overview Content --- */}
             {activeTab === "Overview" && (
@@ -269,7 +269,7 @@ export default function ClientModal({ open, onClose, client }) {
                     Registered: **{registered}** Last access: **{lastAccess}** Last Address: **{lastAddress}**
                   </p>
                 </div>
-                <div className={`border rounded-sm h-2/3 ${mode === "dark" ? "border-gray-300" : "border-gray-400"}`}>
+                <div className={`border rounded-sm h-[75%]  max-h-full ${mode === "dark" ? "border-gray-300" : "border-gray-400"}`}>
                   <div className={`flex text-xs font-medium border-b py-2 ${mode === "dark" ? "text-gray-400 bg-[#2c2c2c] border-gray-700" : "text-gray-600 bg-gray-100 border-gray-300"}`}>
                     <span className="w-2/12 px-2">Symbol</span>
                     <span className="w-1/12 px-2">Type</span>

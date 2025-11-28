@@ -63,7 +63,7 @@ export default function DealDetailsModal({ open, onClose, dealData }) {
           </span>
           <button
             onClick={onClose}
-            className={`leading-none px-2 ${mode === "dark" ? "text-gray-400 hover:text-white" : "text-gray-600 hover:text-black"}`}
+            className="text-gray-400 hover:bg-red-600 hover:text-white w-6 h-5 mb-1 text-xl leading-none"
             aria-label="Close"
           >
             ✕

@@ -382,7 +382,7 @@ export default function NewClientModal({ open, onClose }) {
             </div>
 
             {/* Rows container (scrollable) */}
-            <div className="flex flex-col flex-grow overflow-auto">
+            <div className={`flex flex-col flex-grow overflow-auto ${mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light'}`}>
               {documents.map((doc) => (
                 <div
                   key={doc.id}
@@ -542,7 +542,7 @@ export default function NewClientModal({ open, onClose }) {
    <div className={`flex flex-col w-full h-full border ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-white border-gray-300"}`}>
 
      {/* Table */}
-     <div className="flex-grow overflow-auto">
+     <div className={`flex-grow overflow-auto ${mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light'}`}>
        {/* Table Header */}
        <div className={`grid grid-cols-4 text-xs border-b ${mode === "dark" ? "bg-[#3c3c3c] border-gray-700 text-gray-300" : "bg-gray-100 border-gray-300 text-gray-700"}`}>
          <div className="py-2 px-3 flex items-center gap-1">
@@ -611,7 +611,7 @@ export default function NewClientModal({ open, onClose }) {
         <div className={`flex items-center justify-between p-1 border-b ${mode === "dark" ? "bg-[#2f2f2f] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
           <h3 className={`text-sm font-semibold ml-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>Client: New</h3>
           <div className="flex items-center">
-            <button className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>?</button>
+            {/* <button className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>?</button> */}
             <button onClick={onClose} className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-red-600 hover:text-white" : "text-gray-600 hover:bg-red-600 hover:text-white"}`}>
               ×
             </button>
@@ -639,7 +639,7 @@ export default function NewClientModal({ open, onClose }) {
           </div>
 
           {/* Main */}
-          <div className="flex-grow p-4 overflow-auto custom-scrollbar">
+          <div className={`flex-grow p-4 overflow-auto ${mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light'}`}>
             <h2 className={`text-xl font-bold mb-4 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>{activeSection}</h2>
             {renderContent()}
           </div>

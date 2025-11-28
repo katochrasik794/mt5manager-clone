@@ -20,8 +20,8 @@ export default function NewCommentModal({ open = true, onClose = () => {}, onSav
             <span>Document: 1 - Proof of identity - Prasad Nanekar - Person - New Comment</span>
           </div>
           <div className="ml-auto flex items-center gap-2">
-            <button className={`p-1 rounded ${mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"}`} title="Help">?</button>
-            <button onClick={onClose} className={`p-1 rounded ${mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"}`}>×</button>
+            {/* <button className={`p-1 rounded ${mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"}`} title="Help">?</button> */}
+            <button onClick={onClose} className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-red-600 hover:text-white" : "text-gray-600 hover:bg-red-600 hover:text-white"}`}>×</button>
           </div>
         </div>
 
@@ -63,7 +63,7 @@ export default function NewCommentModal({ open = true, onClose = () => {}, onSav
 
         {/* Editor area */}
         <div className={`p-4 h-[380px] ${mode === "dark" ? "bg-[#2b2b2b]" : "bg-white"}`}>
-          <div className={`h-full rounded border p-3 overflow-auto custom-scrollbar ${mode === "dark" ? "bg-[#282828] border-gray-700 text-gray-200" : "bg-gray-50 border-gray-300 text-black"}`}>
+          <div className={`h-full rounded border p-3 overflow-auto ${mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light'} ${mode === "dark" ? "bg-[#282828] border-gray-700 text-gray-200" : "bg-gray-50 border-gray-300 text-black"}`}>
             {/* Using a textarea for simplicity; replace with a rich text editor if needed */}
             <textarea
               value={content}

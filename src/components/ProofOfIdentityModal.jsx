@@ -68,7 +68,7 @@ export default function ProofOfIdentityModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur">
       <div
-        className={`w-[1200px] max-w-5xl rounded shadow-lg overflow-hidden h-[95%] ${
+        className={`w-[1200px] max-w-5xl rounded shadow-lg overflow-hidden h-[680px] ${
           mode === "dark"
             ? "bg-[#2b2b2b] text-gray-200"
             : "bg-white text-black"
@@ -552,7 +552,7 @@ export default function ProofOfIdentityModal({
               {activeTab === "History" && (
                 <>
                   <div
-                    className={`h-[80vh] overflow-auto border rounded p-2 ${
+                    className={`h-[570px] overflow-auto border rounded p-2 ${
                       mode === "dark"
                         ? "border-gray-600 bg-[#2b2b2b] divide-gray-700"
                         : "border-gray-300 bg-white divide-gray-300"
@@ -748,7 +748,7 @@ export default function ProofOfIdentityModal({
                   >
                     <h3 className="text-lg font-medium mb-3">Comments</h3>
                     <div
-                      className={`p-4 h-[75vh] border rounded ${
+                      className={`p-4 h-[540px] border rounded ${
                         mode === "dark"
                           ? "bg-[#2b2b2b] border-gray-700 text-gray-300"
                           : "bg-white border-gray-300 text-black"

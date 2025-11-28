@@ -55,18 +55,16 @@ export default function NewOtherDocumentModal({
             New document
           </div>
           <div className="flex items-center gap-2">
-            <button
+            {/* <button
               className={`px-2 py-1 rounded ${
                 mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"
               }`}
             >
               ?
-            </button>
+            </button> */}
             <button
               onClick={onClose}
-              className={`px-2 py-1 rounded ${
-                mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"
-              }`}
+              className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-red-600 hover:text-white" : "text-gray-600 hover:bg-red-600 hover:text-white"}`}
             >
               ×
             </button>

@@ -55,8 +55,8 @@ export default function NewAccountModal({ open = true, onClose = () => {}, onCre
         <div className={`flex items-center justify-between px-4 py-2 border-b ${mode === "dark" ? "border-gray-700 bg-[#262626]" : "border-gray-300 bg-gray-100"}`}>
           <div className={`text-sm font-medium ${mode === "dark" ? "text-gray-200" : "text-black"}`}>New Account</div>
           <div className="flex items-center gap-2">
-            <button className={`p-1 rounded ${mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"}`}>?</button>
-            <button onClick={onClose} className={`p-1 rounded ${mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"}`}>×</button>
+            {/* <button className={`p-1 rounded ${mode === "dark" ? "hover:bg-[#333333]" : "hover:bg-gray-200"}`}>?</button> */}
+            <button onClick={onClose} className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-red-600 hover:text-white" : "text-gray-600 hover:bg-red-600 hover:text-white"}`}>×</button>
           </div>
         </div>
 

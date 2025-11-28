@@ -245,21 +245,21 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
       {/* Client Account Modal (The main modal) */}
       <div className="fixed inset-0 -top-12 backdrop-blur  flex items-center justify-center z-50">
         {/* Main Content Area - mimics the window from the image */}
-        <div className={`rounded-sm border shadow-2xl max-w-4xl w-full h-5/6 mx-4 ${mode === "dark" ? "bg-[#1e1e1e] border-gray-700" : "bg-white border-gray-300"}`}>
+        <div className={`rounded-sm border shadow-2xl max-w-4xl w-full h-4/6 mx-4 ${mode === "dark" ? "bg-[#1e1e1e] border-gray-700" : "bg-white border-gray-300"}`}>
           {/* Title Bar */}
           <div className={`flex items-center justify-between p-1 border-b ${mode === "dark" ? "bg-[#2c2c2c] border-gray-700" : "bg-gray-100 border-gray-300"}`}>
             <h3 className={`text-sm font-semibold ml-2 ${mode === "dark" ? "text-gray-100" : "text-black"}`}>
               Account: **{login}**, **{name}**, **{currency}**, **{group}**
             </h3>
             <div className="flex items-center">
-              <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-3xl mb-2 leading-none">
+              {/* <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-3xl mb-2 leading-none">
                 <span className="inline-block transform -translate-y-0.5">
                   -
                 </span>
               </button>
               <button className="text-gray-400 hover:bg-[#3e3e3e] w-8 h-6 text-lg leading-none">
                 ☐
-              </button>
+              </button> */}
               <button
                 onClick={onClose}
                 className="text-gray-400 hover:bg-red-600 hover:text-white w-8 h-6 mb-1 text-xl leading-none"
@@ -289,7 +289,7 @@ export default function UserModal({ open, onClose, client, hideNewClient = false
           {/* Main Content Area */}
           {/* Only the Profile tab is forced to have no scroll; others can scroll if content exceeds height */}
           <div
-            className={`p-4 h-[calc(100%-65px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${
+            className={`p-4 h-[calc(100%-80px)] overflow-auto ${mode === "dark" ? "bg-[#2c2c2c]" : "bg-white"} ${
               activeTab === "Personal" || activeTab === "Trade" || activeTab === "Profile" || activeTab === "Balance" ? mode === "dark" ? "custom-scrollbar" : "custom-scrollbar-light" : ""
             }`}
           >

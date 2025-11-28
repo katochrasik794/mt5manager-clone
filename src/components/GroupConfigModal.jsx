@@ -131,8 +131,8 @@ export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\St
                     </h3>
                     <div className="flex items-center">
                         {/* Min/Max/Close Buttons (Dummy) */}
-                        <button className={`w-8 mb-1 h-6 text-3xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>-</button>
-                        <button className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>☐</button>
+                        {/* <button className={`w-8 mb-1 h-6 text-3xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>-</button>
+                        <button className={`w-8 h-6 text-xl leading-none ${mode === "dark" ? "text-gray-400 hover:bg-[#3e3e3e]" : "text-gray-600 hover:bg-gray-200"}`}>☐</button> */}
                         <button
                             onClick={onClose}
                             className="text-gray-400 hover:bg-red-600 hover:text-white w-8 h-6 text-2xl leading-none"
@@ -283,7 +283,7 @@ export default function GroupConfigModal({ open, onClose, groupName = "OXO_B\\St
                             </div>
 
                                 {/* Commissions Table */}
-                                <div className={`overflow-x-auto overflow-y-auto custom-scrollbar border rounded-sm ${mode === "dark" ? "border-gray-600" : "border-gray-400"}`}>
+                                <div className={`overflow-x-auto overflow-y-auto ${mode === "dark" ? 'custom-scrollbar' : 'custom-scrollbar-light'} border rounded-sm ${mode === "dark" ? "border-gray-600" : "border-gray-400"}`}>
                                     <table className={`min-w-full divide-y ${mode === "dark" ? "divide-gray-600" : "divide-gray-400"}`}>
                                         <thead>
                                             <tr>
